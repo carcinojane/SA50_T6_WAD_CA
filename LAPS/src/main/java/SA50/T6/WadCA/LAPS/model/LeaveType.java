@@ -1,14 +1,20 @@
 package SA50.T6.WadCA.LAPS.model;
+//import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
-public class LeaveType {
+//@IdClass(AssignedLeavTypeId.class)
+//public class LeaveType implements Serializable{
+public class LeaveType{
 	//composite key
-	@Id
+	//@Id
 	private String designation;
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
 	private String leaveType;
-	private int entitlement;
+	private float entitlement;
 	private float minClaim;
 	public LeaveType() {
 		super();
@@ -33,7 +39,7 @@ public class LeaveType {
 	public void setLeaveType(String leaveType) {
 		this.leaveType = leaveType;
 	}
-	public int getEntitlement() {
+	public float getEntitlement() {
 		return entitlement;
 	}
 	public void setEntitlement(int entitlement) {
@@ -45,7 +51,7 @@ public class LeaveType {
 	public void setMinClaim(float minClaim) {
 		this.minClaim = minClaim;
 	}
-	
-	
+
+
 
 }

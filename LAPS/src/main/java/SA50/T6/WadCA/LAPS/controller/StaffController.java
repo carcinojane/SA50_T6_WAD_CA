@@ -15,8 +15,8 @@ public class StaffController {
 	
 	@GetMapping("/home")
 	public String home() {
-		//return "staff_homepage";
-		return "forward:/Manager/home";
+		return "staff_homepage";
+		//return "forward:/manager/home";
 	}
 	
 	@GetMapping("/apply")

@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("Manager")
-public class ManagerController extends StaffController {
+@RequestMapping("/manager")
+public class ManagerController{
 	
 	@GetMapping("/home")
 	public String login(String username, String password) {
