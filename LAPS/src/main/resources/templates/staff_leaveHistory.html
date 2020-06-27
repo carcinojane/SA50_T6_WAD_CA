@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:utext="#{staff.leaveHistory.page.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../css/style.css" th:href="@{/css/style.css}" />
+  </head>
+<body>
+ <header th:insert="staff_homepage.html :: header"> </header>
+ <h2 th:utext="#{staff.leaveHistory.page.title}"></h2>
+ <a href="/staff/staff_leaveHistory_details">View</a>
+</body>
+</html>
