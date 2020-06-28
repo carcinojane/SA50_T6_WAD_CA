@@ -5,6 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -25,9 +29,21 @@ public class LeaveRecord{
 	private LocalDateTime leaveStartDate;
 	private LocalDateTime leaveEndDate;
 	private int staffId;
+	@ManyToOne
+	@JoinColumn(name="staffId", insertable=false, updatable=false)
+	private Staff staff;
+	@ManyToOne
+	//@JoinColumn(name="leaveType", insertable=false, updatable=false)
+	@JoinColumns({
+		@JoinColumn(name="id", insertable=false, updatable=false),
+		@JoinColumn(name="designation", insertable=false, updatable=false)
+	})
+	private LeaveType leaveType;
 	private String workDessemination;
 	private int contact;
 	private String reasonForRejection;
+	
+	
 	
 	
 	public LeaveRecord() {
@@ -123,20 +139,30 @@ public class LeaveRecord{
 	}
 
 
-	public int getStaffId() {
-		return staffId;
-	}
-
-
-	public void setStaffId(int staffId) {
-		this.staffId = staffId;
-	}
+//	public Staff getStaff() {
+//		return staff;
+//	}
+//
+//
+//	public void setStaff(Staff staff) {
+//		this.staff = staff;
+//	}
+	
+	
 
 
 	public String getWorkDessemination() {
 		return workDessemination;
 	}
 
+
+	public int getStaffId() {
+		return staffId;
+	}
+
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
+	}
 
 	public void setWorkDessemination(String workDessemination) {
 		this.workDessemination = workDessemination;
