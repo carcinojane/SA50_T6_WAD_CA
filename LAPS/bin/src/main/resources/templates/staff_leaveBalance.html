@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:utext="#{staff.leaveBalance.page.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../css/style.css" th:href="@{/css/style.css}" />
+  </head>
+<body>
+ <header th:insert="staff_homepage.html :: header"> </header>
+ <div class="content">
+ <h2 th:utext="#{staff.leaveBalance.page.title}"></h2>
+ <h3 th:object="${staff}">Leave Balance</h3>
+ <p>Remaining Annual Leave</p>
+ <p th:text="*{totalAnnualLeave}"></p>
+ <p>Remaining Medical Leave</p>
+ <p th:text="*{totalMedicalLeave}"></p>
+ <p>Remaining Compensation Leave</p>
+ <p th:text="*{totalCompensationLeave}"></p>
+</div>
+</body>
+</html>
