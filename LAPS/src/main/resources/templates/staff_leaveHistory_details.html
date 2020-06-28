@@ -9,7 +9,16 @@
 <body>
  <header th:insert="staff_homepage.html :: header"> </header>
  <h2 th:utext="#{staff.leaveHistory.details.page.title}"></h2>
-<input type="button" onclick="location.href='/staff/history/details/update'"
+ <h3>View Leave History Details Page</h3>
+ <p th:text="${leave.leaveType}"></p>
+ <p th:text="${leave.leaveStartDate}"></p>
+ <p th:text="${leave.leaveEndDate}"></p>
+ <p th:text="${leave.reason}"></p>
+  <p th:text="${leave.workDessemination}"></p>
+ <p th:text="${leave.contact}"></p>
+ 
+
+<input th:if="${leave.status == LeaveStatus.APPLIED}" type="button" onclick="location.href='/staff/history/details/update'"
 		value="Update">
 </body>
 </html>

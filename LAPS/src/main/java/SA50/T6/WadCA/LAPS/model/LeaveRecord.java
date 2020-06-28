@@ -1,4 +1,5 @@
 package SA50.T6.WadCA.LAPS.model;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -26,8 +27,8 @@ public class LeaveRecord{
 	}
 	
 	private String reason;
-	private LocalDateTime leaveStartDate;
-	private LocalDateTime leaveEndDate;
+	private LocalDate leaveStartDate;
+	private LocalDate leaveEndDate;
 	private int staffId;
 	@ManyToOne
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
@@ -51,8 +52,8 @@ public class LeaveRecord{
 		// TODO Auto-generated constructor stub
 	}
 
-	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDateTime leaveStartDate,
-			LocalDateTime leaveEndDate, int staffId, String workDessemination, int contact) {
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate,
+			LocalDate leaveEndDate, int staffId, String workDessemination, int contact) {
 		super();
 		this.managerId = managerId;
 		this.leaveStatus = leaveStatus;
@@ -64,8 +65,8 @@ public class LeaveRecord{
 		this.contact = contact;
 	}
 	
-	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDateTime leaveStartDate,
-			LocalDateTime leaveEndDate, int staffId, String workDessemination, int contact, String reasonForRejection) {
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate,
+			LocalDate leaveEndDate, int staffId, String workDessemination, int contact, String reasonForRejection) {
 		super();
 		this.managerId = managerId;
 		this.leaveStatus = leaveStatus;
@@ -119,22 +120,22 @@ public class LeaveRecord{
 	}
 
 
-	public LocalDateTime getLeaveStartDate() {
+	public LocalDate getLeaveStartDate() {
 		return leaveStartDate;
 	}
 
 
-	public void setLeaveStartDate(LocalDateTime leaveStartDate) {
+	public void setLeaveStartDate(LocalDate leaveStartDate) {
 		this.leaveStartDate = leaveStartDate;
 	}
 
 
-	public LocalDateTime getLeaveEndDate() {
+	public LocalDate getLeaveEndDate() {
 		return leaveEndDate;
 	}
 
 
-	public void setLeaveEndDate(LocalDateTime leaveEndDate) {
+	public void setLeaveEndDate(LocalDate leaveEndDate) {
 		this.leaveEndDate = leaveEndDate;
 	}
 
