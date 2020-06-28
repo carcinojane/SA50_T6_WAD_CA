@@ -1,5 +1,6 @@
 package SA50.T6.WadCA.LAPS.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class Staff {
 	private float totalCompensationLeave;
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
-	private LocalDateTime startDate;
+	private LocalDate startDate;
 	
 	public Staff() {
 		super();
@@ -33,7 +34,7 @@ public class Staff {
 	}
 
 	public Staff(String username, String password, int managerId, Designation designation, float totalCompensationLeave,
-			float totalMedicalLeave, float totalAnnualLeave, LocalDateTime startDate) {
+			float totalMedicalLeave, float totalAnnualLeave, LocalDate startDate) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -109,11 +110,11 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 	}
 
-	public LocalDateTime getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 	
