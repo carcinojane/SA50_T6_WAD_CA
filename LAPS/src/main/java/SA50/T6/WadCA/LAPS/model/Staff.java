@@ -1,12 +1,17 @@
 package SA50.T6.WadCA.LAPS.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Staff {
@@ -16,8 +21,6 @@ public class Staff {
 	private int staffId;
 	private String username;
 	private String password;
-	//foreign key
-	private int managerId;
 	private Designation designation;
 	public enum Designation{
 		employee,
@@ -28,17 +31,29 @@ public class Staff {
 	private float totalAnnualLeave;
 	private LocalDate startDate;
 	
+	//self-referencing: staffId
+	@ManyToOne(cascade={CascadeType.ALL})
+	@JoinColumn(name="managerId")
+	private Staff manager;
+	@OneToMany(mappedBy="manager")
+	private Set<Staff> subordinates = new HashSet<Staff>();
+	
+	//Map leave
+	@OneToMany(mappedBy="staffId")
+	private Set<LeaveRecord> leaveRecords = new HashSet<LeaveRecord>();
+	
+	
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Staff(String username, String password, int managerId, Designation designation, float totalCompensationLeave,
+	public Staff(String username, String password, Staff manager, Designation designation, float totalCompensationLeave,
 			float totalMedicalLeave, float totalAnnualLeave, LocalDate startDate) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.managerId = managerId;
+		this.manager = manager;
 		this.designation = designation;
 		this.totalCompensationLeave = totalCompensationLeave;
 		this.totalMedicalLeave = totalMedicalLeave;
@@ -70,12 +85,14 @@ public class Staff {
 		this.password = password;
 	}
 
-	public int getManagerId() {
-		return managerId;
+	
+
+	public Staff getManager() {
+		return manager;
 	}
 
-	public void setManagerId(int managerId) {
-		this.managerId = managerId;
+	public void setManager(Staff manager) {
+		this.manager = manager;
 	}
 
 	public Designation getDesignation() {
