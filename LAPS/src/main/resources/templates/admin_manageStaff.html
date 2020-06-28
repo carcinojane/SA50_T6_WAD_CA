@@ -7,9 +7,13 @@
           href="../../css/style.css" th:href="@{/css/style.css}" />
   </head>
 <body>
- <header th:insert="admin_homepage.html :: header"> </header>
- <h2 th:utext="#{admin.manageStaff.page.title}"></h2>
- <a href="/admin/manageStaff/details">View</a>
- <a href="/admin/manageStaff/add">Add</a>
+ <header th:insert="admin_login.html :: header"> </header>
+
+ 	<div class="content">
+	 	<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
+	 	<a href="/admin/manageStaff/details">View</a>
+	 	<a href="/admin/manageStaff/add">Add</a>
+	</div>
+ 
 </body>
 </html>
