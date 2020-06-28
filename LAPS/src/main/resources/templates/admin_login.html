@@ -1,14 +1,68 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  
   <head>
     <title th:utext="#{admin.login.page.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
     <link rel="stylesheet" type="text/css" media="all" 
           href="../../css/style.css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" type="text/css" media="all"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<script href="../../javascript/navbar.js"></script>
+	<script href="../../javascript/login.js"></script>
   </head>
+
 <body>
- <header th:insert="admin_homepage.html :: header"> </header>
- <h2 th:utext="#{admin.login.page.title}"></h2>
-<input type="button"  onclick="location.href='/admin/home'" value="Login" >
+  
+  <header th:fragment="header">
+ 		<div class="topnav" id="myTopnav">
+ 			<img src="../../images/logo.png">
+ 			
+ 			<a href="/LAPS">Home</a>
+ 			<button class="logout" type="button" onclick="location.href='/admin/login'" value="Logout">Logout</button>
+ 			
+ 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+ 			<i class="fa fa-bars"></i>
+ 			</a>
+ 		</div>
+ 		
+ 		<div class="footer">
+ 			<p>Company Name &copy; All rights reserved.</p>
+ 		</div>
+ </header>
+ 
+<div class="content">
+  <h2 th:utext="#{admin.login.page.title}"></h2>
+  <div class="menu">
+    <ul>
+      <li>
+      	<button onclick="document.getElementById('admin').style.display='block'" href="#approval">Login</button>
+      </li>
+    </ul>
+  </div>
+  
+  <div id="admin" class="modal">
+          <form class="modal-content animate" action="/action_page.php" method="post">
+            <div class="container">
+              <h2>Admin Login</h2>
+              <label for="uname"><b>Username</b></label>
+              <input type="text" placeholder="Enter Username" name="uname" required>
+
+
+              <label for="psw"><b>Password</b></label>
+              <input type="password" placeholder="Enter Password" name="psw" required>
+
+              <button type="button"  onclick="location.href='/admin/home'" value="Login">Login</button>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+              <button type="button" onclick="document.getElementById('admin').style.display='none'" class="cancelbtn">Cancel</button>
+            </div>
+          </form>
+  </div>
+</div>
+
 </body>
 </html>

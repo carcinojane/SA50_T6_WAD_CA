@@ -7,14 +7,7 @@
 	href="../../css/style.css" th:href="@{/css/style.css}" />
 </head>
 <body>
-	<header th:fragment="header">
-		<table>
-			<tr>
-				<td><a href="/admin/home">Home</a></td>
-				<td><a href="/LAPS">logout</a></td>
-			</tr>
-		</table>
-	</header>
+	<header th:insert="admin_login.html :: header"> </header>
 	<h2 th:utext="#{admin.homepage.page.title}"></h2>
 	<input type="button" onclick="location.href='/admin/manageStaff'"
 		value="Manage Staff">
