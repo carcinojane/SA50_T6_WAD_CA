@@ -1,10 +1,13 @@
 package SA50.T6.WadCA.LAPS.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +22,19 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int staffId;
+	@Column(unique = true)
 	private String username;
 	private String password;
+	
+	//self-referencing: staffId
+		@ManyToOne
+		@JoinColumn(name="manager_id")
+		private Staff manager;
+		
+		@OneToMany(mappedBy="manager",cascade={CascadeType.ALL})
+		private Set<Staff> subordinates = new HashSet<Staff>();
+	
+	
 	private Designation designation;
 	public enum Designation{
 		employee,
@@ -31,13 +45,6 @@ public class Staff {
 	private float totalAnnualLeave;
 	private LocalDate startDate;
 	
-	//self-referencing: staffId
-	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="managerId")
-	private Staff manager;
-	@OneToMany(mappedBy="manager")
-	private Set<Staff> subordinates = new HashSet<Staff>();
-	
 	//Map leave
 	@OneToMany(mappedBy="staffId")
 	private Set<LeaveRecord> leaveRecords = new HashSet<LeaveRecord>();
@@ -46,6 +53,13 @@ public class Staff {
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+
+	public Staff(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
 	}
 
 	public Staff(String username, String password, Staff manager, Designation designation, float totalCompensationLeave,
@@ -60,7 +74,7 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 		this.startDate = startDate;
 	}
-
+//
 	public int getStaffId() {
 		return staffId;
 	}
@@ -133,6 +147,17 @@ public class Staff {
 
 	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
+	}
+	
+	public Collection<Staff> getSubordinates(){
+		return new ArrayList<Staff>(subordinates);
+	}
+	
+	public void addSubordinates(Staff subordinate){
+		if(subordinates.contains(subordinate))
+			return;
+		subordinates.add(subordinate);
+		subordinate.setManager(this);
 	}
 	
 	
