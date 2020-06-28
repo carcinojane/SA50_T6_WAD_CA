@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{admin.homepage.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header th:insert="admin_login.html :: header"> </header>
+	<h2 th:utext="#{admin.homepage.page.title}"></h2>
+	<input type="button" onclick="location.href='/admin/manageStaff'"
+		value="Manage Staff">
+	<input type="button" onclick="location.href='/admin/manageLeaveType'"
+		value="Manage Leave Type">
+</body>
+</html>
+
+
+
+

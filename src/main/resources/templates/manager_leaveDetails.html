@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{manager.approval.details.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+	<header th:insert="staff_login.html :: header"> </header>
+	 
+	 <div class="content">
+	 	<h1 th:utext="#{manager.approval.details.page.title}">Leave Details</h1>
+	 	<p th:utext="${product.brand}"></p>
+ 	
+	 	
+	 	<form action="#" th:object="${leave}" th:action="@{/manager/save}" method="get">
+	 		
+	 		<fieldset>
+				Employee ID: <input type="text" th:field="*{staffId}" disabled>	
+			</fieldset>
+	 				
+			<fieldset>
+				From: <input type="text" th:field="*{leaveStartDate}" placeholder="dd-MM-yyyy"
+         	     th:text="${#dates.format(leave.leaveStartDate, 'dd-MM-yyyy')}" disabled>	
+			</fieldset>
+			
+			<fieldset>
+				From: <input type="text" th:field="*{leaveEndDate}" placeholder="dd-MM-yyyy"
+         	     th:text="${#dates.format(leave.leaveEndDate, 'dd-MM-yyyy')}" disabled>	
+			</fieldset>
+			
+			<fieldset>
+				Reason: <input type="text" th:field="*{reason}" disabled>	
+			</fieldset>
+			
+			<fieldset>
+				Work Dissemination: <input type="text" th:field="*{workDessemination}" disabled>	
+			</fieldset>
+			
+			<fieldset>
+				Contact Details: <input type="text" th:field="*{contact}" disabled>	
+			</fieldset>
+			
+			<fieldset>
+				Leave Status: <input type="text" th:field="*{leaveStatus}">	
+			</fieldset>
+			
+			<fieldset>
+				Reason for Rejection: <input type="text" th:field="*{reasonForRejection}">	
+			</fieldset>
+		
+			<fieldset>
+				<button type="submit" >Save</button>
+			</fieldset>
+		</form>	
+			
+	 </div>
+
+</body>
+</html>

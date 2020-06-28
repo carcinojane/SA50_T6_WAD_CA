@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{manager.homepage.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+	<header th:insert="staff_login.html :: header"> </header>
+	 
+	 <div class="content">
+	 	<h2 th:utext="#{manager.homepage.page.title}"></h2>
+	 	  <div class="menu">
+	 	  	<ul>
+	 	  		<li>
+	 	  			<button type="button"  onclick="location.href='/manager/approval'" value="View Leave Application for Approval">View Leave Application for Approval</button>
+	 	  		</li>
+	 	  	</ul>
+	 	  </div>
+	 </div>
+
+</body>
+</html>

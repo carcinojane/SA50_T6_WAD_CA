@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{staff.homepage.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/style.css" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<header th:insert="staff_login.html :: header"> </header>
+	<h2 th:utext="#{staff.homepage.page.title}"></h2>
+	<input type="button" onclick="location.href='/staff/apply'"
+		value="Apply Leave">
+	<input type="button" onclick="location.href='/staff/balance'"
+		value="View Leave Balance">
+	<input type="button" onclick="location.href='/staff/history'"
+		value="View Personal Leave History">
+</body>
+</html>
+
+
+
+
