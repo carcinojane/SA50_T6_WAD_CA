@@ -4,21 +4,23 @@
     <title th:utext="#{staff.leaveHistory.details.page.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/style.css" th:href="@{/css/style.css}" />
+          href="../../css/main.css" th:href="@{/css/main.css}" />
   </head>
 <body>
- <header th:insert="staff_homepage.html :: header"> </header>
+ <header th:insert="staff_login.html :: header"> </header>
+ <div class="content">
  <h2 th:utext="#{staff.leaveHistory.details.page.title}"></h2>
  <h3>View Leave History Details Page</h3>
  <p th:text="${leave.leaveType}"></p>
  <p th:text="${leave.leaveStartDate}"></p>
  <p th:text="${leave.leaveEndDate}"></p>
  <p th:text="${leave.reason}"></p>
-  <p th:text="${leave.workDessemination}"></p>
+ <p th:text="${leave.workDessemination}"></p>
  <p th:text="${leave.contact}"></p>
  
 
 <input th:if="${leave.status == LeaveStatus.APPLIED}" type="button" onclick="location.href='/staff/history/details/update'"
 		value="Update">
+</div>
 </body>
 </html>

@@ -1,16 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+  
   <head>
     <title th:utext="#{main.homepage.page.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
     <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/style.css" th:href="@{/css/style.css}" />
+          href="../../css/main.css" th:href="@{/css/main.css}" />
+    <link rel="stylesheet" type="text/css" media="all"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<script href="../../javascript/navbar.js"></script>
   </head>
+
 <body>
- <header th:insert="admin_homepage.html :: header"> </header>
- <h2 th:utext="#{main.homepage.page.title}"></h2>
- <input type="button"  onclick="location.href='/admin/login'" value="Admin Login" >
- <input type="button"  onclick="location.href='/staff/login'" value="Staff Login" >
+
+ <header th:fragment="header">
+ 		<div class="topnav" id="myTopnav">
+ 			<img src="../../images/logo.png">
+ 			
+ 			<a href="/LAPS">Home</a> 			
+ 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+ 			<i class="fa fa-bars"></i>
+ 			</a>
+ 		</div>
+ 		
+ 		<div class="footer">
+ 			<p>Company Name &copy; All rights reserved.</p>
+ 		</div>
+ </header>
+ 
+ <div class="content">
+  <h2 th:utext="#{main.homepage.page.title}"></h2>
+  <div class="menu">
+    <ul>
+      <li>
+        <button type="button"  onclick="location.href='/admin/login'" value="Admin Login">Administrator Login</button>
+      </li>
+
+      <li>
+        <button type="button"  onclick="location.href='/staff/login'" value="Staff Login">Staff Login</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
 </body>
 </html>
 

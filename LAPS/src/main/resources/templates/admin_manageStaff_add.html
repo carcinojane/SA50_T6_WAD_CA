@@ -4,11 +4,14 @@
     <title th:utext="#{admin.manageStaff.add.page.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/style.css" th:href="@{/css/style.css}" />
+          href="../../css/main.css" th:href="@{/css/main.css}" />
   </head>
 <body>
- <header th:insert="admin_homepage.html :: header"> </header>
- <h2 th:utext="#{admin.manageStaff.add.page.title}"></h2>
+ <header th:insert="admin_login.html :: header"> </header>
 
+ 	<div class="content">
+	 	<h2 th:utext="#{admin.manageStaff.add.page.title}"></h2>
+	</div>
+	 
 </body>
 </html>

@@ -1,6 +1,5 @@
 package SA50.T6.WadCA.LAPS.model;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 
 @Entity
@@ -206,12 +204,4 @@ public class LeaveRecord{
 		this.leaveType = leaveType;
 	}
 	
-	
-
-
-	
-	
-
-	
-
 }

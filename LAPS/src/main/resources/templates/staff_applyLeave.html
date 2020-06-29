@@ -4,10 +4,10 @@
     <title th:utext="#{staff.applyLeave.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/style.css" th:href="@{/css/style.css}" />
+          href="../../css/main.css" th:href="@{/css/main.css}" />
   </head>
 <body>
- <header th:insert="staff_homepage.html :: header"> </header>
+ <header th:insert="staff_login.html :: header"> </header>
  <div class="content">
  <h2 th:utext="#{staff.applyLeave.title}"></h2>
   <h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
