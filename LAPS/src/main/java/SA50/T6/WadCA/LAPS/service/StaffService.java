@@ -14,4 +14,6 @@ public interface StaffService {
 //	public ArrayList<Float> findLeaveBalanceById(int staffId);
 	
 	public Staff findStaffById(int staffId);
+	public ArrayList<Staff> findAllStaff();
+	public boolean saveStaff(Staff staff);
 }
