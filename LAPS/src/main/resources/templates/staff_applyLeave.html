@@ -10,6 +10,26 @@
  <header th:insert="staff_homepage.html :: header"> </header>
  <div class="content">
  <h2 th:utext="#{staff.applyLeave.title}"></h2>
+  <h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
+  <form th:action="@{/staff/search}" method="post">
+  	<fieldset>
+  		Category
+  		<select th:field=${staff.designation.designation}>
+  			<option th:each="leave:${leaveTypeList}" th:value="${leave}" th:text="${leave}">
+  		</select>
+  	</fieldset>
+  	<fieldset>
+  		Status
+  		<select th:field=${staff.leaveStatus.leaveStatus}>
+  			<option th:each="status:${leaveStatus}" th:value="${status}" th:text="${status}">
+  		</select>
+  	</fieldset>
+  	<fieldset>
+  		<button type="submit">Search</button>
+  	</fieldset>
+  </form>
+
+ 
  <h3 th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
  <table class="w3-container" th:if="${not #lists.isEmpty(lrecords)}">
  	<tr th:each="leave:${lrecords}">
