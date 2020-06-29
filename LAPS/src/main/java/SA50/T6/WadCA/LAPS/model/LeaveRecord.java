@@ -21,7 +21,8 @@ public class LeaveRecord{
 		APPLIED,
 		APPROVED,
 		REJECTED,
-		CANCEL
+		CANCELLED,
+		UPDATED
 	}
 	
 	private String reason;
@@ -38,7 +39,7 @@ public class LeaveRecord{
 		@JoinColumn(name="designation", insertable=false, updatable=false)
 	})
 	private LeaveType leaveType;
-	private String workDessemination;
+	private String workDissemination;
 	private int contact;
 	private String reasonForRejection;
 	
@@ -59,7 +60,7 @@ public class LeaveRecord{
 		this.leaveStartDate = leaveStartDate;
 		this.leaveEndDate = leaveEndDate;
 		this.staffId = staffId;
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 		this.contact = contact;
 	}
 	
@@ -72,7 +73,7 @@ public class LeaveRecord{
 		this.leaveStartDate = leaveStartDate;
 		this.leaveEndDate = leaveEndDate;
 		this.staffId = staffId;
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 		this.contact = contact;
 		this.reasonForRejection = reasonForRejection;
 	}
@@ -151,7 +152,7 @@ public class LeaveRecord{
 
 
 	public String getWorkDessemination() {
-		return workDessemination;
+		return workDissemination;
 	}
 
 
@@ -164,7 +165,7 @@ public class LeaveRecord{
 	}
 
 	public void setWorkDessemination(String workDessemination) {
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 	}
 
 
@@ -187,4 +188,20 @@ public class LeaveRecord{
 		this.reasonForRejection = reasonForRejection;
 	}
 
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	public LeaveType getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(LeaveType leaveType) {
+		this.leaveType = leaveType;
+	}
+	
 }
