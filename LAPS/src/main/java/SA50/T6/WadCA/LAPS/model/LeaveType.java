@@ -7,7 +7,6 @@ import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 
 @Entity
 @IdClass(LeaveTypeId.class)
-//public class LeaveType implements Serializable{
 public class LeaveType{
 	//composite key
 	@Id
@@ -18,6 +17,7 @@ public class LeaveType{
 	private String leaveType;
 	private float entitlement;
 	private float minClaim;
+	
 	public LeaveType() {
 		super();
 		// TODO Auto-generated constructor stub

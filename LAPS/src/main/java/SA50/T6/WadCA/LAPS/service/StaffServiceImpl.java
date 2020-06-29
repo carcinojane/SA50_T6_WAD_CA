@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
 
+
 @Service
 public class StaffServiceImpl implements StaffService {
 
@@ -18,6 +19,16 @@ public class StaffServiceImpl implements StaffService {
 	@Override
 	public Staff findStaffById(int staffId) {
 		return srepo.findById(staffId).get();
+	}
+
+	@Override
+	public ArrayList<Staff> findAllStaff() {
+		return (ArrayList<Staff>) srepo.findAll();
+	}
+
+	@Override
+	public boolean saveStaff(Staff staff) {
+		if(srepo.save(staff)!=null) return true; else return false;
 	}
 
 //	@Override
