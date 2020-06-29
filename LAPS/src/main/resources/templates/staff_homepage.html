@@ -8,13 +8,24 @@
 </head>
 <body>
 	<header th:insert="staff_login.html :: header"> </header>
-	<h2 th:utext="#{staff.homepage.page.title}"></h2>
-	<input type="button" onclick="location.href='/staff/apply'"
-		value="Apply Leave">
-	<input type="button" onclick="location.href='/staff/balance'"
-		value="View Leave Balance">
-	<input type="button" onclick="location.href='/staff/history'"
-		value="View Personal Leave History">
+	
+	<div class="content">
+	 	<h2 th:utext="#{staff.homepage.page.title}"></h2>
+	 	  <div class="menu">
+	 	  	<ul>
+	 	  		<li>
+	 	  			<button type="button"  onclick="location.href='/staff/apply'" value="Apply Leave">Apply Leave</button>
+	 	  		</li>
+	 	  		<li>
+	 	  			<button type="button"  onclick="location.href='/staff/balance'" value="View Leave Balance">View Leave Balance</button>
+	 	  		</li>
+	 	  		<li>
+	 	  			<button type="button"  onclick="location.href='/staff/history'" value="View Personal Leave History">View Personal Leave History</button>
+	 	  		</li>
+	 	  	</ul>
+	 	  </div>
+	 </div>
+	 
 </body>
 </html>
 
