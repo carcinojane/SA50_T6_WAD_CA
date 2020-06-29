@@ -1,16 +1,64 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:utext="#{admin.manageStaff.details}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
-  </head>
+<head>
+<title th:utext="#{admin.manageStaff.details}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
 <body>
- <header th:insert="admin_login.html :: header"> </header>
+	<header th:insert="admin_login.html :: header"> </header>
 
- 	<div class="content">
-	 	<h2 th:utext="#{admin.manageStaff.details}"></h2>
+	<div class="content">
+		<h2 th:utext="#{admin.manageStaff.details.page.title}"></h2>
+		<table th:object="${staff}">
+			<tr>
+				<td>Staff Id</td>
+				<td th:text=${staff.staffId}>Staff Id</td>
+			</tr>
+			<tr>
+				<td>User Name</td>
+				<td th:text=${staff.username}>User Name</td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td th:text=${staff.password}>Password</td>
+			</tr>
+			<tr>
+				<td>Start Date</td>
+				<td th:text=${staff.startDate}>Start Date</td>
+			</tr>
+			<tr>
+				<td>Designation</td>
+				<td th:text=${staff.designation}>Designation</td>
+			</tr>
+			<tr th:if="${staff ne null and staff.manager ne null}">
+				<td>Managed By</td>
+				<td th:text=*{manager.username}>Manager</td>
+			</tr>
+			<tr th:if="${not #lists.isEmpty(staff.subordinates)}">
+				<td>Subordinates</td>
+				<td><p th:each="subordinate: *{subordinates}" th:text="${subordinate.username}">Subordinates</td>
+			</tr>
+			<tr>
+				<td>Total Annual Leave</td>
+				<td th:text=${staff.totalAnnualLeave}>Total Annual Leave</td>
+			</tr>
+			<tr>
+				<td>Total Medical Leave</td>
+				<td th:text=${staff.totalMedicalLeave}>Total Medical Leave</td>
+			</tr>
+			<tr>
+				<td>Total Compensation Leave</td>
+				<td th:text=${staff.totalCompensationLeave}>Total Compensation
+					Leave</td>
+			</tr>
+		</table>
+		<a href="EditStaff.html"
+			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}">Edit</a>
+
+
+
 	</div>
 
 </body>

@@ -1,17 +1,31 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 //import java.text.SimpleDateFormat;
 //import java.util.Calendar;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import SA50.T6.WadCA.LAPS.model.Staff;
+import SA50.T6.WadCA.LAPS.service.StaffService;
 
 @Controller
 @RequestMapping("/admin")
 
 public class AdminController {
+	
+	@Autowired
+	private StaffService sservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -24,10 +38,10 @@ public class AdminController {
 		
         return "admin_homepage"; 
     }
-	
-	@GetMapping("/manageStaff")
-	public String manageStaff() {
-		//returns staff list
+		
+	@RequestMapping(value = "/manageStaff")
+	public String manageStaff(Model model) {
+		model.addAttribute("staffs", sservice.findAllStaff());
         return "admin_manageStaff"; 
     }
 	
@@ -37,23 +51,33 @@ public class AdminController {
         return "admin_manageLeaveType"; 
     }
 	
-	@GetMapping("/manageStaff/details")
-	public String viewStaffDetaills() {
-		
+	@GetMapping("/manageStaff/details/{id}")
+	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("staff", sservice.findStaffById(id));
         return "admin_manageStaff_details"; 
     }
 	
 	@GetMapping("/manageStaff/add")
-	public String addStaff() {
-		
+	public String addStaff(Model model) {
+		model.addAttribute("staff", new Staff());
         return "admin_manageStaff_add"; 
     }
 	
-	@GetMapping("/manageStaff/edit")
-	public String editStaffDetails() {
-		
+	@GetMapping("/manageStaff/edit/{id}")
+	public String editStaffDetails(@PathVariable("id") Integer id, Model model) {
+		model.addAttribute("staff", sservice.findStaffById(id));
         return "admin_manageStaff_edit"; 
     }
 	
+	@RequestMapping(value = "manageStaff/save")
+	public String saveFacility(@ModelAttribute("staff") @Valid Staff staff, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "admin_manageStaff_edit";
+		}
+		
+		sservice.saveStaff(staff);
+		return "forward:/admin/manageStaff";
+	}
 
 }
