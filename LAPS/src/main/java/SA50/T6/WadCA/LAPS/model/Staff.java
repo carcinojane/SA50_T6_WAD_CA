@@ -28,7 +28,7 @@ public class Staff {
 	
 	//self-referencing: staffId
 		@ManyToOne
-		@JoinColumn(name="manager_id")
+		@JoinColumn(name="managerId")
 		private Staff manager;
 		
 		@OneToMany(mappedBy="manager",cascade={CascadeType.ALL})
@@ -44,11 +44,6 @@ public class Staff {
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
 	private LocalDate startDate;
-	
-	//Map leave
-	@OneToMany(mappedBy="staffId")
-	private Set<LeaveRecord> leaveRecords = new HashSet<LeaveRecord>();
-	
 	
 	public Staff() {
 		super();
