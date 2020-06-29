@@ -37,6 +37,7 @@ public class Staff {
 	
 	private Designation designation;
 	public enum Designation{
+		admin,
 		employee,
 		manager,
 	}
