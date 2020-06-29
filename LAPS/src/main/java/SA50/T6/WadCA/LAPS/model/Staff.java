@@ -26,7 +26,7 @@ public class Staff {
 	private String username;
 	private String password;
 	
-	//self-referencing: staffId
+	//self-referencing staff to manger: staffId
 		@ManyToOne
 		@JoinColumn(name="managerId")
 		private Staff manager;
