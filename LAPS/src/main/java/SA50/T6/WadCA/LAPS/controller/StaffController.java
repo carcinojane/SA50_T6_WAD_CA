@@ -100,7 +100,7 @@ public class StaffController {
 		} else {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
-		leaveRecord.setManagerId((sservice.findStaffById((int)session.getAttribute("staffId")).getManagerId()));
+		leaveRecord.setManagerId((sservice.findStaffById((int)session.getAttribute("staffId")).getManager().getStaffId()));
 		leaveRecord.setStaffId((int)session.getAttribute("staffId"));
 		//set managerID, get based on staffId
 		//set staffID, get based on staffId
