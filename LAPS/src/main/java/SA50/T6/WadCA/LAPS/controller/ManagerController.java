@@ -40,4 +40,5 @@ public class ManagerController{
 		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
+	
 }
