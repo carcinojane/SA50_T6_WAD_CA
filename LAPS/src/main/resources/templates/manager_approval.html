@@ -3,8 +3,8 @@
 <head>
 <title th:utext="#{manager.approval.page.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" media="all"
-	href="../../css/style.css" th:href="@{/css/style.css}" />
+<link rel="stylesheet" type="text/css" media="all" 
+          href="../../css/main.css" th:href="@{/css/main.css}" />
 </head>
 <body>
 	<header th:insert="staff_login.html :: header"> </header>
@@ -21,17 +21,17 @@
 			<th style="width:17.5%">Action</th>
 		</tr>
 		
-		<tr th:if="${#lists.isEmpty(leaves)}">
+		<tr th:if="${#lists.isEmpty(lrecords)}">
 		<td colspan="5">No pending leave for approval.</td>
 		</tr>
 		
-		<tr th:if="${not #lists.isEmpty(leaves)}" th:each="leave:${leaves}">
-			<td th:text=${leave.staffId}>Staff Id</td>
-			<td th:text=${leave.leaveStartDate}>From</td>
-			<td th:text=${leave.leaveEndDate}>To</td>
-			<td th:text=${leave.leaveStatus}>Status</td>
+		<tr th:if="${not #lists.isEmpty(lrecords)}" th:each="lrecord:${lrecords}">
+			<td th:text=${lrecord.staffId}>Staff Id</td>
+			<td th:text=${lrecord.leaveStartDate}>From</td>
+			<td th:text=${lrecord.leaveEndDate}>To</td>
+			<td th:text=${lrecord.leaveStatus}>Status</td>
 			<td><a href="manager_approvalDetails.html"
-				th:href="@{/manager/details/}+${leave.leaveId}" th:utext="#{manager.approval.details.page.title}"></a></td>
+				th:href="@{/manager/details/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a></td>
 		</tr>
 		</table>
 		
