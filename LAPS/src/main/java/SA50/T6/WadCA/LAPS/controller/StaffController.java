@@ -89,6 +89,7 @@ public class StaffController {
 		}
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
+		session.setAttribute("staff", staff);
 		return "staff_homepage";
 		//return "forward:/manager/home";
 	  }
@@ -106,8 +107,9 @@ public class StaffController {
 //	}
 	
 	@GetMapping("/apply")
-	public String apply(Model model) {
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(1)) ;
+	public String apply(Model model, HttpSession session) {
+		Staff staff = (Staff)session.getAttribute("staff");
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
 		return ("staff_applyLeave");
 	}
 	
