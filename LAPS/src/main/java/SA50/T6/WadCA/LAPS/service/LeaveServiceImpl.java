@@ -1,5 +1,6 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,5 +79,27 @@ public class LeaveServiceImpl implements LeaveService {
 	public void deleteLeaveRecord(LeaveRecord leaveRecord) {
 		lrepo.delete(leaveRecord);
 		
+	}
+
+	@Override
+	public float numOfLeaveApplied(LeaveRecord leave) {
+		LocalDate from = leave.getLeaveStartDate();
+		LocalDate to = leave.getLeaveEndDate();
+		float numOfDay = 0;
+		LocalDate curr = from;
+		
+		do {
+			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
+				numOfDay += 0.5;
+			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == 'A')
+				numOfDay += 0.5;
+			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
+				numOfDay ++;
+			
+			curr = curr.plusDays(1);
+		}while(curr.compareTo(to)!=0);
+		
+		
+		return numOfDay;
 	}
 }

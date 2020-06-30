@@ -32,9 +32,11 @@ public class LeaveRecord{
 	@DateTimeFormat(pattern = "dd-MMM-yyyy")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveStartDate;
+	private char leaveStartTime;
 	@DateTimeFormat(pattern = "dd-MMM-yyyy")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveEndDate;
+	private char leaveEndTime;
 	private int staffId;
 	@ManyToOne
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
@@ -50,27 +52,49 @@ public class LeaveRecord{
 	private int contact;
 	private String reasonForRejection;
 	
-	
-	
-	
+
 	public LeaveRecord() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate,
-			LocalDate leaveEndDate, int staffId, String workDessemination, int contact) {
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate, char leaveStartTime,
+			LocalDate leaveEndDate, char leaveEndTime, int staffId, String workDessemination, int contact) {
 		super();
 		this.managerId = managerId;
 		this.leaveStatus = leaveStatus;
 		this.reason = reason;
 		this.leaveStartDate = leaveStartDate;
+		this.leaveStartTime = leaveStartTime;
 		this.leaveEndDate = leaveEndDate;
+		this.leaveEndTime =leaveEndTime;
 		this.staffId = staffId;
 		this.workDissemination = workDessemination;
 		this.contact = contact;
 	}
 	
+	
+	
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
+			@NotNull(message = "Reason is mandatory field") String reason,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			Staff staff, LeaveType leaveType, String workDissemination, int contact) {
+		super();
+		this.managerId = managerId;
+		this.leaveStatus = leaveStatus;
+		this.reason = reason;
+		this.leaveStartDate = leaveStartDate;
+		this.leaveStartTime = leaveStartTime;
+		this.leaveEndDate = leaveEndDate;
+		this.leaveEndTime = leaveEndTime;
+		this.staffId = staffId;
+		this.staff = staff;
+		this.leaveType = leaveType;
+		this.workDissemination = workDissemination;
+		this.contact = contact;
+	}
+
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate,
 			LocalDate leaveEndDate, int staffId, String workDessemination, int contact, String reasonForRejection) {
 		super();
@@ -209,6 +233,22 @@ public class LeaveRecord{
 
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
+	}
+
+	public char getLeaveStartTime() {
+		return leaveStartTime;
+	}
+
+	public void setLeaveStartTime(char leaveStartTime) {
+		this.leaveStartTime = leaveStartTime;
+	}
+
+	public char getLeaveEndTime() {
+		return leaveEndTime;
+	}
+
+	public void setLeaveEndTime(char leaveEndTime) {
+		this.leaveEndTime = leaveEndTime;
 	}
 	
 }

@@ -22,14 +22,30 @@
  		</select>
  	</fieldset>
  	<fieldset>
- 		From
+ 		From Date
  		<input type="date" th:field="*{leaveStartDate}">
  		<p th:if="${#fields.hasErrors('leaveStartDate')}" th:errors="*{leaveStartDate}"></p>
+ 	</fieldset>
+ 	<fieldset th:if="${staff.leaveType.leaveType == Compensation Leave}">
+ 		From Time
+ 		<select th:field=*{leaveStartTime}>
+ 			<option th:value="'P'" >PM</option>
+ 			<option th:value="'A'" >AM</option>
+ 			<option th:value="'N'" >N/A</option>
+ 		</select>
  	</fieldset>
  	<fieldset>
  		To
  		<input type="date" th:field="*{leaveEndDate}">
  		<p th:if="${#fields.hasErrors('leaveEndDate')}" th:errors="*{leaveEndDate}"></p>
+ 	</fieldset>
+ 	 <fieldset th:if="*{leaveType.leaveType == 'Compensation Leave'}">
+ 		To Time
+ 		<select th:field=*{leaveStartTime}>
+ 			<option th:value="'P'" >PM</option>
+ 			<option th:value="'A'" >AM</option>
+ 			<option th:value="'N'" >N/A</option>
+ 		</select>
  	</fieldset>
  	<fieldset>
  		Reason
@@ -48,7 +64,7 @@
  		<button type="submit">Save</button>
  	</fieldset>
  </form>
- 	<a th:href="@{/staff/apply}">Back</a>
+ 	<p><a href="staff_applyLeave.html" th:href="@{/staff/apply}">Back</a></p>
  </div>
 </body>
 </html>

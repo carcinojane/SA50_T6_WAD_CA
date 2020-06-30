@@ -7,8 +7,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import SA50.T6.WadCA.LAPS.model.Admin;
+import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Staff;
+import SA50.T6.WadCA.LAPS.model.Staff.Designation;
+import SA50.T6.WadCA.LAPS.repo.LeaveTypeRepository;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
+import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
+import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.model.Admin;
 import SA50.T6.WadCA.LAPS.service.AdminService;
 
 
@@ -17,6 +23,14 @@ public class LapsApplication {
 	
 	@Autowired
 	StaffRepository staffRepo;
+	
+	@Autowired
+	protected LeaveTypeService ltservice;
+	
+	@Autowired
+	public void setLeaveTypeService(LeaveTypeImpl ltserviceImpl) {
+		this.ltservice = ltserviceImpl;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(LapsApplication.class, args);
@@ -41,8 +55,24 @@ public class LapsApplication {
 //			
 //			staffRepo.save(staff1);
 //			staffRepo.save(staff2);
+		
+			
+//			LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
+//			LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
+//			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
+//			LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
+//			LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
+//			LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
+//			
+//			ltservice.save(annual_emp);
+//			ltservice.save(medical_emp);
+//			ltservice.save(compensation_emp);
+//			ltservice.save(annual_mng);
+//			ltservice.save(medical_mng);
+//			ltservice.save(compensation_mng);
+			
 
-//		};
-//	}
+		};
+	}
 
 }
