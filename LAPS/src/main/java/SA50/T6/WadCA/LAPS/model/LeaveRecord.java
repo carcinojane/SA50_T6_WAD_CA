@@ -75,6 +75,27 @@ public class LeaveRecord{
 	
 	
 	
+	
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
+			@NotNull(message = "Reason is mandatory field") String reason,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			LeaveType leaveType, String workDissemination, int contact, String reasonForRejection) {
+		super();
+		this.managerId = managerId;
+		this.leaveStatus = leaveStatus;
+		this.reason = reason;
+		this.leaveStartDate = leaveStartDate;
+		this.leaveStartTime = leaveStartTime;
+		this.leaveEndDate = leaveEndDate;
+		this.leaveEndTime = leaveEndTime;
+		this.staffId = staffId;
+		this.leaveType = leaveType;
+		this.workDissemination = workDissemination;
+		this.contact = contact;
+		this.reasonForRejection = reasonForRejection;
+	}
+
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
 			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
@@ -251,4 +272,8 @@ public class LeaveRecord{
 		this.leaveEndTime = leaveEndTime;
 	}
 	
+	@Override
+	public String toString() {
+		return "LeaveRecord [leaveStatus=" + leaveStatus + "]";
+	}
 }
