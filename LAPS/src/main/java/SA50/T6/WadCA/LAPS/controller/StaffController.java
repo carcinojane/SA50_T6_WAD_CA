@@ -41,34 +41,34 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("display")
 @RequestMapping("/staff")
 public class StaffController {
-	
+
 	@Autowired
 	protected LeaveService lservice;
-	
+
 	@Autowired
 	public void setLeaveService(LeaveServiceImpl lserviceImpl) {
 		this.lservice = lserviceImpl;
 	}
-	
+
 	@Autowired
 	protected LeaveTypeService ltservice;
-	
+
 	@Autowired
 	public void setLeaveTypeService(LeaveTypeImpl ltserviceImpl) {
 		this.ltservice = ltserviceImpl;
 	}
-	
+
 	@Autowired
 	protected StaffService sservice;
-	
+
 	@Autowired
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
 	}
-  
-  	@InitBinder
+
+	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
-		
+
 	}
 
 	@GetMapping("/login")
@@ -76,7 +76,7 @@ public class StaffController {
 		session.setAttribute("staffId", staff.getStaffId());
 		return "staff_login";
 	}
-	
+
 	@PostMapping("/home")
 	public String home(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult,
 			Model model, HttpSession session) {
@@ -90,38 +90,47 @@ public class StaffController {
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
 		session.setAttribute("staff", staff);
+		//Staff staff1 = (Staff)session.getAttribute("staff");
+
+		if (registeredStaff.getDesignation()==Designation.manager){
+			return "redirect:/manager/home";
+		}
+
 		return "staff_homepage";
-		//return "forward:/manager/home";
-	  }
-  
-    @GetMapping("/logout")
-	  public String logout(@ModelAttribute("staff") Staff staff, Model model, SessionStatus status) {
+	}
+
+	@GetMapping("/logout")
+	public String logout(@ModelAttribute("staff") Staff staff, Model model, SessionStatus status) {
 		status.setComplete();
 		return "forward:/staff/login";
-	  }	
-	
-//	@GetMapping("/list")
-//	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
-//		lservice.findLeaveRecordByStaffId(staffId);
-//		return ("staff_applyLeave");
-//	}
-	
+	}	
+
+	//	@GetMapping("/list")
+	//	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
+	//		lservice.findLeaveRecordByStaffId(staffId);
+	//		return ("staff_applyLeave");
+	//	}
+
 	@GetMapping("/apply")
 	public String apply(Model model, HttpSession session) {
 		Staff staff = (Staff)session.getAttribute("staff");
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId()));
+		model.addAttribute("staff",staff);
+		model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
+		model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
 		return ("staff_applyLeave");
 	}
-	
+
 	@GetMapping("/search")
 	public String search(Model model, HttpSession session) {
-		Designation designation = sservice.findStaffById((int)session.getAttribute("staffId")).getDesignation();
+		Staff staff = (Staff)session.getAttribute("staff");
+		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 		List<LeaveStatus> leaveStatus = lservice.findAllLeaveStatus();
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
 		model.addAttribute("leaveStatus", leaveStatus);
 		return ("staff_applyLeave");
 	}
-	
+
 	@GetMapping("/apply/add")
 	public String applyLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, Model model, HttpSession session) {
 		leaveRecord = new LeaveRecord();
@@ -130,7 +139,7 @@ public class StaffController {
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
 		return "staff_applyLeave_add";
 	}
-	
+
 	@GetMapping("/apply/save")
 	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
@@ -148,14 +157,14 @@ public class StaffController {
 		}
 		leaveRecord.setManagerId((sservice.findStaffById((int)session.getAttribute("staffId")).getManager().getStaffId()));
 		leaveRecord.setStaffId((int)session.getAttribute("staffId"));
-//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
-//			return "staff_applyLeave_add";
-//		} else 
-	
+		//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+		//			return "staff_applyLeave_add";
+		//		} else 
+
 		lservice.saveLeaveRecord(leaveRecord);
 		return "forward:/staff/apply";
 	}
-	
+
 	@GetMapping("/apply/delete")
 	public String delete(@ModelAttribute("LeaveRecord")LeaveRecord leaveRecord, HttpSession session) {
 		lservice.deleteLeaveRecord(leaveRecord);
@@ -167,13 +176,13 @@ public class StaffController {
 		model.addAttribute("staff", sservice.findStaffById((int)session.getAttribute("staffId")));
 		return "staff_leaveBlance";
 	}
-	
+
 	@GetMapping("/history")
 	public String history(Model model, HttpSession session) {
 		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId((int)session.getAttribute("staffId"))) ;
 		return "staff_LeaveHistory";
 	}
-	
+
 	@GetMapping("/history/details/{id}")
 	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		//check LeaveStatus
@@ -185,7 +194,7 @@ public class StaffController {
 			return "staff_leaveHistory_details";
 		}
 	}
-	
+
 	/*
 	 * @GetMapping("/history/details") public String leaveDetails(int id, Model
 	 * model) { //check LeaveStatus model.addAttribute("leave",
@@ -193,12 +202,12 @@ public class StaffController {
 	 * 
 	 * }
 	 */
-	
+
 	@GetMapping("/history/details/edit")
 	public String editLeaveDetails(Model model, int id) {
 		model.addAttribute("leave",lservice.findById(id));
 		return "staff_leaveHistory_details_edit";
 	}
-	
+
 }
 

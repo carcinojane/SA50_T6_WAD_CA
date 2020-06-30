@@ -12,5 +12,6 @@ public interface StaffService {
 
 	public ArrayList<Staff> findAllStaff();
 	public boolean saveStaff(Staff staff);
+	
 
 }
