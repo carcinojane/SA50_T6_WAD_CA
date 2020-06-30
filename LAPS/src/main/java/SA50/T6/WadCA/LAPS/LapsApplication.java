@@ -7,15 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Admin;
 import SA50.T6.WadCA.LAPS.model.Staff;
-import SA50.T6.WadCA.LAPS.model.Staff.Designation;
-import SA50.T6.WadCA.LAPS.repo.LeaveTypeRepository;
+import SA50.T6.WadCA.LAPS.repo.AdminRepository;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
-import SA50.T6.WadCA.LAPS.model.Admin;
-import SA50.T6.WadCA.LAPS.service.AdminService;
 
 
 @SpringBootApplication
@@ -23,7 +20,8 @@ public class LapsApplication {
 	
 	@Autowired
 	StaffRepository staffRepo;
-	
+	@Autowired
+	AdminRepository adminRepo;
 	@Autowired
 	protected LeaveTypeService ltservice;
 	
@@ -39,24 +37,27 @@ public class LapsApplication {
 	//test mapping
 
 
-//	@Bean
-//	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-//		return args -> {
-//			//test 1 with username and password
+	@Bean
+	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+		return args -> {
+			//test 1 with username and password
 
-//			Staff manager1 = new Staff("manager1","password");
-//			staffRepo.save(manager1);
-//			
-//			Staff staff1 = new Staff("staff1","password");
-//			Staff staff2 = new Staff("staff2","password");
-//			
-//			staff1.setManager(manager1);
-//			staff2.setManager(manager1);
-//			
-//			staffRepo.save(staff1);
-//			staffRepo.save(staff2);
-		
+			Staff manager1 = new Staff("manager1","password");
+			staffRepo.save(manager1);
 			
+			Staff staff1 = new Staff("staff1","password");
+			Staff staff2 = new Staff("staff2","password");
+			
+			staff1.setManager(manager1);
+			staff2.setManager(manager1);
+			
+			staffRepo.save(staff1);
+			staffRepo.save(staff2);
+			
+			Admin admin1=new Admin("admin1", "password");
+			adminRepo.save(admin1);
+		
+};			
 //			LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
 //			LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
 //			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
@@ -72,7 +73,6 @@ public class LapsApplication {
 //			ltservice.save(compensation_mng);
 			
 
-		};
+//		};
 	}
-
 }

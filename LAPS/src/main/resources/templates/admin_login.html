@@ -13,62 +13,6 @@
 <script href="../../javascript/login.js"></script>
 </head>
 <body>
-  
-  <header th:fragment="header">
- 		<div class="topnav" id="myTopnav">
- 			<img src="../../images/logo.png">
- 			
- 			<a href="/LAPS">Home</a>
- 			<button class="logout" type="button" onclick="location.href='/admin/login'" value="Logout">Logout</button>
- 			
- 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
- 			<i class="fa fa-bars"></i>
- 			</a>
- 		</div>
- 		
- 		<div class="footer">
- 			<p>Company Name &copy; All rights reserved.</p>
- 		</div>
- 		
- 		<script>
- 			function myFunction() {
- 			  var x = document.getElementById("myTopnav");
- 			  if (x.className === "topnav") {
- 			    x.className += " responsive";
- 			  } else {
- 			    x.className = "topnav";
- 			  }
- 			}
- 			
- 			/// Get the modal
- 			var modal = document.getElementById('admin' || 'staff');
-
- 			// When the user clicks anywhere outside of the modal, close it
- 			window.onclick = function(event) {
- 			    if (event.target == modal) {
- 			        modal.style.display = "none";
- 			    }
- 			}
- 		</script>
- 		
- </header>
- 
-<div class="content">
-  <h2 th:utext="#{admin.login.page.title}"></h2>
-  <div class="menu">
-    <ul>
-      <li>
-      	<button onclick="document.getElementById('admin').style.display='block'" href="#approval">Login</button>
-      </li>
-    </ul>
-  </div>
-  
-  <div id="admin" class="modal">
-          <form class="modal-content animate" action="/action_page.php" method="post">
-            <div class="container">
-              <h2>Admin Login</h2>
-              <label for="uname"><b>Username</b></label>
-              <input type="text" placeholder="Enter Username" name="uname" required>
 
 	<header th:fragment="header">
 		<div class="topnav" id="myTopnav">
@@ -84,6 +28,28 @@
 		<div class="footer">
 			<p>Company Name &copy; All rights reserved.</p>
 		</div>
+
+		<script>
+			function myFunction() {
+				var x = document.getElementById("myTopnav");
+				if (x.className === "topnav") {
+					x.className += " responsive";
+				} else {
+					x.className = "topnav";
+				}
+			}
+
+			/// Get the modal
+			var modal = document.getElementById('admin' || 'staff');
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+				if (event.target == modal) {
+					modal.style.display = "none";
+				}
+			}
+		</script>
+
 	</header>
 
 	<div class="content">
@@ -125,6 +91,5 @@
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

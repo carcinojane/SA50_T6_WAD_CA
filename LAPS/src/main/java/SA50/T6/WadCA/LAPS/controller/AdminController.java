@@ -76,11 +76,6 @@ public class AdminController {
 		return "forward:/admin/login";
 	}	
 	
-	@GetMapping("/manageStaff")
-	public String manageStaff() {
-		//returns staff list
-
-		
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
 		model.addAttribute("staffs", sservice.findAllStaff());
