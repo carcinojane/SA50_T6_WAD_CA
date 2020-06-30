@@ -9,6 +9,12 @@ public class LeaveTypeId implements Serializable{
 	private int id;
 	private Designation designation;
 	
+	
+	public LeaveTypeId() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public LeaveTypeId(int id, Designation designation) {
 		this.id = id;
 		this.designation = designation;

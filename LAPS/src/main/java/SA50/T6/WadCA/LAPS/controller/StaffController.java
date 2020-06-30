@@ -62,7 +62,8 @@ public class StaffController {
 	}
 	
 	@GetMapping("/home")
-	public String home() {
+	public String home(Model model) {
+		model.addAttribute("staffId", "1");
 		return "staff_homepage";
 		//return "forward:/manager/home";
 	}
@@ -74,8 +75,8 @@ public class StaffController {
 //	}
 	
 	@GetMapping("/apply")
-	public String apply(Model model, int staffId) {
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staffId)) ;
+	public String apply(Model model) {
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(1)) ;
 		return ("staff_applyLeave");
 	}
 	
@@ -101,6 +102,9 @@ public class StaffController {
 	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "staff_applyLeave_add";
+		}
+		if(leaveRecord.getLeaveType().equals("Annual Leave") || leaveRecord.getLeaveType().equals("Medical Leave")) {
+			leaveRecord.setLeaveStartTime('N');
 		}
 		if(leaveRecord.getLeaveStatus() == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
@@ -137,25 +141,25 @@ public class StaffController {
 		return "staff_LeaveHistory";
 	}
 	
-//	@GetMapping("/history/details/{id}")
-//	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
-//		//check LeaveStatus
-//		model.addAttribute("leave", lservice.findById(id));
-//		LeaveRecord record = lservice.findById(id);
-//		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
-//			return "staff_leaveHistory_datails_edit";
-//		} else {
-//			return "staff_leaveHistory_details";
-//		}
-//	}
-	
-	@GetMapping("/history/details")
-	public String leaveDetails(int id, Model model) {
+	@GetMapping("/history/details/{id}")
+	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		//check LeaveStatus
 		model.addAttribute("leave", lservice.findById(id));
-		return "staff_leaveHistory_details";
-		
+		LeaveRecord record = lservice.findById(id);
+		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
+			return "staff_leaveHistory_datails_edit";
+		} else {
+			return "staff_leaveHistory_details";
+		}
 	}
+	
+	/*
+	 * @GetMapping("/history/details") public String leaveDetails(int id, Model
+	 * model) { //check LeaveStatus model.addAttribute("leave",
+	 * lservice.findById(id)); return "staff_leaveHistory_details";
+	 * 
+	 * }
+	 */
 	
 	@GetMapping("/history/details/edit")
 	public String editLeaveDetails(Model model, int id) {

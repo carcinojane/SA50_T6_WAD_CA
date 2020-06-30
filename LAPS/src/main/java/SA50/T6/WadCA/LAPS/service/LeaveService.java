@@ -29,6 +29,7 @@ public interface LeaveService {
 	public List<LeaveStatus> findAllLeaveStatus();
 //	public List<LeaveRecord> findByFromAndToDate(LocalDate leaveStartDate, LocalDate leaveEndDate);
 	public void deleteLeaveRecord(LeaveRecord leaveRecord);
+	public float numOfLeaveApplied(LeaveRecord leaveRecord);
 
 	
 }
