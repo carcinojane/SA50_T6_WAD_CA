@@ -79,7 +79,6 @@ public class AdminController {
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
 		model.addAttribute("staffs", sservice.findAllStaff());
-
         return "admin_manageStaff"; 
     }
 	
