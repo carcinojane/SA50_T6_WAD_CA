@@ -1,6 +1,8 @@
 package SA50.T6.WadCA.LAPS.controller;
 
-import java.time.LocalDate;
+
+import javax.servlet.http.HttpSession;
+
 
 import javax.validation.Valid;
 
@@ -15,32 +17,65 @@ import org.springframework.validation.BindingResult;
 //import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+
+import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+
+import SA50.T6.WadCA.LAPS.model.Admin;
+import SA50.T6.WadCA.LAPS.model.Staff;
+import SA50.T6.WadCA.LAPS.service.AdminService;
+import SA50.T6.WadCA.LAPS.service.AdminServiceImpl;
 
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 
 @Controller
+@SessionAttributes("display")
 @RequestMapping("/admin")
 
 public class AdminController {
 	
 	@Autowired
+	protected AdminService aservice;
 	private StaffService sservice;
 	
+  @Autowired
+	public void setAdminService(AdminServiceImpl aserviceImpl) {
+		this.aservice=aserviceImpl;
+	}
+  	
 	@GetMapping("/login")
-	public String login() {
-		
+	public String login(@ModelAttribute("admin") Admin admin) {
+		admin = new Admin();
         return "admin_login"; 
     }
 	
-	@GetMapping("/home")
-	public String home() {
-		
+	@PostMapping("/home")
+	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult,
+			Model model, HttpSession session) {
+		if(bindingResult.hasErrors()||admin==null) {
+			return "admin_login";
+		} 
+		Admin registeredAdmin = aservice.findAdminByName(admin.getUsername());
+		if(!registeredAdmin.getPassword().equals(admin.getPassword())) {
+			return "admin_login";
+		}
+		model.addAttribute("admin", admin);
+		session.setAttribute("display", admin.getUsername());
         return "admin_homepage"; 
     }
-		
+	
+	@GetMapping("/logout")
+	public String logout(@ModelAttribute("admin") Admin admin, Model model, SessionStatus status) {
+		status.setComplete();
+		return "forward:/admin/login";
+	}	
+	
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
 		model.addAttribute("staffs", sservice.findAllStaff());
@@ -54,7 +89,7 @@ public class AdminController {
     }
 	
 	@GetMapping("/manageStaff/details/{id}")
-	public String viewStaffDetails(@PathVariable("id") Integer id, Model model) {
+	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
         return "admin_manageStaff_details"; 
     }
@@ -72,10 +107,10 @@ public class AdminController {
     }
 	
 	@RequestMapping(value = "manageStaff/save")
-	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, 
+	public String saveFacility(@ModelAttribute("staff") @Valid Staff staff, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "admin_manageStaff_add";
+			return "admin_manageStaff_edit";
 		}
 		
 		sservice.saveStaff(staff);

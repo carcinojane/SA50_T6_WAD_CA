@@ -3,6 +3,7 @@ package SA50.T6.WadCA.LAPS.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -46,8 +51,9 @@ public class Staff {
 	private float totalCompensationLeave;
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
-	@DateTimeFormat (pattern="dd-MM-yyyy")
-	private LocalDate startDate;
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern="dd-MM-yyy")
+	private Date startDate;
 	
 	public Staff() {
 		super();
@@ -61,8 +67,8 @@ public class Staff {
 		this.password = password;
 	}
 
-	public Staff(String username, String password, Staff manager, Designation designation, float totalCompensationLeave,
-			float totalMedicalLeave, float totalAnnualLeave, LocalDate startDate) {
+	public Staff(String username, String password, Staff manager, Designation designation,
+			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave, Date startDate) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -73,6 +79,7 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 		this.startDate = startDate;
 	}
+
 //
 	public int getStaffId() {
 		return staffId;
@@ -140,11 +147,11 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 	}
 
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	

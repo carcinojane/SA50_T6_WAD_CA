@@ -40,5 +40,11 @@ public class LeaveTypeImpl implements LeaveTypeService {
 			
 		}
 		return leaveTypes;
+	}
+
+	@Override
+	public void save(LeaveType leaveType) {
+		ltrepo.save(leaveType);
+		
 	} 
 }
