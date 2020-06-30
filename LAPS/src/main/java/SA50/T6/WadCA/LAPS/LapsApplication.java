@@ -9,10 +9,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+
 import SA50.T6.WadCA.LAPS.model.*;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
 import SA50.T6.WadCA.LAPS.repo.*;
 import SA50.T6.WadCA.LAPS.service.*;
+
 
 
 @SpringBootApplication
@@ -59,6 +61,7 @@ public class LapsApplication {
 			Admin admin1=new Admin("admin1", "password");
 			adminRepo.save(admin1);
 
+
 			//create Leave Records
 			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
 					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',2,"",97856210);
@@ -69,24 +72,21 @@ public class LapsApplication {
 
 
 		};			
-		//			LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
-		//			LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
+				LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
+				LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
 		//			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
-		//			LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
-		//			LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
+					LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
+					LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
 		//			LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
 		//			
-		//			ltservice.save(annual_emp);
-		//			ltservice.save(medical_emp);
+					ltservice.save(annual_emp);
+					ltservice.save(medical_emp);
 		//			ltservice.save(compensation_emp);
-		//			ltservice.save(annual_mng);
-		//			ltservice.save(medical_mng);
+					ltservice.save(annual_mng);
+				ltservice.save(medical_mng);
 		//			ltservice.save(compensation_mng);
 		//			
 		//
 		//		};
-
-
-
 	}
 }

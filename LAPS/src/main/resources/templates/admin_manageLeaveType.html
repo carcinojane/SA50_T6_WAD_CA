@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:utext="#{admin.manageLeaveType.page.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
-  </head>
+<head>
+<title th:utext="#{admin.manageLeaveType.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
 <body>
 
-  <header th:insert="admin_login.html :: header"> </header>
+	<header th:insert="admin_login.html :: header"> </header>
 
-  	 <div class="content">
-	 	<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		<a href="/admin/manageStaff/edit">Edit</a>
-	 </div>
- 
+	<div class="content">
+		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
+		<a href="/admin/homepage">Back</a>
+		<table class="list">
+			<tr>
+				<th>Leave Type Id</th>
+				<th>Designation</th>
+				<th>Leave Type</th>
+				<th>Entitlement</th>
+				<th>Minimum Claim</th>
+				<th>Edit</th>
+
+			</tr>
+			<tr th:each="leavetype:${leavetypes}">
+				<td th:text=${leavetype.id}>Id</td>
+				<td th:text=${leavetype.designation}>Designation</td>
+				<td th:text=${leavetype.leaveType}>LeaveType</td>
+				<td th:text=${leavetype.entitlement}>Entitlement</td>
+				<td th:text=${leavetype.minClaim}>MinClaim</td>
+				<td><a
+					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.id} +'/' + {leavetype.designation}}">Edit</a>
+				</td>
+
+			</tr>
+		</table>
+	</div>
+
 </body>
 </html>
