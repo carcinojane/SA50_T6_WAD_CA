@@ -90,7 +90,6 @@ public class StaffController {
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
 		session.setAttribute("staff", staff);
-		//Staff staff1 = (Staff)session.getAttribute("staff");
 
 		if (registeredStaff.getDesignation()==Designation.manager){
 			return "redirect:/manager/home";
