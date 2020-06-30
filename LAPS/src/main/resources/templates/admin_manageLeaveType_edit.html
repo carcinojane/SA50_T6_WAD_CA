@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{admin.manageLeaveType.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+
+	<header th:insert="admin_login.html :: header"> </header>
+
+	<div class="content">
+		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
+		<a href="/admin/manageLeaveType">Back</a>
+		<form action="#" th:object="${leavetype}"
+			th:action="@{/admin/manageLeaveType/save}" method="post">
+			<table class="list">
+				<tr>
+
+					<input type="hidden" th:field="*{id}">
+				</tr>
+				<tr>
+					<input type="hidden" th:field="${leavetype.leaveType}">
+				</tr>
+				<tr>
+					<input type="hidden" th:field="${leavetype.designation}">
+				</tr>
+				<tr>
+
+					<td>Designation</td>
+					<td th:text=${leavetype.designation}></td>
+				</tr>
+				<tr>
+					<td>Leave Type</td>
+					<td th:text=${leavetype.leaveType}></td>
+				</tr>
+
+				<tr>
+					<td>Entitlement</td>
+					<td><input type="text" th:field="*{entitlement}">
+						<p th:if="${#fields.hasErrors('entitlement')}"
+							th:errors="*{entitlement}"></p></td>
+				</tr>
+				<tr>
+					<td>Minimum Claim</td>
+					<td><input type="text" th:field="*{minClaim}">
+						<p th:if="${#fields.hasErrors('minClaim')}"
+							th:errors="*{minClaim}"></p></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</body>
+</html>
