@@ -1,16 +1,21 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import SA50.T6.WadCA.LAPS.model.LeaveRecord;
+import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
-import SA50.T6.WadCA.LAPS.service.StaffService;
-import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
 
 @Controller
 @RequestMapping("/manager")
@@ -30,8 +35,9 @@ public class ManagerController{
 	}
 	
 	@GetMapping("/approval")
-	public String approval(Model model, int managerId) {
-		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(managerId)) ;
+	public String approval(Model model, HttpSession session) {
+		//List<LeaveRecord> lrecords = lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId"));
+		//model.addAttribute("lrecords", lrecords) ;
 		return "manager_approval";
 	}
 	
@@ -39,6 +45,21 @@ public class ManagerController{
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
+	}
+	
+	@GetMapping(value = "/approve")
+	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
+		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+		return "manager_approval";
+	}
+	
+	@GetMapping(value = "/reject")
+	public String rejectLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
+		if (leaveRecord.getReasonForRejection()!=null) {
+		leaveRecord.setLeaveStatus(LeaveStatus.REJECTED);
+		return "forward:/manager/approval";}
+		
+		return "manager_leaveDetails";	
 	}
 	
 }

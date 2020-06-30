@@ -32,7 +32,7 @@ public class LeaveTypeImpl implements LeaveTypeService {
 	public ArrayList<String> findLeaveTypeNamesByDesignation(Designation designation) {
 		ArrayList<String> leaveTypes = new ArrayList<>();
 		List<LeaveType> leaveTypeList = ltrepo.findAll();
-		for (Iterator iterator = leaveTypeList.iterator(); iterator.hasNext();) {
+		for (Iterator<LeaveType> iterator = leaveTypeList.iterator(); iterator.hasNext();) {
 			LeaveType leaveType = (LeaveType) iterator.next();
 			if(leaveType.getDesignation() == designation) {
 				leaveTypes.add(leaveType.getLeaveType());
