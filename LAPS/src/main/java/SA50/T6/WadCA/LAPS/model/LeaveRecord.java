@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -21,11 +24,16 @@ public class LeaveRecord{
 		APPLIED,
 		APPROVED,
 		REJECTED,
-		CANCEL
+		CANCELLED,
+		UPDATED
 	}
-	
+	@NotNull(message = "Reason is mandatory field")
 	private String reason;
+	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveStartDate;
+	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveEndDate;
 	private int staffId;
 	@ManyToOne
@@ -38,7 +46,7 @@ public class LeaveRecord{
 		@JoinColumn(name="designation", insertable=false, updatable=false)
 	})
 	private LeaveType leaveType;
-	private String workDessemination;
+	private String workDissemination;
 	private int contact;
 	private String reasonForRejection;
 	
@@ -59,7 +67,7 @@ public class LeaveRecord{
 		this.leaveStartDate = leaveStartDate;
 		this.leaveEndDate = leaveEndDate;
 		this.staffId = staffId;
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 		this.contact = contact;
 	}
 	
@@ -72,7 +80,7 @@ public class LeaveRecord{
 		this.leaveStartDate = leaveStartDate;
 		this.leaveEndDate = leaveEndDate;
 		this.staffId = staffId;
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 		this.contact = contact;
 		this.reasonForRejection = reasonForRejection;
 	}
@@ -151,7 +159,7 @@ public class LeaveRecord{
 
 
 	public String getWorkDessemination() {
-		return workDessemination;
+		return workDissemination;
 	}
 
 
@@ -164,7 +172,7 @@ public class LeaveRecord{
 	}
 
 	public void setWorkDessemination(String workDessemination) {
-		this.workDessemination = workDessemination;
+		this.workDissemination = workDessemination;
 	}
 
 
@@ -187,4 +195,20 @@ public class LeaveRecord{
 		this.reasonForRejection = reasonForRejection;
 	}
 
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	public LeaveType getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(LeaveType leaveType) {
+		this.leaveType = leaveType;
+	}
+	
 }
