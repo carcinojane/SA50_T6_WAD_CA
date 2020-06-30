@@ -50,7 +50,7 @@ public class Staff {
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd-MM-yyy")
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date startDate;
 	
 	public Staff() {

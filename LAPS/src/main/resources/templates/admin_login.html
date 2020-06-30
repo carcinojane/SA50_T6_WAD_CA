@@ -62,55 +62,21 @@
       </li>
     </ul>
   </div>
-  
-  <div id="admin" class="modal">
-          <form class="modal-content animate" action="/action_page.php" method="post">
-            <div class="container">
-              <h2>Admin Login</h2>
-              <label for="uname"><b>Username</b></label>
-              <input type="text" placeholder="Enter Username" name="uname" required>
-
-	<header th:fragment="header">
-		<div class="topnav" id="myTopnav">
-			<img src="../../images/logo.png"> <a href="/LAPS">Home</a>
-			<button class="logout" type="button"
-				onclick="location.href='/admin/login'" value="Logout">Logout</button>
-
-			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
-				<i class="fa fa-bars"></i>
-			</a>
-		</div>
-
-		<div class="footer">
-			<p>Company Name &copy; All rights reserved.</p>
-		</div>
-	</header>
-
-	<div class="content">
-		<h2 th:utext="#{admin.login.page.title}"></h2>
-		<div class="menu">
-			<ul>
-				<li>
-					<button
-						onclick="document.getElementById('admin').style.display='block'"
-						href="#approval">Login</button>
-				</li>
-			</ul>
-		</div>
 
 		<div id="admin" class="modal">
-			<form class="modal-content animate" th:object="${admin}"
-				th:action="@{/admin/home}" action="/action_page.php" method="post">
+			<form class="modal-content animate" th:object="${admin}" th:action="@{/admin/home}" action="/action_page.php" method="post">
 				<div class="container">
 					<h2>Admin Login</h2>
-					<label for="uname"> <b>Username</b>
-					</label> <input type="text" placeholder="Enter Username"
-						th:field="*{username}" name="uname" required>
-					<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+					<label for="uname"> 
+					<b>Username</b>
+					</label> 
+						<input type="text" placeholder="Enter Username"	th:field="*{username}" name="uname" required>
+						<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
 
-					<label for="psw"> <b>Password</b>
-					</label> <input type="password" placeholder="Enter Password"
-						th:field="*{password}" name="psw" required>
+					<label for="psw"> 
+					<b>Password</b>
+					</label> 
+						<input type="password" placeholder="Enter Password" th:field="*{password}" name="psw" required>
 					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
 					<!-- <button type="button" onclick="location.href='/admin/home'" value="Login">Login</button>-->
@@ -118,8 +84,7 @@
 
 				<div class="container" style="background-color: #f1f1f1">
 					<button type="submit">Login</button>
-					<button type="button"
-						onclick="document.getElementById('admin').style.display='none'"
+					<button type="button" onclick="document.getElementById('admin').style.display='none'"
 						class="cancelbtn">Cancel</button>
 				</div>
 			</form>

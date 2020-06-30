@@ -78,8 +78,9 @@ public class AdminController {
 	
 	@GetMapping("/manageStaff")
 	public String manageStaff() {
+		return null;
 		//returns staff list
-
+	}
 		
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
