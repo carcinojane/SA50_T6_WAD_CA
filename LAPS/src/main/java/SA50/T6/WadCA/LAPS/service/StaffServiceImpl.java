@@ -20,6 +20,14 @@ public class StaffServiceImpl implements StaffService {
 		return srepo.findById(staffId).get();
 	}
 
+	@Override
+	public Staff findStaffByName(String name) {
+		Staff staff = srepo.findByUsername(name); 
+		return staff;
+	}
+	
+
+
 //	@Override
 //	public ArrayList<Float> findLeaveBalanceById(int staffId) {
 //		Staff staff = srepo.findById(staffId).get();
