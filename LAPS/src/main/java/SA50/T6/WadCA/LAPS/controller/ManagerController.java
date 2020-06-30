@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +36,14 @@ public class ManagerController{
 	
 	@GetMapping("/approval")
 	public String approval(Model model, HttpSession session) {
-		//model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId"))) ;
+		//List<LeaveRecord> lrecords = lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId"));
+		//model.addAttribute("lrecords", lrecords) ;
 		return "manager_approval";
 	}
 	
 	@GetMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
-		//model.addAttribute("leave", lservice.findById(id));
+		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
 	
