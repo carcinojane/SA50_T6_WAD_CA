@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Entity
@@ -24,9 +27,13 @@ public class LeaveRecord{
 		CANCELLED,
 		UPDATED
 	}
-	
+	@NotNull(message = "Reason is mandatory field")
 	private String reason;
+	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveStartDate;
+	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveEndDate;
 	private int staffId;
 	@ManyToOne
