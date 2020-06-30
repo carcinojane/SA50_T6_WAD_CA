@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 
 @Service
@@ -101,5 +102,24 @@ public class LeaveServiceImpl implements LeaveService {
 		
 		
 		return numOfDay;
+	}
+
+	@Override
+	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus) {
+		
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndLeaveStatus(id, leaveStatus);
+	}
+
+	@Override
+	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LeaveType leaveType) {
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndLeaveType(id, leaveType);
+	}
+
+	@Override
+	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LeaveType leaveType) {
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndStatusAndType(id, leaveType, leaveStatus);
 	}
 }

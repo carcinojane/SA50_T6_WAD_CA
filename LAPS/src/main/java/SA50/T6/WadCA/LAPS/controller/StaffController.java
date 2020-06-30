@@ -2,7 +2,6 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 
-import java.time.DayOfWeek;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -12,13 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
@@ -27,15 +34,6 @@ import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
-
-
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @SessionAttributes("display")
@@ -110,23 +108,53 @@ public class StaffController {
 	//		return ("staff_applyLeave");
 	//	}
 
-	@GetMapping("/apply")
-	public String apply(Model model, HttpSession session) {
+	@GetMapping(value="/apply")
+	public String apply(Model model, HttpSession session,
+			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
+			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
+
 		Staff staff = (Staff)session.getAttribute("staff");
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId()));
+		int id=staff.getStaffId();
 		model.addAttribute("staff",staff);
 		model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
 		model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
+
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id));
+
+
 		return ("staff_applyLeave");
 	}
 
-	@GetMapping("/search")
-	public String search(Model model, HttpSession session) {
+	//@RequestMapping(value="/search", method = RequestMethod.POST)
+	@RequestMapping(value="/search")
+	public String search(Model model, HttpSession session, 
+			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
+			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
 		Staff staff = (Staff)session.getAttribute("staff");
-		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
-		List<LeaveStatus> leaveStatus = lservice.findAllLeaveStatus();
-		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
-		model.addAttribute("leaveStatus", leaveStatus);
+		Integer id=staff.getStaffId();
+
+		//search by leaveStatus and leaveType
+		if (leaveStatus!=null && leaveType!=null) {
+			model.addAttribute("lrecords", lservice.findByIdAndStatusAndType(id, leaveStatus, leaveType));
+		}
+		//search by leaveType
+		else if (leaveType!=null) {
+			model.addAttribute("lrecords", lservice.findByIdAndLeaveType(id, leaveType));
+		}
+		//search by leaveStatus
+		else if (leaveStatus!=null) {
+			model.addAttribute("lrecords", lservice.findByIdAndLeaveStatus(id, leaveStatus));
+		}
+		else {
+			model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id));
+		}
+
+
+		//Staff staff = (Staff)session.getAttribute("staff");
+		//		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+		//		List<LeaveStatus> leaveStatus = lservice.findAllLeaveStatus();
+		//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
+		//		model.addAttribute("leaveStatus", leaveStatus);
 		return ("staff_applyLeave");
 	}
 
