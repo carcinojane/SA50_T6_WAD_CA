@@ -21,6 +21,11 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Override
+	public Staff findStaffByName(String name) {
+		Staff staff = srepo.findByUsername(name); 
+		return staff;
+	}
+	
 	public ArrayList<Staff> findAllStaff() {
 		return (ArrayList<Staff>) srepo.findAll();
 	}

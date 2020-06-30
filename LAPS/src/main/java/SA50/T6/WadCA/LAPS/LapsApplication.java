@@ -7,8 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-import SA50.T6.WadCA.LAPS.model.Staff;
+import SA50.T6.WadCA.LAPS.model.Admin;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
+import SA50.T6.WadCA.LAPS.service.AdminService;
 
 
 @SpringBootApplication
@@ -22,10 +23,13 @@ public class LapsApplication {
 	}
 
 	//test mapping
+
+
 //	@Bean
 //	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 //		return args -> {
 //			//test 1 with username and password
+
 //			Staff manager1 = new Staff("manager1","password");
 //			staffRepo.save(manager1);
 //			
@@ -37,10 +41,8 @@ public class LapsApplication {
 //			
 //			staffRepo.save(staff1);
 //			staffRepo.save(staff2);
-//			
-//			
-//
-//
+
 //		};
 //	}
+
 }
