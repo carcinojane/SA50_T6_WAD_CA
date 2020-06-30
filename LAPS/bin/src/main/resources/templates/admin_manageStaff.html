@@ -4,12 +4,33 @@
     <title th:utext="#{admin.manageStaff.page.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/style.css" th:href="@{/css/style.css}" />
+          href="../../css/main.css" th:href="@{/css/main.css}" />
   </head>
 <body>
- <header th:insert="admin_homepage.html :: header"> </header>
- <h2 th:utext="#{admin.manageStaff.page.title}"></h2>
- <a href="/admin/manageStaff/details">View</a>
- <a href="/admin/manageStaff/add">Add</a>
+ <header th:insert="admin_login.html :: header"> </header>
+
+ 	<div class="content">
+	 	<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
+	 	<a href="/admin/manageStaff/add">Add</a>
+	 	<h2 th:if="${not #lists.isEmpty(staffs)}">Staff List</h2>
+	<table th:if="${not #lists.isEmpty(staffs)}">
+		<tr>
+			<th>Staff Id</th>
+			<th>User Name</th>
+			<th>Password</th>
+			<th>Start Date</th>
+			<th>Detail</th>
+		</tr>
+		<tr th:each="staff:${staffs}">
+			<td th:text=${staff.staffId}>Staff Id</td>
+			<td th:text=${staff.username}>User Name</td>
+			<td th:text=${staff.password}>Password</td>
+			<td th:text=${staff.startDate}>Start Date</td>
+			<td><a href="DetailStaff.html"
+				th:href="@{/admin/manageStaff/details/}+${staff.staffId}">Detail</a></td>
+		</tr>
+	</table>
+	</div>
+ 
 </body>
 </html>

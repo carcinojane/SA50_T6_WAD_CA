@@ -1,5 +1,6 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,16 @@ public interface LeaveService {
 	ArrayList<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")int staffId);
 	
 	@Query(
-		value = "SELECT * FROM LeaveRecord lr WHERE lr.managerId = :managerId AND lr.leaveStatus = APPLIED", 
+		value = "SELECT lr FROM LeaveRecord lr WHERE lr.managerId = :managerId AND lr.leaveStatus = 'APPLIED'", 
 		nativeQuery = true)
-	ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(@Param("managerId")int managerId);
+	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(@Param("managerId")int managerId);
 	
 	public ArrayList<LeaveRecord> findAll();
 	public LeaveRecord findById(int id);
 	public boolean saveLeaveRecord(LeaveRecord leaveRecord);
 	public List<LeaveStatus> findAllLeaveStatus();
+//	public List<LeaveRecord> findByFromAndToDate(LocalDate leaveStartDate, LocalDate leaveEndDate);
+	public void deleteLeaveRecord(LeaveRecord leaveRecord);
+
 	
 }
