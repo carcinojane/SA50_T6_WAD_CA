@@ -13,7 +13,7 @@
 	 	<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
 	 	<a href="/admin/manageStaff/add">Add</a>
 	 	<h2 th:if="${not #lists.isEmpty(staffs)}">Staff List</h2>
-	<table th:if="${not #lists.isEmpty(staffs)}">
+	<table class="list" th:if="${not #lists.isEmpty(staffs)}">
 		<tr>
 			<th>Staff Id</th>
 			<th>User Name</th>
