@@ -1,3 +1,4 @@
+
 package SA50.T6.WadCA.LAPS.controller;
 
 
@@ -27,7 +28,17 @@ import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
 
+
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+
 @Controller
+@SessionAttributes("display")
 @RequestMapping("/staff")
 public class StaffController {
 	
@@ -54,6 +65,11 @@ public class StaffController {
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
 	}
+  
+  	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+		
+	}
 
 	@GetMapping("/login")
 	public String Login(@ModelAttribute("staff") Staff staff, String username, String password, HttpSession session) {
@@ -61,12 +77,27 @@ public class StaffController {
 		return "staff_login";
 	}
 	
-	@GetMapping("/home")
-	public String home(Model model) {
-		model.addAttribute("staffId", "1");
+	@PostMapping("/home")
+	public String home(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult,
+			Model model, HttpSession session) {
+		if(bindingResult.hasErrors()||staff==null) {
+			return "staff_login";
+		} 
+		Staff registeredStaff = sservice.findStaffByName(staff.getUsername());
+		if(!registeredStaff.getPassword().equals(staff.getPassword())) {
+			return "staff_login";
+		}
+		model.addAttribute("staff", staff);
+		session.setAttribute("display", staff.getUsername());
 		return "staff_homepage";
 		//return "forward:/manager/home";
-	}
+	  }
+  
+    @GetMapping("/logout")
+	  public String logout(@ModelAttribute("staff") Staff staff, Model model, SessionStatus status) {
+		status.setComplete();
+		return "forward:/staff/login";
+	  }	
 	
 //	@GetMapping("/list")
 //	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
@@ -167,6 +198,5 @@ public class StaffController {
 		return "staff_leaveHistory_details_edit";
 	}
 	
-	
-	
 }
+

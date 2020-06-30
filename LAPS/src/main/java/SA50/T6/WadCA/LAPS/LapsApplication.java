@@ -14,6 +14,8 @@ import SA50.T6.WadCA.LAPS.repo.LeaveTypeRepository;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.model.Admin;
+import SA50.T6.WadCA.LAPS.service.AdminService;
 
 
 @SpringBootApplication
@@ -29,17 +31,19 @@ public class LapsApplication {
 	public void setLeaveTypeService(LeaveTypeImpl ltserviceImpl) {
 		this.ltservice = ltserviceImpl;
 	}
-	
 
 	public static void main(String[] args) {
 		SpringApplication.run(LapsApplication.class, args);
 	}
 
 	//test mapping
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-			//test 1 with username and password
+
+
+//	@Bean
+//	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+//		return args -> {
+//			//test 1 with username and password
+
 //			Staff manager1 = new Staff("manager1","password");
 //			staffRepo.save(manager1);
 //			
@@ -70,4 +74,5 @@ public class LapsApplication {
 
 		};
 	}
+
 }
