@@ -1,5 +1,6 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,5 +27,8 @@ public interface LeaveService {
 	public LeaveRecord findById(int id);
 	public boolean saveLeaveRecord(LeaveRecord leaveRecord);
 	public List<LeaveStatus> findAllLeaveStatus();
+//	public List<LeaveRecord> findByFromAndToDate(LocalDate leaveStartDate, LocalDate leaveEndDate);
+	public void deleteLeaveRecord(LeaveRecord leaveRecord);
+
 	
 }

@@ -24,14 +24,17 @@
  	<fieldset>
  		From
  		<input type="date" th:field="*{leaveStartDate}">
+ 		<p th:if="${#fields.hasErrors('leaveStartDate')}" th:errors="*{leaveStartDate}"></p>
  	</fieldset>
  	<fieldset>
  		To
  		<input type="date" th:field="*{leaveEndDate}">
+ 		<p th:if="${#fields.hasErrors('leaveEndDate')}" th:errors="*{leaveEndDate}"></p>
  	</fieldset>
  	<fieldset>
  		Reason
  		<input type="text" th:field="*{reason}">
+ 		<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p>
  	</fieldset>
  	<fieldset>
  		Work Dissemination
