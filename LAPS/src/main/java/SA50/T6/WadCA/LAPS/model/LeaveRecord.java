@@ -251,4 +251,8 @@ public class LeaveRecord{
 		this.leaveEndTime = leaveEndTime;
 	}
 	
+	@Override
+	public String toString() {
+		return "LeaveRecord [leaveStatus=" + leaveStatus + "]";
+	}
 }
