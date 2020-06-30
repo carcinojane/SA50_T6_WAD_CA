@@ -42,6 +42,7 @@ public class AdminController {
 	
 	@Autowired
 	protected AdminService aservice;
+	@Autowired
 	private StaffService sservice;
 	
   @Autowired
