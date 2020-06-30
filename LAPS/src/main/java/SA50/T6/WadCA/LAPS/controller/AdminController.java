@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +54,7 @@ public class AdminController {
     }
 	
 	@GetMapping("/manageStaff/details/{id}")
-	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
+	public String viewStaffDetails(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
         return "admin_manageStaff_details"; 
     }
@@ -70,10 +72,10 @@ public class AdminController {
     }
 	
 	@RequestMapping(value = "manageStaff/save")
-	public String saveFacility(@ModelAttribute("staff") @Valid Staff staff, 
+	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, 
 			BindingResult bindingResult,  Model model) {
 		if (bindingResult.hasErrors()) {
-			return "admin_manageStaff_edit";
+			return "admin_manageStaff_add";
 		}
 		
 		sservice.saveStaff(staff);

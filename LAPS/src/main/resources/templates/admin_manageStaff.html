@@ -13,19 +13,19 @@
 	 	<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
 	 	<a href="/admin/manageStaff/add">Add</a>
 	 	<h2 th:if="${not #lists.isEmpty(staffs)}">Staff List</h2>
-	<table th:if="${not #lists.isEmpty(staffs)}">
+	<table class="list" th:if="${not #lists.isEmpty(staffs)}">
 		<tr>
 			<th>Staff Id</th>
 			<th>User Name</th>
-			<th>Password</th>
 			<th>Start Date</th>
+			<th>Designation</th>
 			<th>Detail</th>
 		</tr>
 		<tr th:each="staff:${staffs}">
 			<td th:text=${staff.staffId}>Staff Id</td>
 			<td th:text=${staff.username}>User Name</td>
-			<td th:text=${staff.password}>Password</td>
 			<td th:text=${staff.startDate}>Start Date</td>
+			<td th:text=${staff.designation}>Designation</td>
 			<td><a href="DetailStaff.html"
 				th:href="@{/admin/manageStaff/details/}+${staff.staffId}">Detail</a></td>
 		</tr>

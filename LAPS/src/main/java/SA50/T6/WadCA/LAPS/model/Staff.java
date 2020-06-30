@@ -16,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 public class Staff {
 	
@@ -44,6 +46,7 @@ public class Staff {
 	private float totalCompensationLeave;
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
+	@DateTimeFormat (pattern="dd-MM-yyyy")
 	private LocalDate startDate;
 	
 	public Staff() {
