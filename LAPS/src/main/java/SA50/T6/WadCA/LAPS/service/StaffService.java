@@ -17,6 +17,6 @@ public interface StaffService {
 	public ArrayList<Staff> findAllManager();
 	public ArrayList<Staff> findSearchStaff(String username);
 	public Integer findStaffIdByUsername(String username);
-	
+	public Staff findStaffObjByUsername(String username);
 
 }

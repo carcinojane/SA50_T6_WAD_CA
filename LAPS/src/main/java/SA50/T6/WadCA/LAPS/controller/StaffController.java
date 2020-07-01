@@ -89,8 +89,8 @@ public class StaffController {
 		if(!registeredStaff.getPassword().equals(staff.getPassword())) {
 			return "staff_login";
 		}
-		staff.setStaffId(sservice.findStaffIdByUsername(staff.getUsername()));
 		model.addAttribute("staff", staff);
+		staff = sservice.findStaffObjByUsername(staff.getUsername());
 		session.setAttribute("display", staff.getUsername());
 		session.setAttribute("staff", staff);
 
@@ -114,14 +114,17 @@ public class StaffController {
 	//	}
 
 	@GetMapping(value="/apply")
-	public String apply(Model model, HttpSession session) {
+	public String apply(Model model, HttpSession session,
+			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
+			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
 
 		Staff staff = (Staff)session.getAttribute("staff");
-		//model.addAttribute("staff",staff);
+		int id=staff.getStaffId();
+		model.addAttribute("staff",staff);
 		//model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
 		//model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
 		
-		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(staff.getStaffId());
+		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(id);
 
 		model.addAttribute("lrecords", lrecords);
 
