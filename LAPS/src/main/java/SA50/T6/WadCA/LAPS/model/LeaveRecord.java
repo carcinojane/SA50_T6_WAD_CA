@@ -8,11 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-
 @Entity
 public class LeaveRecord{
 	@Id
@@ -20,13 +19,7 @@ public class LeaveRecord{
 	private int leaveId;
 	private int managerId;
 	private LeaveStatus leaveStatus;
-	public enum LeaveStatus{
-		APPLIED,
-		APPROVED,
-		REJECTED,
-		CANCELLED,
-		UPDATED
-	}
+	
 	@NotNull(message = "Reason is mandatory field")
 	private String reason;
 	@DateTimeFormat(pattern = "dd-MMM-yyyy")
@@ -47,6 +40,7 @@ public class LeaveRecord{
 		@JoinColumn(name="id", insertable=false, updatable=false),
 		@JoinColumn(name="designation", insertable=false, updatable=false)
 	})
+	@OneToOne
 	private LeaveType leaveType;
 	private String workDissemination;
 	private int contact;

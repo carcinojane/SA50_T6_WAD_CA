@@ -14,7 +14,7 @@ public class LeaveType{
 	private int id;
 	@Id
 	private Designation designation;
-	private String leaveType;
+	private LType leaveType;
 	private float entitlement;
 	
 	private float minClaim;
@@ -23,7 +23,7 @@ public class LeaveType{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public LeaveType(Designation designation, String leaveType, float entitlement, float minClaim) {
+	public LeaveType(Designation designation, LType leaveType, float entitlement, float minClaim) {
 		super();
 		this.designation = designation;
 		this.leaveType = leaveType;
@@ -42,10 +42,10 @@ public class LeaveType{
 	public void setDesignation(Designation designation) {
 		this.designation = designation;
 	}
-	public String getLeaveType() {
+	public LType getLeaveType() {
 		return leaveType;
 	}
-	public void setLeaveType(String leaveType) {
+	public void setLeaveType(LType leaveType) {
 		this.leaveType = leaveType;
 	}
 	public float getEntitlement() {

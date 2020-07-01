@@ -2,7 +2,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
-import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
@@ -116,10 +115,12 @@ public class StaffController {
 		Staff staff = (Staff)session.getAttribute("staff");
 		int id=staff.getStaffId();
 		model.addAttribute("staff",staff);
-		model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
-		model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
+		//model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
+		//model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
+		
+		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(id);
 
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id));
+		model.addAttribute("lrecords", lrecords);
 
 
 		return ("staff_applyLeave");
@@ -136,7 +137,7 @@ public class StaffController {
 
 		//search by leaveStatus and leaveType
 		if (leaveStatus!=null && leaveType!=null) {
-			model.addAttribute("lrecords", lservice.findByIdAndStatusAndType(id, leaveStatus, leaveType));
+			//model.addAttribute("lrecords", lservice.findByIdAndStatusAndType(id, leaveStatus, leaveType));
 		}
 		//search by leaveType
 		else if (leaveType!=null) {
@@ -144,7 +145,7 @@ public class StaffController {
 		}
 		//search by leaveStatus
 		else if (leaveStatus!=null) {
-			model.addAttribute("lrecords", lservice.findByIdAndLeaveStatus(id, leaveStatus));
+			//model.addAttribute("lrecords", lservice.findByIdAndLeaveStatus(id, leaveStatus));
 		}
 		else {
 			model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id));

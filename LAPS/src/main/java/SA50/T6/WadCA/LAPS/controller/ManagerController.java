@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
-import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+
+import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
