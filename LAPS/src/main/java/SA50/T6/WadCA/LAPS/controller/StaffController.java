@@ -73,6 +73,11 @@ public class StaffController {
 		session.setAttribute("staffId", staff.getStaffId());
 		return "staff_login";
 	}
+	
+	@GetMapping("/.home")
+	public String menu() {
+		return "staff_homepage";
+	}
 
 	@PostMapping("/home")
 	public String home(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult,
@@ -84,6 +89,7 @@ public class StaffController {
 		if(!registeredStaff.getPassword().equals(staff.getPassword())) {
 			return "staff_login";
 		}
+		staff.setStaffId(sservice.findStaffIdByUsername(staff.getUsername()));
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
 		session.setAttribute("staff", staff);
@@ -92,7 +98,7 @@ public class StaffController {
 			return "redirect:/manager/home";
 		}
 
-		return "staff_homepage";
+		return "redirect:/staff/.home";
 	}
 
 	@GetMapping("/logout")
@@ -108,17 +114,14 @@ public class StaffController {
 	//	}
 
 	@GetMapping(value="/apply")
-	public String apply(Model model, HttpSession session,
-			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
-			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
+	public String apply(Model model, HttpSession session) {
 
 		Staff staff = (Staff)session.getAttribute("staff");
-		int id=staff.getStaffId();
-		model.addAttribute("staff",staff);
+		//model.addAttribute("staff",staff);
 		//model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
 		//model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
 		
-		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(id);
+		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(staff.getStaffId());
 
 		model.addAttribute("lrecords", lrecords);
 

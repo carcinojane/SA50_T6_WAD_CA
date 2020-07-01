@@ -5,6 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
 	<header th:insert="admin_login.html :: header"> </header>
@@ -22,10 +27,13 @@
 				</tr>
 				<tr>
 
+					<input type="hidden" th:field="*{username}">
+				</tr>
+				
+				<tr>
+
 					<td>User Name</td>
-					<td><input type="text" th:field="*{username}">
-						<p th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p></td>
+					<td th:text="*{username}"></td>
 				</tr>
 				<tr>
 					<td>Password</td>

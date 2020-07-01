@@ -147,6 +147,7 @@ public class AdminController {
 		return "admin_manageLeaveType";
 	}
 
+
 //	@GetMapping("/manageLeaveType/edit/{id}/{designation}")
 //	public String editLeaveTypeEntitlement(@PathVariable("id") int id,
 //			@PathVariable("designation") Designation designation, Model model) {
@@ -155,6 +156,19 @@ public class AdminController {
 //		return "admin_manageLeaveType_edit";
 //	}
 
-	
+	@RequestMapping(value = "/manageLeaveType/save")
+	public String saveLeaveType(@ModelAttribute("leaveType") @Valid LeaveType leavetype, BindingResult bindingResult,
+			Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "admin_manageLeaveType_edit";
+		}
+
+		ltservice.save(leavetype);
+		System.out.println("Designation: " + leavetype.getDesignation() + " ID: " + leavetype.getId() + " Leave Type: "
+				+ leavetype.getLeaveType());
+		return "forward:/admin/manageLeaveType";
+	}
+
 
 }

@@ -3,11 +3,16 @@
 <head>
 <title th:utext="#{manager.approval.details.page.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	<header th:insert="staff_login.html :: header"> </header>
+	<header th:insert="manager_homepage.html :: header"> </header>
 	 
 	 <div class="content">
 	 	<h1 th:utext="#{manager.approval.details.page.title}">Leave Details</h1>
