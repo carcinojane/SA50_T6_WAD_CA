@@ -20,4 +20,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	
 	@Query("Select s from Staff s Where s.username Like CONCAT('%',:username,'%')")
 	ArrayList<Staff> findStaffLikeSearchInput(@Param("username")String username);
+	
+	@Query("Select s.staffId from Staff s Where s.username = :username")
+	Integer findStaffIdByUsername(@Param("username")String username);
 }

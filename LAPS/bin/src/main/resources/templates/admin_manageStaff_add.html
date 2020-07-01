@@ -5,6 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
 	<header th:insert="admin_login.html :: header"> </header>
@@ -50,6 +55,15 @@
 								th:value="${designationOptn}" th:text="${designationOptn}"></option>
 					</select></td>
 				</tr>
+				<!-- <tr>
+					<td>Managed By</td>
+					<td><select th:field="${staff.manager}">
+							 <option th:value="Null" selected>--Select--</option>
+				
+							<option th:each="manager : ${managers}" th:value="${manager.staffId}"
+								th:text="${manager.username}"></option>
+					</select></td>
+				</tr> -->
 				<tr>
 					<td>Total Annual Leave</td>
 					<td><input type="text" th:field="*{totalAnnualLeave}">
