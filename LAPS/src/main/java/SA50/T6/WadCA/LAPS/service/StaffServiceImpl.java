@@ -1,6 +1,8 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,7 @@ public class StaffServiceImpl implements StaffService {
 		if(srepo.save(staff)!=null) return true; else return false;
 	}
 
-	@Override
-	public ArrayList<Staff> findAllManager() {
-		return (ArrayList<Staff>) srepo.findAllManagers();
-	}
+	
 
 	@Override
 	public ArrayList<Staff> findSearchStaff(String username) {
@@ -51,6 +50,17 @@ public class StaffServiceImpl implements StaffService {
 		return srepo.findStaffIdByUsername(username);
 	}
 
+	@Override
+	public ArrayList<String> findAllManagerNames() {
+		
+			List<Staff> staffs = srepo.findAllManagers();
+			ArrayList<String> names = new ArrayList<String>();
+			for (Iterator<Staff> iterator = staffs.iterator(); iterator.hasNext();) {
+				Staff staff = (Staff) iterator.next();
+				names.add(staff.getUsername());
+			}
+			return names;
+		}
 //	@Override
 //	public ArrayList<Float> findLeaveBalanceById(int staffId) {
 //		Staff staff = srepo.findById(staffId).get();
@@ -60,6 +70,17 @@ public class StaffServiceImpl implements StaffService {
 //		balance.add(staff.getTotalCompensationLeave());
 //		return balance;
 //	}
+
+	@Override
+	public Staff findManagerByUsername(String username) {
+		return srepo.findManagerByUsername(username);
+	}
+
+	@Override
+	public void deleteStaff(Staff staff) {
+		srepo.delete(staff);
+		
+	}
 	
 
 	

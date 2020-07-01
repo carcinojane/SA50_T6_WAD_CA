@@ -68,10 +68,8 @@ public class LeaveTypeImpl implements LeaveTypeService {
 
 	@Override
 	public LeaveType findLeaveTypeToEdit(LType leaveType, Designation designation) {
-		System.out.println("IMPL Part: " + leaveType + designation);
 		LeaveType record=ltrepo.findLeaveTypeToEdit(leaveType, designation);
 		return record;
 	}
-
 	
 }

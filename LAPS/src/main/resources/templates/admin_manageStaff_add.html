@@ -20,10 +20,7 @@
 		<form action="#" th:object="${staff}"
 			th:action="@{/admin/manageStaff/save}" method="post">
 			<table class="list">
-
-
 				<tr>
-
 					<input type="hidden" th:field="*{staffId}">
 				</tr>
 				<tr>
@@ -55,16 +52,14 @@
 								th:value="${designationOptn}" th:text="${designationOptn}"></option>
 					</select></td>
 				</tr>
-				<!-- <tr>
-					<td>Managed By</td>
-					<td><select th:field="${staff.manager}">
-							 <option th:value="Null" selected>--Select--</option>
-				
-							<option th:each="manager : ${managers}" th:value="${manager.staffId}"
-								th:text="${manager.username}"></option>
-					</select></td>
-				</tr> -->
 				<tr>
+					<td>Managed By</td>
+					<td><select th:field="*{manager.username}">
+							<option th:each="managerName : ${managerNames}" th:value="${managerName}"
+								th:text="${managerName}"></option>
+					</select></td>
+				</tr>
+				<!-- <tr>
 					<td>Total Annual Leave</td>
 					<td><input type="text" th:field="*{totalAnnualLeave}">
 						<p th:if="${#fields.hasErrors('totalAnnualLeave')}"
@@ -81,7 +76,7 @@
 					<td><input type="text" th:field="*{totalCompensationLeave}">
 						<p th:if="${#fields.hasErrors('totalCompensationLeave')}"
 							th:errors="*{totalCompensationLeave}"></p></td>
-				</tr>
+				</tr> -->
 				<tr>
 					<td></td>
 					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
