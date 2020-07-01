@@ -10,10 +10,8 @@ import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 public class LeaveType{
 	//composite key
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	@Id
 	private Designation designation;
+	@Id
 	private LType leaveType;
 	private float entitlement;
 	
@@ -30,12 +28,7 @@ public class LeaveType{
 		this.entitlement = entitlement;
 		this.minClaim = minClaim;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public Designation getDesignation() {
 		return designation;
 	}
