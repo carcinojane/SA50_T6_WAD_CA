@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
-import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 
 public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer> {

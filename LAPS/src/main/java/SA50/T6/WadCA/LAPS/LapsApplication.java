@@ -10,13 +10,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import SA50.T6.WadCA.LAPS.model.Admin;
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
-import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
-
-import SA50.T6.WadCA.LAPS.model.Staff.Designation;
-import SA50.T6.WadCA.LAPS.repo.*;
-import SA50.T6.WadCA.LAPS.service.*;
-
+import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
@@ -79,6 +75,8 @@ public class LapsApplication {
 			//create Leave Records
 			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
 					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',2,"",97856210);
+			//LeaveType lt1= new LeaveType(LeaveType.this);
+			//l1.setLeaveType(LType.AnnualLeave);
 			lRepo.save(l1);
 			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
 					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',2,"",8662395);
@@ -89,12 +87,12 @@ public class LapsApplication {
 
 
 			//};			
-			LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
-			LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
-			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
-			LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
-			LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
-			LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
+			LeaveType annual_emp = new LeaveType(Designation.employee, LType.AnnualLeave, 14f, 1f);
+			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f,1f);
+			LeaveType compensation_emp = new LeaveType(Designation.employee, LType.Compensation, 2f, 0.5f);
+			LeaveType annual_mng = new LeaveType(Designation.manager, LType.Compensation, 18f, 1f);
+			LeaveType medical_mng = new LeaveType(Designation.manager, LType.MedicalLeave, 60f, 1f);
+			LeaveType compensation_mng = new LeaveType(Designation.manager, LType.Compensation, 2f, 0.5f);
 
 			ltservice.save(annual_emp);
 			ltservice.save(medical_emp);
