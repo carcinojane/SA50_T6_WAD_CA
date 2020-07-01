@@ -17,61 +17,79 @@
 	<header th:insert="staff_homepage.html :: header"> </header>
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
-		<h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
-		<form th:action="@{/staff/search}" method="post">
+		
+		<div th:if="${not #lists.isEmpty(lrecords)}">
+		<h3>Search</h3>
 		<input id="userInput" type="text" placeholder="Search..">
-			<fieldset>
-				Category<select id="LType" name="LType">
-					<option
-						th:each="LTypeOpt : ${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
-						th:value="${LTypeOpt}" th:text="${LTypeOpt.displayValue}"></option>
-						
-				</select>
-			</fieldset>
-			<fieldset>
-				Status<select name="status">
-					<option
-						th:each="status : ${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
-						th:value="${status}" th:text="${status.displayValue}"></option>
-						
-				</select>
-			</fieldset>
-			
-				<button type="submit">Search</button>
-			
-		</form>
-
-
+		<input type="hidden" id="dummy1" class="search-key" placeholder="">     
+        <input type="hidden" id="dummy2" class="search-key" placeholder="">
+        
+		<select type="text" id="leavetype" class="search-key">
+          <option value=""></option>
+          <option value="Annual Leave">Annual Leave</option>
+          <option value="Medical Leave">Medical Leave</option>
+          <option value="Compensation Leave">Compensation Leave</option>
+        </select>
+        
+        <select type="text" id="leavestatus" class="search-key">
+          <option value=""></option>
+          <option value="Applied">Applied</option>
+          <option value="Approved">Approved</option>
+          <option value="Rejected">Rejected</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Updated">Updated</option>
+        </select>
+        
+        <input type="hidden" id="dummy3" class="search-key" placeholder="">        
+		</div>
+		
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
-
-		<table class="list">
-			<thead>
-				<tr>
-					<th style="width: 20%">From</th>
-					<th style="width: 22.5%">To</th>
-					<th style="width: 22.5%">Category</th>
-					<th style="width: 17.5%">Status</th>
-					<th style="width: 17.5%">Action</th>
-				</tr>
-			</thead>
-
-			<tbody id="leaveRecordTable">
-				<tr th:if="${#lists.isEmpty(lrecords)}">
-					<td colspan="5">No leave records found.</td>
-				</tr>
-				<tr th:if="${not #lists.isEmpty(lrecords)}"
-					th:each="leave:${lrecords}">
-					<td th:text="${leave.leaveStartDate}">From</td>
-					<td th:text="${leave.leaveEndDate}">To</td>
-					<td th:text="${leave.leaveTypeDisplay}">Category</td>
-					<td th:text="${leave.leaveStatus.displayValue}">Status</td>
-					<td><a th:href="@{/staff/history/details/}+${leave.leaveId}" th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
-		</table>
-		<p>
-			<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>
-		</p>
+		
+        <p th:if="${#lists.isEmpty(lrecords)}">No leave records found.</p>
+        <table id="leavetable" class="list" th:if="${not #lists.isEmpty(lrecords)}">
+        <thead>
+            <tr>
+                <th style="width: 20%">From</th>
+				<th style="width: 22.5%">To</th>
+				<th style="width: 22.5%">Category</th>
+				<th style="width: 17.5%">Status</th>
+				<th style="width: 17.5%">Action</th>
+            </tr>
+		</thead>
+		<tbody id="leaveRecordTable">
+			<tr th:each="leave:${lrecords}">
+				<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
+				<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
+				<td data-input="leavetype" th:text="${leave.leaveTypeDisplay}">Category</td>
+				<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
+				<td data-input="dummy3" th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
+            </tr>
+		</tbody>
+    </table>
+    
+    <p>
+		<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>
+	</p>
 	</div>
 
+<script>
+var $filterableRows = $('#leavetable').find('tr').not(':first'),
+$inputs = $('.search-key');
 
+$inputs.on('input', function() {
+
+$filterableRows.hide().filter(function() {
+return $(this).find('td').filter(function() {
+
+var tdText = $(this).text().toLowerCase(),
+		inputValue = $('#' + $(this).data('input')).val().toLowerCase();
+
+return tdText.indexOf(inputValue) != -1;
+
+}).length == $(this).find('td').length;
+}).show();
+
+});
+</script>
 </body>
 </html>

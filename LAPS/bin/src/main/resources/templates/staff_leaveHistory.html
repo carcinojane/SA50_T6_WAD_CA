@@ -1,19 +1,50 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:utext="#{staff.leaveHistory.page.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
+<head>
+<title th:utext="#{staff.leaveHistory.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
-	<link rel="stylesheet" type="text/css" media="all"
+<link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<script type="text/javascript" src="../../js/navbar.js"></script>
-	<script type="text/javascript" src="../../js/login.js"></script>
-  </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/search.js"></script>
+</head>
 <body>
- <header th:insert="staff_homepage.html :: header"> </header>
- <h2 th:utext="#{staff.leaveHistory.page.title}"></h2>
- <a href="/staff/staff_leaveHistory_details">View</a>
+	<header th:insert="staff_homepage.html :: header"> </header>
+	<h2 th:utext="#{staff.leaveHistory.page.title}"></h2>
+	<div class="content">
+	<input id="userInput" type="text" placeholder="Search..">
+		<table class="list">
+			<thead>
+				<tr>
+					<th style="width: 20%">From</th>
+					<th style="width: 22.5%">To</th>
+					<th style="width: 22.5%">Category</th>
+					<th style="width: 17.5%">Status</th>
+					<th style="width: 17.5%">Action</th>
+				</tr>
+			</thead>
+
+			<tbody id="leaveRecordTable">
+				<tr th:if="${#lists.isEmpty(lrecords)}">
+					<td colspan="5">No leave records found.</td>
+				</tr>
+				<tr th:if="${not #lists.isEmpty(lrecords)}"
+					th:each="leave:${lrecords}">
+					<td th:text="${leave.leaveStartDate}">From</td>
+					<td th:text="${leave.leaveEndDate}">To</td>
+					<td th:text="${leave.leaveTypeDisplay}">Category</td>
+					<td th:text="${leave.leaveStatus.displayValue}">Status</td>
+					<td><a th:href="@{/staff/history/details/}+${leave.leaveId}"
+						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
+		</table>
+
+
+	</div>
+
 </body>
 </html>
