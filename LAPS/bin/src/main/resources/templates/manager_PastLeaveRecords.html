@@ -8,15 +8,39 @@
 <link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/search.js"></script>
 </head>
 <body>
 	<header th:insert="manager_homepage.html :: header"> </header>
 	 
 	 <div class="content">
 	 	<h1 th:utext="#{manager.history.page.title}">Leave Details</h1>
-		 	 
+		<input id="userInput" type="text" placeholder="Search..">
+	 	<table class="list">
+	 	<thead>
+	 	<tr>
+	 		<th style="width:25%">Employee Id</th>
+			<th style="width:25%">From</th>
+			<th style="width:25%">To</th>
+			<th style="width:25%">Status</th>
+		</tr>
+		</thead>
+		
+		<tbody id="leaveRecordTable">
+		<tr th:if="${#lists.isEmpty(lrecords)}">
+			<td colspan="5">No pending leave for approval.</td>
+		</tr>
+		<tr th:if="${not #lists.isEmpty(lrecords)}" th:each="lrecord:${lrecords}">
+			<td th:text=${lrecord.staffId}>Staff Id</td>
+			<td th:text=${lrecord.leaveStartDate}>From</td>
+			<td th:text=${lrecord.leaveEndDate}>To</td>
+			<td th:text=${lrecord.leaveStatus}>Status</td>
+		</tr>
+		</tbody>
+		</table> 	 
 	 </div>
 
 </body>

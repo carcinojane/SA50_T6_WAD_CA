@@ -66,6 +66,17 @@ public class Staff {
 		this.password = password;
 	}
 
+	public Staff(String username, @NotNull String password,float totalCompensationLeave,
+			float totalMedicalLeave, float totalAnnualLeave) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.totalCompensationLeave = totalCompensationLeave;
+		this.totalMedicalLeave = totalMedicalLeave;
+		this.totalAnnualLeave = totalAnnualLeave;
+	}
+
+
 	public Staff(String username, String password, Staff manager, Designation designation,
 			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave, Date startDate) {
 		super();
@@ -170,6 +181,13 @@ public class Staff {
 			return;
 		subordinates.add(subordinate);
 		subordinate.setManager(this);
+	}
+
+
+	@Override
+	public String toString() {
+		return "Staff [username=" + username + ", password=" + password + ", manager=" + manager + ", designation="
+				+ designation + ", startDate=" + startDate + "]";
 	}
 	
 	

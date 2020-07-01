@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,7 +26,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import SA50.T6.WadCA.LAPS.model.Admin;
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
-import SA50.T6.WadCA.LAPS.model.LeaveTypeId;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.service.AdminService;
@@ -108,40 +109,81 @@ public class AdminController {
 	@GetMapping("/manageStaff/details/{id}")
 	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
-		
+
 		return "admin_manageStaff_details";
 	}
 
 	@RequestMapping(value = "/manageStaff/search")
 	public String showStaff(@RequestParam(value = "username") String username, Model model) {
 		model.addAttribute("staffs", sservice.findSearchStaff(username));
-		System.out.println("UserName= "+username+" Staff list"+sservice.findSearchStaff(username));
+		System.out.println("UserName= " + username + " Staff list" + sservice.findSearchStaff(username));
 		return "admin_manageStaff";
 	}
 
 	@GetMapping("/manageStaff/add")
 	public String addStaff(Model model) {
 		model.addAttribute("staff", new Staff());
-		model.addAttribute("managers", sservice.findAllManager());
+		ArrayList<String> mnames = sservice.findAllManagerNames();
+		model.addAttribute("managerNames", mnames);
 		return "admin_manageStaff_add";
+	}
+
+	@RequestMapping(value = "manageStaff/save")
+	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			ArrayList<String> mnames = sservice.findAllManagerNames();
+			model.addAttribute("managerNames", mnames);
+			return "admin_manageStaff_add";
+		}
+		Designation designation = staff.getDesignation();
+		if (designation == Staff.Designation.employee) {
+			LeaveType annual = ltservice.findLeaveTypeToEdit(LType.AnnualLeave, Staff.Designation.employee);
+			LeaveType medical = ltservice.findLeaveTypeToEdit(LType.MedicalLeave, Staff.Designation.employee);
+			LeaveType compensation = ltservice.findLeaveTypeToEdit(LType.Compensation, Staff.Designation.employee);
+			staff.setTotalAnnualLeave(annual.getEntitlement());
+			staff.setTotalMedicalLeave(medical.getEntitlement());
+			staff.setTotalCompensationLeave(compensation.getEntitlement());
+		}
+		else {
+			LeaveType annual = ltservice.findLeaveTypeToEdit(LType.AnnualLeave, Staff.Designation.manager);
+			LeaveType medical = ltservice.findLeaveTypeToEdit(LType.MedicalLeave, Staff.Designation.manager);
+			LeaveType compensation = ltservice.findLeaveTypeToEdit(LType.Compensation, Staff.Designation.manager);
+			staff.setTotalAnnualLeave(annual.getEntitlement());
+			staff.setTotalMedicalLeave(medical.getEntitlement());
+			staff.setTotalCompensationLeave(compensation.getEntitlement());
+		}
+		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
+		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setManager(manager);
+		sservice.saveStaff(staff);
+		return "forward:/admin/manageStaff";
 	}
 
 	@GetMapping("/manageStaff/edit/{id}")
 	public String editStaffDetails(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
+		ArrayList<String> mnames = sservice.findAllManagerNames();
+		model.addAttribute("managerNames", mnames);
 		return "admin_manageStaff_edit";
 	}
 
-	@RequestMapping(value = "manageStaff/save")
-	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff,
-			BindingResult bindingResult, Model model) {
-		System.out.println("Manager: " + staff.getManager());
+	@RequestMapping(value = "manageStaff/edit/save")
+	public String editsaveStaff(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			System.out.println("!!!Has Error Binding Result!!!!");
-			return "admin_manageStaff_add";
+			ArrayList<String> mnames = sservice.findAllManagerNames();
+			model.addAttribute("managerNames", mnames);
+			return "admin_manageStaff_edit";
 		}
-		//staff.setManager(manager);
+		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
+		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setManager(manager);
 		sservice.saveStaff(staff);
+		return "forward:/admin/manageStaff";
+	}
+	
+	@GetMapping("/manageStaff/delete/{id}")
+	public String deleteStaff(@PathVariable("id") Integer id) {
+		sservice.deleteStaff(sservice.findStaffById(id));
 		return "forward:/admin/manageStaff";
 	}
 
@@ -151,12 +193,10 @@ public class AdminController {
 		return "admin_manageLeaveType";
 	}
 
-
 	@GetMapping("/manageLeaveType/edit/{leaveType}/{designation}")
 	public String editLeaveTypeEntitlement(@PathVariable("leaveType") LType leaveType,
 			@PathVariable("designation") Designation designation, Model model) {
-		System.out.println(leaveType+ " ," +designation);
-		model.addAttribute("leavetype", ltservice.findLeaveTypeToEdit(leaveType,designation));
+		model.addAttribute("leavetype", ltservice.findLeaveTypeToEdit(leaveType, designation));
 		return "admin_manageLeaveType_edit";
 	}
 
@@ -169,10 +209,7 @@ public class AdminController {
 		}
 
 		ltservice.save(leavetype);
-		System.out.println("Designation: " + leavetype.getDesignation()  + " Leave Type: "
-				+ leavetype.getLeaveType());
 		return "forward:/admin/manageLeaveType";
 	}
-
 
 }

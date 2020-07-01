@@ -21,7 +21,7 @@
 		<form th:action="@{/staff/search}" method="post">
 		<input id="userInput" type="text" placeholder="Search..">
 			<fieldset>
-				Category<select name="LType">
+				Category<select id="LType" name="LType">
 					<option
 						th:each="LTypeOpt : ${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
 						th:value="${LTypeOpt}" th:text="${LTypeOpt.displayValue}"></option>
@@ -65,7 +65,7 @@
 					<td th:text="${leave.leaveEndDate}">To</td>
 					<td th:text="${leave.leaveTypeDisplay}">Category</td>
 					<td th:text="${leave.leaveStatus.displayValue}">Status</td>
-					<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
+					<td><a th:href="@{/staff/history/details/}+${leave.leaveId}" th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
 		</table>
 		<p>
 			<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>
