@@ -20,7 +20,7 @@
 		<a href="/admin/homepage">Back</a>
 		<table class="list">
 			<tr>
-				<th>Leave Type Id</th>
+				
 				<th>Designation</th>
 				<th>Leave Type</th>
 				<th>Entitlement</th>
@@ -29,13 +29,13 @@
 
 			</tr>
 			<tr th:each="leavetype:${leavetypes}">
-				<td th:text=${leavetype.id}>Id</td>
+				
 				<td th:text=${leavetype.designation}>Designation</td>
 				<td th:text=${leavetype.leaveType}>LeaveType</td>
 				<td th:text=${leavetype.entitlement}>Entitlement</td>
 				<td th:text=${leavetype.minClaim}>MinClaim</td>
 				<td><a
-					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.id} +'/' + {leavetype.designation}}">Edit</a>
+					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}">Edit</a>
 				</td>
 
 			</tr>

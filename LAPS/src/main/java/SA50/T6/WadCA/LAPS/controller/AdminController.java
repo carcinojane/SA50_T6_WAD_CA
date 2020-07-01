@@ -1,7 +1,5 @@
 package SA50.T6.WadCA.LAPS.controller;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import SA50.T6.WadCA.LAPS.model.Admin;
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.LeaveTypeId;
 import SA50.T6.WadCA.LAPS.model.Staff;
@@ -148,13 +147,13 @@ public class AdminController {
 	}
 
 
-//	@GetMapping("/manageLeaveType/edit/{id}/{designation}")
-//	public String editLeaveTypeEntitlement(@PathVariable("id") int id,
-//			@PathVariable("designation") Designation designation, Model model) {
-//		LeaveTypeId leavetypeId = new LeaveTypeId(id, designation);
-//		model.addAttribute("leavetype", ltservice.findLeaveTypeById(leavetypeId));
-//		return "admin_manageLeaveType_edit";
-//	}
+	@GetMapping("/manageLeaveType/edit/{leaveType}/{designation}")
+	public String editLeaveTypeEntitlement(@PathVariable("leaveType") LType leaveType,
+			@PathVariable("designation") Designation designation, Model model) {
+		System.out.println(leaveType+ " ," +designation);
+		model.addAttribute("leavetype", ltservice.findLeaveTypeToEdit(leaveType,designation));
+		return "admin_manageLeaveType_edit";
+	}
 
 	@RequestMapping(value = "/manageLeaveType/save")
 	public String saveLeaveType(@ModelAttribute("leaveType") @Valid LeaveType leavetype, BindingResult bindingResult,
@@ -165,7 +164,7 @@ public class AdminController {
 		}
 
 		ltservice.save(leavetype);
-		System.out.println("Designation: " + leavetype.getDesignation() + " ID: " + leavetype.getId() + " Leave Type: "
+		System.out.println("Designation: " + leavetype.getDesignation()  + " Leave Type: "
 				+ leavetype.getLeaveType());
 		return "forward:/admin/manageLeaveType";
 	}

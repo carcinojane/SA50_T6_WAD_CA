@@ -14,6 +14,12 @@ public class LeaveTypeId implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
+	public LeaveTypeId(LType leaveType, Designation designation) {
+		super();
+		this.leaveType = leaveType;
+		this.designation = designation;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

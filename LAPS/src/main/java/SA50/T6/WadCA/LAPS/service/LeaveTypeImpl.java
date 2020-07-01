@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.LeaveTypeId;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.repo.LeaveTypeRepository;
 
@@ -65,8 +66,12 @@ public class LeaveTypeImpl implements LeaveTypeService {
 		return (ArrayList<LeaveType>) ltrepo.findAll();
 	}
 
-//	@Override
-//	public LeaveType findLeaveTypeById(LeaveTypeId id) {
-//		return ltrepo.findById(id).get();
-//	} 
+	@Override
+	public LeaveType findLeaveTypeToEdit(LType leaveType, Designation designation) {
+		System.out.println("IMPL Part: " + leaveType + designation);
+		LeaveType record=ltrepo.findLeaveTypeToEdit(leaveType, designation);
+		return record;
+	}
+
+	
 }
