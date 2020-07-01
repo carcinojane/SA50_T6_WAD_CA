@@ -13,23 +13,44 @@
 </head>
 <body>
 	<header th:insert="staff_homepage.html :: header"> </header>
-	
-	 <div class="content">
-	 	<h1 th:utext="#{manager.approval.details.page.title}">Leave Details</h1>
-	 	<table  class="list">
-	 	<tr><td>From</td><td th:text="${leave.leaveStartDate}"></td></tr>
-	 	<tr><td>To</td><td th:text="${leave.leaveEndDate}"></td></tr>
-	 	<tr><td>Category</td><td th:text="${leave.leaveTypeDisplay}"></td></tr>
-	 	<tr><td>Status</td><td th:text="${leave.leaveStatus.displayValue}"></td></tr>
-	 	<tr><td>Reason</td><td th:text="${leave.reason}"></td></tr>
-	 	<!--  <tr><td>Work Dissemination</td><td th:text="${leave.workDissemination}"></td></tr>-->
+
+	<div class="content">
+		<h1 th:utext="#{manager.approval.details.page.title}">Leave
+			Details</h1>
+		<table class="list">
+			<tr>
+				<td>From</td>
+				<td th:text="${leave.leaveStartDate}"></td>
+			</tr>
+			<tr>
+				<td>To</td>
+				<td th:text="${leave.leaveEndDate}"></td>
+			</tr>
+			<tr>
+				<td>Category</td>
+				<td th:text="${leave.leaveTypeDisplay}"></td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td th:text="${leave.leaveStatus.displayValue}"></td>
+			</tr>
+			<tr>
+				<td>Reason</td>
+				<td th:text="${leave.reason}"></td>
+			</tr>
+			<!--  <tr><td>Work Dissemination</td><td th:text="${leave.workDissemination}"></td></tr>-->
 		</table>
 
 
-		<input type="button"
-			onclick="location.href='/staff/history/details/update'"
-			value="Update">
+		<!--  <input type="button"
+			th:onclick="'location.href='/staff/history/details/edit/'+${leave.leaveId}+'\'"
+			value="Update"/> -->
 			
+		<a th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
+		<button style="background-color:grey">Update</button></a>
+		
+		<a th:href="@{/staff/history/details/delete/}+${leave.leaveId}">
+		<button style="background-color:red">Delete</button></a>
 			
 	</div>
 </body>

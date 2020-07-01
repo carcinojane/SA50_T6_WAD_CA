@@ -208,28 +208,25 @@ public class StaffController {
 	@GetMapping("/history/details/{id}")
 	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("leave", lservice.findById(id));
-		//LeaveRecord record = lservice.findById(id);
 		return "staff_leaveHistory_details";
 	}
 
-	/*
-	 * @GetMapping("/history/details") public String leaveDetails(int id, Model
-	 * model) { //check LeaveStatus model.addAttribute("leave",
-	 * lservice.findById(id)); return "staff_leaveHistory_details";
-	 * 
-	 * }
-	 */
-
-	@GetMapping("/history/details/edit")
-	public String editLeaveDetails(Model model, int id) {
-		model.addAttribute("leave",lservice.findById(id));
-		LeaveRecord record = lservice.findById(id);
-		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
-			return "staff_leaveHistory_datails_edit";
-		} else {
-			return "staff_leaveHistory_details";
+	@GetMapping("/history/details/edit/{id}")
+	public String editLeaveDetails(Model model, @PathVariable("id") Integer id) {
+		LeaveRecord leaveRecord=lservice.findById(id);
+		if(!lservice.checkStatus(leaveRecord)) {
+			return "redirect:/staff/history/details/"+id;
 		}
+		model.addAttribute("leave",leaveRecord);
+			return "staff_leaveHistory_details_edit";
 	}
+	
+	@GetMapping("/history/details/delete/{id}")
+	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
+		lservice.deleteLeaveRecord(lservice.findById(id));
+			return "redirect:/staff/history";
+	}
+
 
 }
 
