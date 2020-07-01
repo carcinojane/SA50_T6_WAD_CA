@@ -90,9 +90,8 @@ public class StaffController {
 			return "staff_login";
 		}
 		model.addAttribute("staff", staff);
-		staff = sservice.findStaffObjByUsername(staff.getUsername());
 		session.setAttribute("display", staff.getUsername());
-		session.setAttribute("staff", staff);
+		session.setAttribute("staff", sservice.findStaffObjByUsername(staff.getUsername()));
 
 		if (registeredStaff.getDesignation()==Designation.manager){
 			return "redirect:/manager/home";
@@ -114,25 +113,12 @@ public class StaffController {
 	//	}
 
 	@GetMapping(value="/apply")
-	public String apply(Model model, HttpSession session,
-			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
-			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
-
+	public String apply(Model model, HttpSession session) {
 		Staff staff = (Staff)session.getAttribute("staff");
-		int id=staff.getStaffId();
-		model.addAttribute("staff",staff);
-		//model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
-		//model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
-		
-		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(id);
-
-		model.addAttribute("lrecords", lrecords);
-
-
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId()));
 		return ("staff_applyLeave");
 	}
 
-	//not working yet. 
 	//@RequestMapping(value="/search", method = RequestMethod.POST)
 	@RequestMapping(value="/search")
 	public String search(Model model, HttpSession session, 

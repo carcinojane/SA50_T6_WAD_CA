@@ -21,17 +21,17 @@ public class LeaveServiceImpl implements LeaveService {
 	@Autowired
 	LeaveRepository lrepo;
 
-	@Override
-	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(int staffId) {
-		ArrayList<LeaveRecord> records = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaverecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaverecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			records.add(leaveRecord2);
-			
-		}
-		return records; 
-	}
+//	@Override
+//	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(int staffId) {
+//		ArrayList<LeaveRecord> records = new ArrayList<LeaveRecord>();
+//		List<LeaveRecord> leaverecord = lrepo.findAll();
+//		for (Iterator<LeaveRecord> iterator = leaverecord.iterator(); iterator.hasNext();) {
+//			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
+//			records.add(leaveRecord2);
+//			
+//		}
+//		return records; 
+//	}
 
 	@Override
 	public ArrayList<LeaveRecord> findAll() {
@@ -137,4 +137,12 @@ public class LeaveServiceImpl implements LeaveService {
 		}
 		return lrecords; 
 	}
+
+	@Override
+	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId) {
+		// TODO Auto-generated method stub
+		return lrepo.findLeaveRecordByStaffId(staffId);
+	}
+
+	
 }

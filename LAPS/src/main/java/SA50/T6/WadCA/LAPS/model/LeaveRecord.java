@@ -45,6 +45,7 @@ public class LeaveRecord{
 	private String workDissemination;
 	private int contact;
 	private String reasonForRejection;
+	private String leaveTypeDisplay;
 	
 
 	public LeaveRecord() {
@@ -248,6 +249,10 @@ public class LeaveRecord{
 
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
+		this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
+	}
+	public String getLeaveTypeDisplay() {
+		return leaveTypeDisplay;
 	}
 
 	public char getLeaveStartTime() {
