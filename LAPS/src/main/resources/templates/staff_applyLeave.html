@@ -14,7 +14,7 @@
 <body>
 	<header th:insert="staff_login.html :: header"> </header>
 	<div class="content">
-		<h2 th:utext="${session.staff.username}">Session</h2>
+		<h2 th:utext="${session.staff.staffId}">Session</h2>
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
 		<form th:action="@{/staff/search}" method="post">

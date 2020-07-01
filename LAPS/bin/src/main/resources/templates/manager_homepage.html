@@ -3,11 +3,31 @@
 <head>
 <title th:utext="#{manager.homepage.page.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	<header th:insert="staff_login.html :: header"> </header>
+	 <header th:fragment="header">
+ 		<div class="topnav" id="myTopnav">
+ 			<img src="../../images/logo.png">
+ 			
+ 			<a href="/manager/home">Home</a>
+ 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout">Logout</button>
+ 			
+ 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+ 			<i class="fa fa-bars"></i>
+ 			</a>
+ 		</div>
+ 		
+ 		<div class="footer">
+ 			<p>Company Name &copy; All rights reserved.</p>
+ 		</div>
+ 	 </header>
 	 
 	 <div class="content">
 	 	<h2 th:utext="#{manager.homepage.page.title}"></h2>
