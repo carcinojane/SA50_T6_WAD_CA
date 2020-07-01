@@ -21,6 +21,7 @@
 				</select>
 			</fieldset>
 			<fieldset>
+			<!-- leavetype should not repeat -->
 				<!--  Status <select th:field=${staff.leaveStatus}>-->
 				Status <select name="leaveStatus">
 					<option th:each="status:${leaveStatuses}" th:value="${status}"
