@@ -51,31 +51,35 @@ public class LapsApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			//create staff
-
-			Staff manager1 = new Staff("manager1","password");
+			//create manager
+			Staff manager1 = new Staff("manager1","password",2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
-
+			Staff manager2 = new Staff("manager2","password2",2,60,18);
+			manager2.setDesignation(Staff.Designation.manager);
+			staffRepo.save(manager2);
+			Staff head = new Staff("Head","password3",2,60,18);
+			head.setDesignation(Staff.Designation.admin);
+			staffRepo.save(head);
+			
+			//create staff
 			Staff staff1 = new Staff("staff1","password");
 			Staff staff2 = new Staff("staff2","password");
-
-
-
+			Staff staff3 = new Staff("staff3","password3");
 			staff1.setManager(manager1);
+			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);
-
+			staff2.setDesignation(Staff.Designation.employee);
+			staff3.setManager(manager2);
+			staff3.setDesignation(Staff.Designation.employee);
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
-
-			Admin admin1=new Admin("admin1", "password");
+			staffRepo.save(staff3);
+			
+			//create admin
+			Admin admin1=new Admin("May Thu Kyaw","admin1", "password");
 			adminRepo.save(admin1);
 
-
-			
-
-
-			//};			
 			LeaveType annual_emp = new LeaveType(Designation.employee, LType.AnnualLeave, 14f, 1f);
 			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f,1f);
 			LeaveType compensation_emp = new LeaveType(Designation.employee, LType.Compensation, 2f, 0.5f);
@@ -117,12 +121,6 @@ public class LapsApplication {
 			System.out.println(l1.getLeaveType().getLeaveType().getDisplayValue());
 			System.out.println(l1.getLeaveTypeDisplay());
 			System.out.println(l4.getWorkDessemination());
-
-
-		//};
-
-
-
 
 //		LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
 //		LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
