@@ -36,8 +36,7 @@ public class ManagerController{
 	
 	@GetMapping("/approval")
 	public String approval(Model model, HttpSession session) {		
-		Staff staff = (Staff)session.getAttribute("staff");
-		
+		Staff staff = (Staff)session.getAttribute("staff");	
 		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(staff.getStaffId()));
 		return "manager_approval";
 	}

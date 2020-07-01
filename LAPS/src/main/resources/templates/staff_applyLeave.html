@@ -12,7 +12,7 @@
 <script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	<header th:insert="staff_login.html :: header"> </header>
+	<header th:insert="staff_homepage.html :: header"> </header>
 	<div class="content">
 		<h2 th:utext="${session.staff.staffId}">Session</h2>
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
