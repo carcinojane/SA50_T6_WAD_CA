@@ -208,17 +208,8 @@ public class StaffController {
 	@GetMapping("/history/details/{id}")
 	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("leave", lservice.findById(id));
-		//LeaveRecord record = lservice.findById(id);
 		return "staff_leaveHistory_details";
 	}
-
-	/*
-	 * @GetMapping("/history/details") public String leaveDetails(int id, Model
-	 * model) { //check LeaveStatus model.addAttribute("leave",
-	 * lservice.findById(id)); return "staff_leaveHistory_details";
-	 * 
-	 * }
-	 */
 
 	@GetMapping("/history/details/edit/{id}")
 	public String editLeaveDetails(Model model, @PathVariable("id") Integer id) {

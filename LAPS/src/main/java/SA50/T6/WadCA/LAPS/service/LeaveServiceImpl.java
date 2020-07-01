@@ -22,18 +22,6 @@ public class LeaveServiceImpl implements LeaveService {
 	@Autowired
 	LeaveRepository lrepo;
 
-//	@Override
-//	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(int staffId) {
-//		ArrayList<LeaveRecord> records = new ArrayList<LeaveRecord>();
-//		List<LeaveRecord> leaverecord = lrepo.findAll();
-//		for (Iterator<LeaveRecord> iterator = leaverecord.iterator(); iterator.hasNext();) {
-//			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-//			records.add(leaveRecord2);
-//			
-//		}
-//		return records; 
-//	}
-
 	@Transactional
 	public ArrayList<LeaveRecord> findAll() {
 		return (ArrayList<LeaveRecord>) lrepo.findAll();
@@ -55,12 +43,6 @@ public class LeaveServiceImpl implements LeaveService {
 		List<LeaveStatus>leaveStatus = Arrays.asList(LeaveStatus.values());
 		return leaveStatus;
 	}
-
-//	@Override
-//	public List<LeaveRecord> findByFromAndToDate(LocalDate leaveStartDate, LocalDate leaveEndDate) {
-//		List<LeaveRecord> leaveRecords = lrepo.findByFromAndToDate(leaveStartDate, leaveEndDate);
-//		return leaveRecords;
-//	}
 
 	@Transactional
 	public void deleteLeaveRecord(LeaveRecord leaveRecord) {
@@ -124,7 +106,6 @@ public class LeaveServiceImpl implements LeaveService {
 		lrecords = lrepo.findLeaveRecordByLeaveStatus(leaveStatus);
 		return lrecords; 
 	}
-
 	@Transactional
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
@@ -145,10 +126,9 @@ public class LeaveServiceImpl implements LeaveService {
 		lrecord = lrepo.findById(leaveId).get();
 		return lrecord;
 	}
-
+	
 	@Transactional
 	public Boolean checkStatus(LeaveRecord leaveRecord) {
-		
 		if(leaveRecord.getLeaveStatus()==LeaveStatus.APPLIED||
 				leaveRecord.getLeaveStatus()==LeaveStatus.UPDATED||
 				leaveRecord.getLeaveStatus()==LeaveStatus.CANCELLED) {
