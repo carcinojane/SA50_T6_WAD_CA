@@ -1,6 +1,5 @@
 package SA50.T6.WadCA.LAPS.model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -18,8 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,6 +29,7 @@ public class Staff {
 	private int staffId;
 	@Column(unique = true)
 	private String username;
+	@NotNull
 	private String password;
 	
 	//self-referencing staff to manger: staffId
@@ -52,7 +51,7 @@ public class Staff {
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd-MM-yyy")
+	@DateTimeFormat(pattern="dd-MM-yyyy")
 	private Date startDate;
 	
 	public Staff() {
