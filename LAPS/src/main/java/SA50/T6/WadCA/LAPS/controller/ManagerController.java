@@ -1,7 +1,5 @@
 package SA50.T6.WadCA.LAPS.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
+
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 
@@ -36,14 +36,16 @@ public class ManagerController{
 	
 	@GetMapping("/approval")
 	public String approval(Model model, HttpSession session) {		
-		List<LeaveRecord> lrecords = lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId")); 
-		model.addAttribute("lrecords", lrecords) ; 
+		Staff staff = (Staff)session.getAttribute("staff");
+		
+		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(staff.getStaffId()));
 		return "manager_approval";
 	}
 	
 	@GetMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("leave", lservice.findById(id));
+		LeaveRecord record = lservice.findById(id);
 		return "manager_leaveDetails";
 	}
 	
