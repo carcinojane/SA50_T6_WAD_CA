@@ -19,5 +19,6 @@ public interface StaffService {
 	public Integer findStaffIdByUsername(String username);
 	public Staff findManagerByUsername(String username);
 	public void deleteStaff(Staff staff);
+	public Staff findStaffObjByUsername(String username);
 
 }

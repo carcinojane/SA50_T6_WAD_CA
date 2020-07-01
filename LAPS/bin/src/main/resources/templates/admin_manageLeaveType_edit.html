@@ -13,7 +13,7 @@
 </head>
 <body>
 
-	<header th:insert="admin_login.html :: header"> </header>
+	<header th:insert="admin_homepage.html :: header"> </header>
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
@@ -21,10 +21,6 @@
 		<form action="#" th:object="${leavetype}"
 			th:action="@{/admin/manageLeaveType/save}" method="post">
 			<table class="list">
-				<tr>
-
-					<input type="hidden" th:field="*{id}">
-				</tr>
 				<tr>
 					<input type="hidden" th:field="${leavetype.leaveType}">
 				</tr>

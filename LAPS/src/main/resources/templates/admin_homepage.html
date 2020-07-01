@@ -12,7 +12,22 @@
 <script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	<header th:insert="admin_login.html :: header"> </header>
+	<header th:fragment="header">
+ 		<div class="topnav" id="myTopnav">
+ 			<img src="../../images/logo.png">
+ 			
+ 			<a onclick="location.href='/admin/.home'">Home</a>
+ 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout">Logout</button>
+ 			
+ 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+ 			<i class="fa fa-bars"></i>
+ 			</a>
+ 		</div>
+ 		
+ 		<div class="footer">
+ 			<p>Company Name &copy; All rights reserved.</p>
+ 		</div>
+ 	</header>
 
 	<div class="content">
 		<h2 th:utext="#{session.display.welcome}+${session.display}">

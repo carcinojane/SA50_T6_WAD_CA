@@ -80,20 +80,6 @@ public class LapsApplication {
 			Admin admin1=new Admin("May Thu Kyaw","admin1", "password");
 			adminRepo.save(admin1);
 
-
-			//create Leave Records
-			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
-					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',2,"",97856210);
-			//LeaveType lt1= new LeaveType(LeaveType.this);
-			//l1.setLeaveType(LType.AnnualLeave);
-			lRepo.save(l1);
-			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
-					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',2,"",8662395);
-			lRepo.save(l2);
-			LeaveRecord l3 = new LeaveRecord(1,LeaveStatus.APPROVED,"It's my birthday!",
-					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',2,"",8662395);
-			lRepo.save(l3);
-			
 			LeaveType annual_emp = new LeaveType(Designation.employee, LType.AnnualLeave, 14f, 1f);
 			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f,1f);
 			LeaveType compensation_emp = new LeaveType(Designation.employee, LType.Compensation, 2f, 0.5f);
@@ -107,6 +93,34 @@ public class LapsApplication {
 			ltservice.save(annual_mng);
 			ltservice.save(medical_mng);
 			ltservice.save(compensation_mng);
+			
+			//create Leave Records
+			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
+					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',2,"",97856210);
+			l1.setLeaveType(annual_emp);
+			lRepo.save(l1);
+			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
+					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',2,"",8662395);
+			l2.setLeaveType(medical_emp);
+			lRepo.save(l2);
+			LeaveRecord l3 = new LeaveRecord(1,LeaveStatus.APPROVED,"It's my birthday!",
+					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',2,"",8662395);
+			l3.setLeaveType(annual_emp);
+			lRepo.save(l3);
+			LeaveRecord l4 = new LeaveRecord(
+					LeaveStatus.APPROVED,
+					"There's a post-covid promotion that I cannot miss",
+					LocalDate.of(2020, 8, 9),'A',
+					LocalDate.of(2020, 8, 9),'A',
+					1,
+					annual_mng,
+					"N.A.",
+					8662395);
+			lRepo.save(l4);
+			
+			System.out.println(l1.getLeaveType().getLeaveType().getDisplayValue());
+			System.out.println(l1.getLeaveTypeDisplay());
+			System.out.println(l4.getWorkDessemination());
 
 //		LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
 //		LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);

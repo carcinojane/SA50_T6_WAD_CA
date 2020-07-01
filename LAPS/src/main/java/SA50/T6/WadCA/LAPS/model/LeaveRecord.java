@@ -45,6 +45,7 @@ public class LeaveRecord{
 	private String workDissemination;
 	private int contact;
 	private String reasonForRejection;
+	private String leaveTypeDisplay;
 	
 
 	public LeaveRecord() {
@@ -123,7 +124,26 @@ public class LeaveRecord{
 		this.contact = contact;
 		this.reasonForRejection = reasonForRejection;
 	}
+	
+	
 
+
+	public LeaveRecord(LeaveStatus leaveStatus, @NotNull(message = "Reason is mandatory field") String reason,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			 LeaveType leaveType, String workDissemination, int contact) {
+		super();
+		this.leaveStatus = leaveStatus;
+		this.reason = reason;
+		this.leaveStartDate = leaveStartDate;
+		this.leaveStartTime = leaveStartTime;
+		this.leaveEndDate = leaveEndDate;
+		this.leaveEndTime = leaveEndTime;
+		this.staffId = staffId;
+		this.leaveType = leaveType;
+		this.workDissemination = workDissemination;
+		this.contact = contact;
+	}
 
 	public int getLeaveId() {
 		return leaveId;
@@ -248,6 +268,10 @@ public class LeaveRecord{
 
 	public void setLeaveType(LeaveType leaveType) {
 		this.leaveType = leaveType;
+		this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
+	}
+	public String getLeaveTypeDisplay() {
+		return leaveTypeDisplay;
 	}
 
 	public char getLeaveStartTime() {

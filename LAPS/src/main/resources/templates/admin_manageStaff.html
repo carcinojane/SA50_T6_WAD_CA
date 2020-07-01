@@ -12,11 +12,11 @@
 <script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	<header th:insert="admin_login.html :: header"> </header>
+	<header th:insert="admin_homepage.html :: header"> </header>
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
-		<a href="/admin/homepage">Back</a> | <a href="/admin/manageStaff/add">Add
+		<a href="/admin/.home">Back</a> | <a href="/admin/manageStaff/add">Add
 			New Staff</a>
 		<h2 th:if="${not #lists.isEmpty(staffs)}">Staff List</h2>
 		<br />

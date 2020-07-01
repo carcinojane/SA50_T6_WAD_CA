@@ -51,6 +51,7 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Override
+
 	public ArrayList<String> findAllManagerNames() {
 		
 			List<Staff> staffs = srepo.findAllManagers();
@@ -61,6 +62,11 @@ public class StaffServiceImpl implements StaffService {
 			}
 			return names;
 		}
+
+	public Staff findStaffObjByUsername(String username) {
+		return srepo.findByUsername(username);
+	}
+
 //	@Override
 //	public ArrayList<Float> findLeaveBalanceById(int staffId) {
 //		Staff staff = srepo.findById(staffId).get();

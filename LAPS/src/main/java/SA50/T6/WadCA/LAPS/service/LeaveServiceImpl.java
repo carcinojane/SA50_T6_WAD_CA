@@ -4,8 +4,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,17 +22,17 @@ public class LeaveServiceImpl implements LeaveService {
 	@Autowired
 	LeaveRepository lrepo;
 
-	@Override
-	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(int staffId) {
-		ArrayList<LeaveRecord> records = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaverecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaverecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			records.add(leaveRecord2);
-			
-		}
-		return records; 
-	}
+//	@Override
+//	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(int staffId) {
+//		ArrayList<LeaveRecord> records = new ArrayList<LeaveRecord>();
+//		List<LeaveRecord> leaverecord = lrepo.findAll();
+//		for (Iterator<LeaveRecord> iterator = leaverecord.iterator(); iterator.hasNext();) {
+//			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
+//			records.add(leaveRecord2);
+//			
+//		}
+//		return records; 
+//	}
 
 	@Override
 	public ArrayList<LeaveRecord> findAll() {
@@ -112,29 +113,36 @@ public class LeaveServiceImpl implements LeaveService {
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			lrecords.add(leaveRecord2);
-			
-		}
+		lrecords = lrepo.findLeaveRecordByManagerId(managerId);
 		return lrecords; 
 	}
 	
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByLeaveStatus(String leaveStatus) {
-		return lrepo.findLeaveRecordByLeaveStatus(leaveStatus);
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		lrecords = lrepo.findLeaveRecordByLeaveStatus(leaveStatus);
+		return lrecords; 
 	}
 
 	@Override
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			lrecords.add(leaveRecord2);
-			
-		}
+		lrecords = lrepo.findPendingLeaveRecordByManagerId(managerId);
 		return lrecords; 
 	}
+
+	@Override
+	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId) {
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		lrecords = lrepo.findLeaveRecordByStaffId(staffId);
+		return lrecords; 
+	}
+
+	@Transactional
+	public LeaveRecord findLeaveRecordById(Integer leaveId) {
+		LeaveRecord lrecord = new LeaveRecord();
+		lrecord = lrepo.findById(leaveId).get();
+		return lrecord;
+	}
+
 }

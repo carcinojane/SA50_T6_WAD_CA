@@ -40,7 +40,9 @@
 			<td th:text=${lrecord.leaveEndDate}>To</td>
 			<td th:text=${lrecord.leaveStatus}>Status</td>
 			<td><a href="manager_approvalDetails.html"
-				th:href="@{/manager/details/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a></td>
+				th:href="@{/manager/staffLeaveDetails/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a>
+				<a href="manager_approvalDetails.html"
+				th:href="@{/manager/history/}+${lrecord.staffId}" th:utext="#{manager.history.page.title}"></a></td>
 		</tr>
 		</tbody>
 		</table>

@@ -6,6 +6,7 @@ public enum LType{
 	Compensation("Compensation");
 	
 	private final String displayValue;
+	
 	private LType(String displayValue) {
 		this.displayValue=displayValue;
 	}

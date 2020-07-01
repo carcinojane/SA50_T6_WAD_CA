@@ -68,7 +68,12 @@ public class AdminController {
 		admin = new Admin();
 		return "admin_login";
 	}
-
+	
+	@GetMapping("/.home")
+	public String menu() {
+		return "admin_homepage";
+	}
+	
 	@PostMapping("/home")
 	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult, Model model,
 			HttpSession session) {
@@ -81,7 +86,7 @@ public class AdminController {
 		}
 		model.addAttribute("admin", admin);
 		session.setAttribute("display", admin.getUsername());
-		return "admin_homepage";
+		return "redirect:/admin/.home";
 	}
 
 	@GetMapping("/logout")
