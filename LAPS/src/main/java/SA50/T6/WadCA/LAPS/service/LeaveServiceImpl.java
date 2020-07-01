@@ -4,8 +4,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -137,7 +138,7 @@ public class LeaveServiceImpl implements LeaveService {
 		return lrecords; 
 	}
 
-	
+	@Transactional
 	public LeaveRecord findLeaveRecordById(Integer leaveId) {
 		LeaveRecord lrecord = new LeaveRecord();
 		lrecord = lrepo.findById(leaveId).get();

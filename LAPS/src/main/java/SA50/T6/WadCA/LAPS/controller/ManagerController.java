@@ -40,7 +40,7 @@ public class ManagerController{
 		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(staff.getStaffId()));
 		return "manager_approval";
 	}
-	
+	//edited
 	@RequestMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("leave", lservice.findById(id));

@@ -30,6 +30,7 @@ public interface LeaveService {
 	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus);
 	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LeaveType leaveType);
 	public List<LeaveRecord> findByIdAndStatusAndType(Integer id,LeaveStatus leaveStatus, LeaveType leaveType);
+	
 	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId);
 
 	
