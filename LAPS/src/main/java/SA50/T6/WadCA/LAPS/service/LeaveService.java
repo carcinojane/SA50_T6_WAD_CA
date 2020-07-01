@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Staff;
 
 public interface LeaveService {
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId);
@@ -17,6 +18,8 @@ public interface LeaveService {
 	
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId (Integer managerId);
 	
+	public LeaveRecord findLeaveRecordById(Integer leaveId);
+		
 	public ArrayList<LeaveRecord> findAll();
 	public LeaveRecord findById(int id);
 	public boolean saveLeaveRecord(LeaveRecord leaveRecord);

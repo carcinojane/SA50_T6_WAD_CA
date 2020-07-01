@@ -112,29 +112,21 @@ public class LeaveServiceImpl implements LeaveService {
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			lrecords.add(leaveRecord2);
-			
-		}
+		lrecords = lrepo.findLeaveRecordByManagerId(managerId);
 		return lrecords; 
 	}
 	
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByLeaveStatus(String leaveStatus) {
-		return lrepo.findLeaveRecordByLeaveStatus(leaveStatus);
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		lrecords = lrepo.findLeaveRecordByLeaveStatus(leaveStatus);
+		return lrecords; 
 	}
 
 	@Override
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findAll();
-		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
-			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			lrecords.add(leaveRecord2);
-			
-		}
+		lrecords = lrepo.findPendingLeaveRecordByManagerId(managerId);
 		return lrecords; 
 	}
 
@@ -145,4 +137,10 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	
+	public LeaveRecord findLeaveRecordById(Integer leaveId) {
+		LeaveRecord lrecord = new LeaveRecord();
+		lrecord = lrepo.findById(leaveId).get();
+		return lrecord;
+	}
+
 }
