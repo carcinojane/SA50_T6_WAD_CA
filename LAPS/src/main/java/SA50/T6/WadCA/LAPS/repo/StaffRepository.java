@@ -14,4 +14,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	
 	@Query("Select s.username from Staff s")
 	ArrayList<String> findAllNames();
+	
+	
 }

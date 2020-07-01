@@ -11,8 +11,9 @@
 	 
 	 <div class="content">
 	 	<h2 th:utext="#{manager.approval.page.title}"></h2>
-	 	
-	 	<table>
+	 	<input id="userInput" type="text" placeholder="Search..">
+	 	<table class="list">
+	 	<thead>
 	 	<tr>
 	 		<th style="width:20%">Employee Id</th>
 			<th style="width:22.5%">From</th>
@@ -20,11 +21,12 @@
 			<th style="width:17.5%">Status</th>
 			<th style="width:17.5%">Action</th>
 		</tr>
+		</thead>
 		
+		<tbody id="leaveRecordTable">
 		<tr th:if="${#lists.isEmpty(lrecords)}">
-		<td colspan="5">No pending leave for approval.</td>
+			<td colspan="5">No pending leave for approval.</td>
 		</tr>
-		
 		<tr th:if="${not #lists.isEmpty(lrecords)}" th:each="lrecord:${lrecords}">
 			<td th:text=${lrecord.staffId}>Staff Id</td>
 			<td th:text=${lrecord.leaveStartDate}>From</td>
@@ -33,9 +35,22 @@
 			<td><a href="manager_approvalDetails.html"
 				th:href="@{/manager/details/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a></td>
 		</tr>
-		</table>
-		
+		</tbody>
+		</table>	
 	 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	  $("#userInput").on("keyup", function() {
+	    var value = $(this).val().toLowerCase();
+	    $("#leaveRecordTable tr").filter(function() {
+	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	    });
+	  });
+	});
+</script>
 
 </body>
 </html>

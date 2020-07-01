@@ -1,60 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:utext="#{admin.manageStaff.edit.page.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
-  </head>
+<head>
+<title th:utext="#{admin.manageStaff.edit.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+</head>
 <body>
-  <header th:insert="admin_login.html :: header"> </header>
+	<header th:insert="admin_login.html :: header"> </header>
 
- 	<div class="content">
-	 	<h2 th:utext="#{admin.manageStaff.edit.page.title}"></h2>
-	 	<form action="#" th:object="${staff}" th:action="@{/admin/manageStaff/save}"
-		method="post">
-		<fieldset>
-			<input type="hidden" th:field="*{staffId}">
-		</fieldset>
-		<fieldset>
-			User Name <input type="text" th:field="*{username}">
-			<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-		</fieldset>
-		<fieldset>
-			Password <input type="text" th:field="*{password}">
-			<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-		</fieldset>
-		<fieldset>
-			Start Date <input type="text" th:field="*{startDate}">
-			<p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
-		</fieldset>
-		<fieldset>
-			Designation <input type="text" th:field="*{designation}">
-			<p th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}"></p>
-		</fieldset>
-		<!-- <fieldset>
+	<div class="content">
+		<h2 th:utext="#{admin.manageStaff.edit.page.title}"></h2>
+		<form action="#" th:object="${staff}"
+			th:action="@{/admin/manageStaff/save}" method="post">
+			<table class="list">
+
+
+				<tr>
+
+					<input type="hidden" th:field="*{staffId}">
+				</tr>
+				<tr>
+
+					<td>User Name</td>
+					<td><input type="text" th:field="*{username}">
+						<p th:if="${#fields.hasErrors('username')}"
+							th:errors="*{username}"></p></td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td><input type="text" th:field="*{password}">
+						<p th:if="${#fields.hasErrors('password')}"
+							th:errors="*{password}"></p></td>
+				</tr>
+				<tr>
+					<td>Start Date</td>
+					<td><input type="text" th:field="*{startDate}"
+						placeholder="dd-MM-yyyy" />
+						<p th:if="${#fields.hasErrors('startDate')}"
+							th:errors="*{startDate}" /></td>
+				</tr>
+				<tr>
+					<td>Designation</td>
+					<td><select th:field="${staff.designation}">
+							<option
+								th:each="designationOptn : ${T(SA50.T6.WadCA.LAPS.model.Staff.Designation).values()}"
+								th:value="${designationOptn}" th:text="${designationOptn}"></option>
+					</select></td>
+				</tr>
+				<!-- <fieldset>
 			Managed By <input type="text" th:field="*{manager}">
 			<p th:if="${#fields.hasErrors('manager')}" th:errors="*{manager}"></p>
-		</fieldset> -->
-		<fieldset>
-			Total Annual Leave<input type="text" th:field="*{totalAnnualLeave}">
-			<p th:if="${#fields.hasErrors('totalAnnualLeave')}" th:errors="*{totalAnnualLeave}"></p>
-		</fieldset>
-		<fieldset>
-			Total Medical Leave<input type="text" th:field="*{totalMedicalLeave}">
-			<p th:if="${#fields.hasErrors('totalMedicalLeave')}" th:errors="*{totalMedicalLeave}"></p>
-		</fieldset>
-		<fieldset>
-			Total Compensation Leave<input type="text" th:field="*{totalCompensationLeave}">
-			<p th:if="${#fields.hasErrors('totalCompensationLeave')}" th:errors="*{totalCompensationLeave}"></p>
-		</fieldset>
-		<fieldset>
-			<input type="submit" value="Save"/>
-			&nbsp; &nbsp; 	
-			<input type="reset" value="Reset"/>
-		</fieldset>
+			</fieldset> -->
+				<tr>
+					<td>Total Annual Leave</td>
+					<td><input type="text" th:field="*{totalAnnualLeave}">
+						<p th:if="${#fields.hasErrors('totalAnnualLeave')}"
+							th:errors="*{totalAnnualLeave}"></p></td>
+				</tr>
+				<tr>
+					<td>Total Medical Leave</td>
+					<td><input type="text" th:field="*{totalMedicalLeave}">
+						<p th:if="${#fields.hasErrors('totalMedicalLeave')}"
+							th:errors="*{totalMedicalLeave}"></p></td>
+				</tr>
+				<tr>
+					<td>Total Compensation Leave</td>
+					<td><input type="text" th:field="*{totalCompensationLeave}">
+						<p th:if="${#fields.hasErrors('totalCompensationLeave')}"
+							th:errors="*{totalCompensationLeave}"></p></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
+				</tr>
 
-	</form>
+			</table>
+			<a href="Back.html" th:href="@{/admin/manageStaff}">Back</a>
+		</form>
 	</div>
 </body>
 </html>

@@ -15,10 +15,11 @@ public interface LeaveService {
 	@Query("SELECT lr FROM LeaveRecord lr WHERE lr.staffId = :staffId")
 	ArrayList<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")int staffId);
 	
-	@Query(
-		value = "SELECT lr FROM LeaveRecord lr WHERE lr.managerId = :managerId AND lr.leaveStatus = 'APPLIED'", 
-		nativeQuery = true)
-	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(@Param("managerId")int managerId);
+	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId);
+	
+	public ArrayList<LeaveRecord> findLeaveRecordByLeaveStatus(String leaveStatus);
+	
+	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId (Integer managerId);
 	
 	public ArrayList<LeaveRecord> findAll();
 	public LeaveRecord findById(int id);

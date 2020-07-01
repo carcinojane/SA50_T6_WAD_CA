@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.LeaveTypeId;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.repo.LeaveTypeRepository;
 
@@ -46,5 +47,15 @@ public class LeaveTypeImpl implements LeaveTypeService {
 	public void save(LeaveType leaveType) {
 		ltrepo.save(leaveType);
 		
+	}
+
+	@Override
+	public ArrayList<LeaveType> findAllLeaveType() {
+		return (ArrayList<LeaveType>) ltrepo.findAll();
+	}
+
+	@Override
+	public LeaveType findLeaveTypeById(LeaveTypeId id) {
+		return ltrepo.findById(id).get();
 	} 
 }
