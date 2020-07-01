@@ -48,6 +48,14 @@ public class ApplyLeaveValidator implements Validator {
 //			break;
 //		}
 //		
+		if(from.isAfter(to)) {
+			errors.reject("date error", "To date should be later than From date");
+		}
+		
+		if(from.isBefore(LocalDate.now())) {
+			errors.reject("back date", "From date should be later than today");
+		}
+		
 		if(from.getDayOfWeek() == DayOfWeek.SATURDAY || from.getDayOfWeek() == DayOfWeek.SUNDAY || to.getDayOfWeek() == DayOfWeek.SATURDAY || to.getDayOfWeek() == DayOfWeek.SUNDAY)
 		{
 			errors.reject("PH", "From or To date falls on PH");

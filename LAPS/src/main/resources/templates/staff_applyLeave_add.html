@@ -16,22 +16,27 @@
   <div class="content">
  <h2 th:utext="#{staff.applyLeave.title}"></h2>
  <h3>Apply Leave Form</h3>
- <form th:object="${leaveRecord}" th:action="@{/staff/save}" method="post">
+ <form th:object="${leaveRecord}" th:action="@{/staff/apply/save}" method="post">
  	<fieldset>
- 		<input type="hidden" th:field="*{id}">
+ 		<input type="hidden" th:field="*{leaveId}">
  	</fieldset>
  	<fieldset>
  		Leave Category
- 		<select th:field=*{leaveType.leaveType}>
+ 		<select name="leaveType" th:field="*{leaveType}">
+			<option th:each="LTypeOpt : ${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+			th:value="${LTypeOpt}" th:text="${LTypeOpt.displayValue}"></option>
+		</select>
+		<p th:if="${#fields.hasErrors('leaveType')}" th:errors="*{leaveType}"></p>
+<!--  		<select name="leaveType" th:field="${leaveTypeList}">
  			<option th:each="leave:${leaveTypeList}" th:value="${leave}" th:text="${leave}">
- 		</select>
+ 		</select> -->
  	</fieldset>
  	<fieldset>
  		From Date
  		<input type="date" th:field="*{leaveStartDate}">
  		<p th:if="${#fields.hasErrors('leaveStartDate')}" th:errors="*{leaveStartDate}"></p>
  	</fieldset>
- 	<fieldset th:if="${staff.leaveType.leaveType == Compensation Leave}">
+ <!-- 	<fieldset th:if="*{leaveType == Compensation Leave}"> -->
  		From Time
  		<select th:field=*{leaveStartTime}>
  			<option th:value="'P'" >PM</option>
@@ -44,7 +49,7 @@
  		<input type="date" th:field="*{leaveEndDate}">
  		<p th:if="${#fields.hasErrors('leaveEndDate')}" th:errors="*{leaveEndDate}"></p>
  	</fieldset>
- 	 <fieldset th:if="*{leaveType.leaveType == 'Compensation Leave'}">
+<!--  	 <fieldset th:if="*{leaveType == 'Compensation Leave'}"> -->
  		To Time
  		<select th:field=*{leaveStartTime}>
  			<option th:value="'P'" >PM</option>
@@ -57,10 +62,10 @@
  		<input type="text" th:field="*{reason}">
  		<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p>
  	</fieldset>
- 	<fieldset>
+ 	<!-- <fieldset>
  		Work Dissemination
  		<input type="text" th:field="*{workDissemination}">
- 	</fieldset>
+ 	</fieldset> -->
  	<fieldset>
  		Contact Details
  		<input type="text" th:field="*{contact}">

@@ -2,12 +2,15 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,15 +25,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Overtime;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.service.OvertimeService;
+import SA50.T6.WadCA.LAPS.service.OvertimeServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
 
@@ -61,6 +68,14 @@ public class StaffController {
 	@Autowired
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
+	}
+	
+	@Autowired
+	protected OvertimeService oservice;
+	
+	@Autowired
+	public void setOvertimeService(OvertimeServiceImpl oserviceImpl) {
+		this.oservice = oserviceImpl;
 	}
 
 	@InitBinder
@@ -93,6 +108,7 @@ public class StaffController {
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
 		session.setAttribute("staff", staff);
+		session.setAttribute("staffId", staff.getStaffId());
 
 		if (registeredStaff.getDesignation()==Designation.manager){
 			return "redirect:/manager/home";
@@ -164,22 +180,29 @@ public class StaffController {
 	}
 
 	@GetMapping("/apply/add")
-	public String applyLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, Model model, HttpSession session) {
-		leaveRecord = new LeaveRecord();
-		Designation designation = sservice.findStaffById((int)session.getAttribute("staffId")).getDesignation();
+	public String applyLeave(Model model, HttpSession session) {
+		model.addAttribute("leaveRecord", new LeaveRecord());
+		int staffId = (int)session.getAttribute("staffId");
+		Designation designation = sservice.findStaffById(staffId).getDesignation();
 		//model.addAttribute("leaveTypeList", ltservice.findAllLeaveTypeNames());
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
 		return "staff_applyLeave_add";
 	}
-
-	@GetMapping("/apply/save")
-	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
+	
+	@RequestMapping("/apply/save")
+	public String save(@ModelAttribute("leaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "staff_applyLeave_add";
 		}
-		if(leaveRecord.getLeaveType().equals("Annual Leave") || leaveRecord.getLeaveType().equals("Medical Leave")) {
-			leaveRecord.setLeaveStartTime('N');
-		}
+		
+		
+//		leaveRecord.setLeaveStartDate(LocalDate.parse(start, DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
+//		leaveRecord.setLeaveEndDate(LocalDate.parse(end, DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
+		
+		if(leaveRecord.getLeaveType().equals(LType.AnnualLeave) ||
+		  leaveRecord.getLeaveType().equals(LType.MedicalLeave)) {
+		  leaveRecord.setLeaveStartTime('N'); }
+		 
 		if(leaveRecord.getLeaveStatus() == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
 		} else if(leaveRecord.getLeaveStatus()==LeaveStatus.APPROVED) {
@@ -187,21 +210,24 @@ public class StaffController {
 		}else {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
+		
 		leaveRecord.setManagerId((sservice.findStaffById((int)session.getAttribute("staffId")).getManager().getStaffId()));
 		leaveRecord.setStaffId((int)session.getAttribute("staffId"));
-		//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
-		//			return "staff_applyLeave_add";
-		//		} else 
-
+//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+//			return "staff_applyLeave_add";
+//		} else 
+	
 		lservice.saveLeaveRecord(leaveRecord);
 		return "forward:/staff/apply";
 	}
+	
 
 	@GetMapping("/apply/delete")
 	public String delete(@ModelAttribute("LeaveRecord")LeaveRecord leaveRecord, HttpSession session) {
 		lservice.deleteLeaveRecord(leaveRecord);
 		return"forward:/staff/apply";
 	}
+	
 	@GetMapping("/balance")
 	public String balance(Model model, HttpSession session) {
 		//int staffId = (int) session.getAttribute("staffId");
@@ -239,6 +265,33 @@ public class StaffController {
 	public String editLeaveDetails(Model model, int id) {
 		model.addAttribute("leave",lservice.findById(id));
 		return "staff_leaveHistory_details_edit";
+	}
+	
+	@GetMapping("/overtime")
+	public String overtime(Model model, HttpSession session) {
+		int staffId =(int)session.getAttribute("staffId");
+		Staff staff = sservice.findStaffById(staffId);
+		model.addAttribute("compLeave", staff.getTotalCompensationLeave());
+		model.addAttribute("overtime", new Overtime());
+		return "staff_overtime";
+	}
+	
+	@GetMapping("/overtime/save")
+	public String OTsave(@ModelAttribute("overtime") @Valid Overtime overtime, BindingResult result,HttpSession session) {
+		if (result.hasErrors()) {
+			return "/staff_overtime";
+		}
+		Staff staff = sservice.findStaffById((int)session.getAttribute("staffId"));
+		//set staffId;
+		overtime.setStaff(staff);
+		oservice.SaveOvertime(overtime);
+		//calculate total compensation leave 
+		float currCompLeave = oservice.FindCompensationLeaveAwarded(overtime.getHours());
+		float totalCompLeave = staff.getTotalCompensationLeave() + currCompLeave;
+		staff.setTotalCompensationLeave(totalCompLeave);
+		sservice.saveStaff(staff);
+		
+		return "forward:/staff/home";
 	}
 
 }

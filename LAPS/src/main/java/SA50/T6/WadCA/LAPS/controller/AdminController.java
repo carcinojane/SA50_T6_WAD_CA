@@ -156,19 +156,19 @@ public class AdminController {
 //		return "admin_manageLeaveType_edit";
 //	}
 
-	@RequestMapping(value = "/manageLeaveType/save")
-	public String saveLeaveType(@ModelAttribute("leaveType") @Valid LeaveType leavetype, BindingResult bindingResult,
-			Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return "admin_manageLeaveType_edit";
-		}
-
-		ltservice.save(leavetype);
-		System.out.println("Designation: " + leavetype.getDesignation() + " ID: " + leavetype.getId() + " Leave Type: "
-				+ leavetype.getLeaveType());
-		return "forward:/admin/manageLeaveType";
-	}
+//	@RequestMapping(value = "/manageLeaveType/save")
+//	public String saveLeaveType(@ModelAttribute("leaveType") @Valid LeaveType leavetype, BindingResult bindingResult,
+//			Model model) {
+//
+//		if (bindingResult.hasErrors()) {
+//			return "admin_manageLeaveType_edit";
+//		}
+//
+//		ltservice.save(leavetype);
+//		System.out.println("Designation: " + leavetype.getDesignation() + " ID: " + leavetype.getId() + " Leave Type: "
+//				+ leavetype.getLeaveType());
+//		return "forward:/admin/manageLeaveType";
+//	}
 
 
 }

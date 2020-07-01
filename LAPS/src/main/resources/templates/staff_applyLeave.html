@@ -18,7 +18,7 @@
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
 		<form th:action="@{/staff/search}" method="post">
-			<fieldset>
+<!-- 			<fieldset> -->
 				<!--Category <select th:field=${staff.designation.designation}>
 				Category <select th:field=${staff.designation} name="leaveType">
 					<option th:each="leave:${leaveTypeList}" th:value="${leave}"
@@ -81,9 +81,7 @@
 					<td th:text="${leave.leaveStatus}">Status</td>
 					<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
 		</table>
-		<p>
-			<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>
-		</p>
+		<p><a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a></p>
 	</div>
 
 
