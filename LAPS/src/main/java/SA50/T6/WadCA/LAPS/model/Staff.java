@@ -79,6 +79,13 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 		this.startDate = startDate;
 	}
+	
+	public boolean isManager(Staff staff) {
+        if (staff.getDesignation() == Designation.manager) {
+            return true;
+        }
+        return false;
+    }
 
 //
 	public int getStaffId() {

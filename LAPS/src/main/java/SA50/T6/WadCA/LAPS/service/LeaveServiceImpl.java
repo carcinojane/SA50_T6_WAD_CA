@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
+import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 
 @Service
@@ -87,10 +88,37 @@ public class LeaveServiceImpl implements LeaveService {
 		
 		return numOfDay;
 	}
+
+
+	@Override
+	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus) {
+		
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndLeaveStatus(id, leaveStatus);
+	}
+
+	@Override
+	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LeaveType leaveType) {
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndLeaveType(id, leaveType);
+	}
+
+	@Override
+	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LeaveType leaveType) {
+		// TODO Auto-generated method stub
+		return lrepo.findByIdAndStatusAndType(id, leaveType, leaveStatus);
+	}
 	
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId) {
-		return lrepo.findLeaveRecordByManagerId(managerId);
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		List<LeaveRecord> leaveRecord = lrepo.findAll();
+		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
+			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
+			lrecords.add(leaveRecord2);
+			
+		}
+		return lrecords; 
 	}
 	
 	@Override
@@ -101,14 +129,12 @@ public class LeaveServiceImpl implements LeaveService {
 	@Override
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findLeaveRecordByManagerId(managerId);
-		
+		List<LeaveRecord> leaveRecord = lrepo.findAll();
 		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
 			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			String leaveRecord2Status = leaveRecord2.getLeaveStatus().toString();
-			if (leaveRecord2Status=="APPLIED")
 			lrecords.add(leaveRecord2);
+			
 		}
-		return lrecords;
+		return lrecords; 
 	}
 }
