@@ -6,17 +6,17 @@ import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 
 public class LeaveTypeId implements Serializable{
 
-	private int id;
+	private LType leaveType;
 	private Designation designation;
-	
 	
 	public LeaveTypeId() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public LeaveTypeId(int id, Designation designation) {
-		this.id = id;
+	public LeaveTypeId(LType leaveType, Designation designation) {
+		super();
+		this.leaveType = leaveType;
 		this.designation = designation;
 	}
 
@@ -25,7 +25,7 @@ public class LeaveTypeId implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((designation == null) ? 0 : designation.hashCode());
-		result = prime * result + id;
+		result = prime * result + ((leaveType == null) ? 0 : leaveType.hashCode());
 		return result;
 	}
 
@@ -38,15 +38,19 @@ public class LeaveTypeId implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		LeaveTypeId other = (LeaveTypeId) obj;
-		if (designation == null) {
-			if (other.designation != null)
-				return false;
-		} else if (!designation.equals(other.designation))
+		if (designation != other.designation)
 			return false;
-		if (id != other.id)
+		if (leaveType != other.leaveType)
 			return false;
 		return true;
 	}
+	
+	
+	
+	
+	
+	
+
 
 
 	
