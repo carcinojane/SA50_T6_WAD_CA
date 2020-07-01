@@ -12,11 +12,11 @@ import org.springframework.context.annotation.Bean;
 import SA50.T6.WadCA.LAPS.model.Admin;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
-<<<<<<< HEAD
+
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.repo.*;
 import SA50.T6.WadCA.LAPS.service.*;
-=======
+
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
@@ -26,7 +26,6 @@ import SA50.T6.WadCA.LAPS.repo.StaffRepository;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
 
->>>>>>> branch 'master' of https://github.com/carcinojane/SA50_T6_WAD_CA.git
 
 
 @SpringBootApplication
@@ -64,8 +63,8 @@ public class LapsApplication {
 
 			Staff staff1 = new Staff("staff1","password");
 			Staff staff2 = new Staff("staff2","password");
-			
-			
+
+
 
 			staff1.setManager(manager1);
 			staff2.setManager(manager1);
@@ -89,45 +88,43 @@ public class LapsApplication {
 			lRepo.save(l3);
 
 
-<<<<<<< HEAD
-		//};			
-					LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
-					LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
-					LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
-					LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
-					LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
-					LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
-					
-					ltservice.save(annual_emp);
-					ltservice.save(medical_emp);
-					ltservice.save(compensation_emp);
-					ltservice.save(annual_mng);
-					ltservice.save(medical_mng);
-					ltservice.save(compensation_mng);
-					
-		
-				};
+			//};			
+			LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
+			LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
+			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
+			LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
+			LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
+			LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
+
+			ltservice.save(annual_emp);
+			ltservice.save(medical_emp);
+			ltservice.save(compensation_emp);
+			ltservice.save(annual_mng);
+			ltservice.save(medical_mng);
+			ltservice.save(compensation_mng);
+
+
+		//};
 
 
 
-=======
-			
-				LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
-				LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
-		//			LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
-					LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
-					LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
-		//			LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
-		//			
-					ltservice.save(annual_emp);
-					ltservice.save(medical_emp);
-		//			ltservice.save(compensation_emp);
-					ltservice.save(annual_mng);
-				ltservice.save(medical_mng);
-		//			ltservice.save(compensation_mng);
-		//			
-		//
-				};
->>>>>>> branch 'master' of https://github.com/carcinojane/SA50_T6_WAD_CA.git
-	}
+
+//		LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
+//		LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
+//		LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
+//		LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
+//		LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
+//		LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
+//
+//		ltservice.save(annual_emp);
+//		ltservice.save(medical_emp);
+//		ltservice.save(compensation_emp);
+//		ltservice.save(annual_mng);
+//		ltservice.save(medical_mng);
+//		ltservice.save(compensation_mng);
+
+
+	};
+
+}
 }

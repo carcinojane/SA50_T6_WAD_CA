@@ -88,7 +88,7 @@ public class LeaveServiceImpl implements LeaveService {
 		
 		return numOfDay;
 	}
-<<<<<<< HEAD
+
 
 	@Override
 	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus) {
@@ -107,7 +107,7 @@ public class LeaveServiceImpl implements LeaveService {
 	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LeaveType leaveType) {
 		// TODO Auto-generated method stub
 		return lrepo.findByIdAndStatusAndType(id, leaveType, leaveStatus);
-=======
+	}
 	
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId) {
@@ -131,6 +131,5 @@ public class LeaveServiceImpl implements LeaveService {
 			lrecords.add(leaveRecord2);
 		}
 		return lrecords;
->>>>>>> branch 'master' of https://github.com/carcinojane/SA50_T6_WAD_CA.git
 	}
 }
