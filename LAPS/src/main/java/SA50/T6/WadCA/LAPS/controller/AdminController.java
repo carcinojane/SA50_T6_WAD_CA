@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -64,29 +66,29 @@ public class AdminController {
 	@GetMapping("/login")
 	public String login(@ModelAttribute("admin") Admin admin) {
 		admin = new Admin();
-        return "admin_login"; 
-    }
-	
+		return "admin_login";
+	}
+
 	@PostMapping("/home")
-	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult,
-			Model model, HttpSession session) {
-		if(bindingResult.hasErrors()||admin==null) {
+	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult, Model model,
+			HttpSession session) {
+		if (bindingResult.hasErrors() || admin == null) {
 			return "admin_login";
-		} 
+		}
 		Admin registeredAdmin = aservice.findAdminByName(admin.getUsername());
-		if(!registeredAdmin.getPassword().equals(admin.getPassword())) {
+		if (!registeredAdmin.getPassword().equals(admin.getPassword())) {
 			return "admin_login";
 		}
 		model.addAttribute("admin", admin);
 		session.setAttribute("display", admin.getUsername());
-        return "admin_homepage"; 
-    }
-	
+		return "admin_homepage";
+	}
+
 	@GetMapping("/logout")
 	public String logout(@ModelAttribute("admin") Admin admin, Model model, SessionStatus status) {
 		status.setComplete();
 		return "forward:/admin/login";
-	}	
+	}
 
 	@RequestMapping(value = "/homepage")
 	public String homepage(Model model) {
@@ -102,17 +104,21 @@ public class AdminController {
 	@GetMapping("/manageStaff/details/{id}")
 	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
+		
 		return "admin_manageStaff_details";
 	}
-	@RequestMapping(value="/manageStaff/search")
-	public String showStaff(@RequestParam(value="username") String username,Model model) {
-		model.addAttribute("staff", sservice.findStaffByName(username));
-		return "admin_manageStaff_details";
+
+	@RequestMapping(value = "/manageStaff/search")
+	public String showStaff(@RequestParam(value = "username") String username, Model model) {
+		model.addAttribute("staffs", sservice.findSearchStaff(username));
+		System.out.println("UserName= "+username+" Staff list"+sservice.findSearchStaff(username));
+		return "admin_manageStaff";
 	}
 
 	@GetMapping("/manageStaff/add")
 	public String addStaff(Model model) {
 		model.addAttribute("staff", new Staff());
+		model.addAttribute("managers", sservice.findAllManager());
 		return "admin_manageStaff_add";
 	}
 
@@ -123,16 +129,19 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "manageStaff/save")
-	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult, Model model) {
+	public String saveStaff(@ModelAttribute("staff") @Valid Staff staff,
+			BindingResult bindingResult, Model model) {
+		System.out.println("Manager: " + staff.getManager());
 		if (bindingResult.hasErrors()) {
-			return "admin_manageStaff_edit";
+			System.out.println("!!!Has Error Binding Result!!!!");
+			return "admin_manageStaff_add";
 		}
-
+		//staff.setManager(manager);
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
 	}
 
-	@RequestMapping(value="/manageLeaveType")
+	@RequestMapping(value = "/manageLeaveType")
 	public String manageLeaveType(Model model) {
 		model.addAttribute("leavetypes", ltservice.findAllLeaveType());
 		return "admin_manageLeaveType";
@@ -146,16 +155,17 @@ public class AdminController {
 		return "admin_manageLeaveType_edit";
 	}
 
-	@RequestMapping(value="/manageLeaveType/save")
+	@RequestMapping(value = "/manageLeaveType/save")
 	public String saveLeaveType(@ModelAttribute("leaveType") @Valid LeaveType leavetype, BindingResult bindingResult,
 			Model model) {
-		
+
 		if (bindingResult.hasErrors()) {
 			return "admin_manageLeaveType_edit";
 		}
 
 		ltservice.save(leavetype);
-		System.out.println("Designation: " + leavetype.getDesignation()+" ID: "+leavetype.getId()+" Leave Type: "+leavetype.getLeaveType());
+		System.out.println("Designation: " + leavetype.getDesignation() + " ID: " + leavetype.getId() + " Leave Type: "
+				+ leavetype.getLeaveType());
 		return "forward:/admin/manageLeaveType";
 	}
 

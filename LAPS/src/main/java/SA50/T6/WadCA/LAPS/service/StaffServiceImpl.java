@@ -35,6 +35,16 @@ public class StaffServiceImpl implements StaffService {
 		if(srepo.save(staff)!=null) return true; else return false;
 	}
 
+	@Override
+	public ArrayList<Staff> findAllManager() {
+		return (ArrayList<Staff>) srepo.findAllManagers();
+	}
+
+	@Override
+	public ArrayList<Staff> findSearchStaff(String username) {
+		return (ArrayList<Staff>) srepo.findStaffLikeSearchInput(username);
+			}
+
 //	@Override
 //	public ArrayList<Float> findLeaveBalanceById(int staffId) {
 //		Staff staff = srepo.findById(staffId).get();
