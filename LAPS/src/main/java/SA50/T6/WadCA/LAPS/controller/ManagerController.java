@@ -41,9 +41,9 @@ public class ManagerController{
 		return "manager_approval";
 	}
 	
-	@GetMapping("/staffLeaveDetails/{id}")
+	@RequestMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("leave", lservice.findLeaveRecordById(id));
+		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
 	

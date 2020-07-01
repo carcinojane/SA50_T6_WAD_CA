@@ -103,9 +103,20 @@ public class LapsApplication {
 					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',2,"",8662395);
 			l3.setLeaveType(annual_emp);
 			lRepo.save(l3);
+			LeaveRecord l4 = new LeaveRecord(
+					LeaveStatus.APPROVED,
+					"There's a post-covid promotion that I cannot miss",
+					LocalDate.of(2020, 8, 9),'A',
+					LocalDate.of(2020, 8, 9),'A',
+					1,
+					annual_mng,
+					"N.A.",
+					8662395);
+			lRepo.save(l4);
 			
 			System.out.println(l1.getLeaveType().getLeaveType().getDisplayValue());
 			System.out.println(l1.getLeaveTypeDisplay());
+			System.out.println(l4.getWorkDessemination());
 
 
 		//};
