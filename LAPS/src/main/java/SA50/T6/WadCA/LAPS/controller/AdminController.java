@@ -64,33 +64,33 @@ public class AdminController {
 	@GetMapping("/login")
 	public String login(@ModelAttribute("admin") Admin admin) {
 		admin = new Admin();
-		return "admin_login";
-	}
-
+        return "admin_login"; 
+    }
+	
 	@PostMapping("/home")
-	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult, Model model,
-			HttpSession session) {
-		if (bindingResult.hasErrors() || admin == null) {
+	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult,
+			Model model, HttpSession session) {
+		if(bindingResult.hasErrors()||admin==null) {
 			return "admin_login";
-		}
+		} 
 		Admin registeredAdmin = aservice.findAdminByName(admin.getUsername());
-		if (!registeredAdmin.getPassword().equals(admin.getPassword())) {
+		if(!registeredAdmin.getPassword().equals(admin.getPassword())) {
 			return "admin_login";
 		}
 		model.addAttribute("admin", admin);
 		session.setAttribute("display", admin.getUsername());
-		return "admin_homepage";
-	}
-
-	@RequestMapping(value = "/homepage")
-	public String homepage(Model model) {
-		return "admin_homepage";
-	}
-
+        return "admin_homepage"; 
+    }
+	
 	@GetMapping("/logout")
 	public String logout(@ModelAttribute("admin") Admin admin, Model model, SessionStatus status) {
 		status.setComplete();
 		return "forward:/admin/login";
+	}	
+
+	@RequestMapping(value = "/homepage")
+	public String homepage(Model model) {
+		return "admin_homepage";
 	}
 
 	@RequestMapping(value = "/manageStaff")
