@@ -96,15 +96,15 @@ public class LapsApplication {
 			
 			//create Leave Records
 			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
-					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',2,"",97856210);
+					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',4,"",97856210);
 			l1.setLeaveType(annual_emp);
 			lRepo.save(l1);
 			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
-					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',2,"",8662395);
+					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',4,"",8662395);
 			l2.setLeaveType(medical_emp);
 			lRepo.save(l2);
 			LeaveRecord l3 = new LeaveRecord(1,LeaveStatus.APPROVED,"It's my birthday!",
-					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',2,"",8662395);
+					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',4,"",8662395);
 			l3.setLeaveType(annual_emp);
 			lRepo.save(l3);
 			LeaveRecord l4 = new LeaveRecord(
