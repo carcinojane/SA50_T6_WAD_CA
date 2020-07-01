@@ -132,8 +132,9 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId) {
-		// TODO Auto-generated method stub
-		return lrepo.findLeaveRecordByStaffId(staffId);
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		lrecords = lrepo.findLeaveRecordByStaffId(staffId);
+		return lrecords; 
 	}
 
 	

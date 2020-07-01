@@ -8,23 +8,18 @@
 <link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/search.js"></script>
 </head>
 <body>
-	<header th:insert="staff_login.html :: header"> </header>
+	<header th:insert="staff_homepage.html :: header"> </header>
 	<div class="content">
-		<h2 th:utext="${session.staff.staffId}">Session</h2>
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
 		<form th:action="@{/staff/search}" method="post">
-			<fieldset>
-				<!--Category <select th:field=${staff.designation.designation}>
-				Category <select th:field=${staff.designation} name="leaveType">
-					<option th:each="leave:${leaveTypeList}" th:value="${leave}"
-						th:text="${leave}">
-				</select>
-			</fieldset>-->
+		<input id="userInput" type="text" placeholder="Search..">
 			<fieldset>
 				Category<select name="LType">
 					<option
@@ -41,18 +36,9 @@
 						
 				</select>
 			</fieldset>
-			<!--<fieldset>
-			<!-- leavetype should not repeat -->
-			<!--  Status <select th:field=${staff.leaveStatus}
-				Status <select name="leaveStatus">
-					<option th:each="status:${leaveStatuses}" th:value="${status}"
-						th:text="${status}">
-				</select>
-			</fieldset>-->
-
-			<fieldset>
+			
 				<button type="submit">Search</button>
-			</fieldset>
+			
 		</form>
 
 
@@ -77,8 +63,8 @@
 					th:each="leave:${lrecords}">
 					<td th:text="${leave.leaveStartDate}">From</td>
 					<td th:text="${leave.leaveEndDate}">To</td>
-					<td th:text="${leave.leaveType}">Category</td>
-					<td th:text="${leave.leaveStatus}">Status</td>
+					<td th:text="${leave.leaveTypeDisplay}">Category</td>
+					<td th:text="${leave.leaveStatus.displayValue}">Status</td>
 					<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
 		</table>
 		<p>
