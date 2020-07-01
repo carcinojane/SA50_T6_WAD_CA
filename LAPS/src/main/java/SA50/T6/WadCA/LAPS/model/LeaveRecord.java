@@ -217,7 +217,7 @@ public class LeaveRecord{
 	
 
 
-	public String getWorkDessemination() {
+	public String getWorkDissemination() {
 		return workDissemination;
 	}
 
@@ -230,7 +230,7 @@ public class LeaveRecord{
 		this.staffId = staffId;
 	}
 
-	public void setWorkDessemination(String workDessemination) {
+	public void setWorkDissemination(String workDessemination) {
 		this.workDissemination = workDessemination;
 	}
 

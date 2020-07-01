@@ -62,7 +62,8 @@
 				<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
 				<td data-input="leavetype" th:text="${leave.leaveTypeDisplay}">Category</td>
 				<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
-				<td data-input="dummy3" th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
+				<td data-input="dummy3"><a th:href="@{/staff/history/details/}+${leave.leaveId}"
+						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
             </tr>
 		</tbody>
     </table>

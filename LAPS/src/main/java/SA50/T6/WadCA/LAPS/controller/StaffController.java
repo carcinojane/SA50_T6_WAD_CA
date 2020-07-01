@@ -106,11 +106,6 @@ public class StaffController {
 		return "forward:/staff/login";
 	}	
 
-	//	@GetMapping("/list")
-	//	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
-	//		lservice.findLeaveRecordByStaffId(staffId);
-	//		return ("staff_applyLeave");
-	//	}
 
 	@GetMapping(value="/apply")
 	public String apply(Model model, HttpSession session) {
@@ -119,45 +114,17 @@ public class StaffController {
 		return ("staff_applyLeave");
 	}
 
-	//@RequestMapping(value="/search", method = RequestMethod.POST)
-	@RequestMapping(value="/search")
-	public String search(Model model, HttpSession session, 
-			@RequestParam(value="leaveStatus", required=false) LeaveStatus leaveStatus,
-			@RequestParam(value="leaveType", required=false)LeaveType leaveType) {
-		Staff staff = (Staff)session.getAttribute("staff");
-		Integer id=staff.getStaffId();
-
-		//search by leaveStatus and leaveType
-		if (leaveStatus!=null && leaveType!=null) {
-			//model.addAttribute("lrecords", lservice.findByIdAndStatusAndType(id, leaveStatus, leaveType));
-		}
-		//search by leaveType
-		else if (leaveType!=null) {
-			model.addAttribute("lrecords", lservice.findByIdAndLeaveType(id, leaveType));
-		}
-		//search by leaveStatus
-		else if (leaveStatus!=null) {
-			//model.addAttribute("lrecords", lservice.findByIdAndLeaveStatus(id, leaveStatus));
-		}
-		else {
-			model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id));
-		}
-
-
-		//Staff staff = (Staff)session.getAttribute("staff");
-		//		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
-		//		List<LeaveStatus> leaveStatus = lservice.findAllLeaveStatus();
-		//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
-		//		model.addAttribute("leaveStatus", leaveStatus);
-		return ("staff_applyLeave");
-	}
+	
 
 	@GetMapping("/apply/add")
 	public String applyLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, Model model, HttpSession session) {
 		leaveRecord = new LeaveRecord();
-		Designation designation = sservice.findStaffById((int)session.getAttribute("staffId")).getDesignation();
+		Staff staff = (Staff)session.getAttribute("staff");
+		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 		//model.addAttribute("leaveTypeList", ltservice.findAllLeaveTypeNames());
-		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
+//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
+		model.addAttribute("leaveTypeList", ltservice.findByDesignation(designation));
+		
 		return "staff_applyLeave_add";
 	}
 

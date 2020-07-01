@@ -130,8 +130,7 @@ public class LeaveServiceImpl implements LeaveService {
 	@Transactional
 	public Boolean checkStatus(LeaveRecord leaveRecord) {
 		if(leaveRecord.getLeaveStatus()==LeaveStatus.APPLIED||
-				leaveRecord.getLeaveStatus()==LeaveStatus.UPDATED||
-				leaveRecord.getLeaveStatus()==LeaveStatus.CANCELLED) {
+				leaveRecord.getLeaveStatus()==LeaveStatus.UPDATED) {
 			return true;
 		}
 		return false;

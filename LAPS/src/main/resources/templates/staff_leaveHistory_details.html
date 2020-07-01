@@ -38,20 +38,18 @@
 				<td>Reason</td>
 				<td th:text="${leave.reason}"></td>
 			</tr>
-			<!--  <tr><td>Work Dissemination</td><td th:text="${leave.workDissemination}"></td></tr>-->
+			<tr>
+				<td>Work Dissemination</td>
+				<td th:text="${leave.workDissemination}"></td>
+			</tr>
 		</table>
 
-
-		<!--  <input type="button"
-			th:onclick="'location.href='/staff/history/details/edit/'+${leave.leaveId}+'\'"
-			value="Update"/> -->
-			
 		<a th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
-		<button style="background-color:grey">Update</button></a>
-		
-		<a th:href="@{/staff/history/details/delete/}+${leave.leaveId}">
-		<button style="background-color:red">Delete</button></a>
-			
+			<button style="background-color: grey">Update</button>
+		</a> <a th:href="@{/staff/history/details/delete/}+${leave.leaveId}">
+			<button style="background-color: red">Delete</button>
+		</a>
+
 	</div>
 </body>
 </html>
