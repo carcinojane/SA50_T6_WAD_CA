@@ -111,7 +111,14 @@ public class LeaveServiceImpl implements LeaveService {
 	
 	@Override
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId) {
-		return lrepo.findLeaveRecordByManagerId(managerId);
+		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
+		List<LeaveRecord> leaveRecord = lrepo.findAll();
+		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
+			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
+			lrecords.add(leaveRecord2);
+			
+		}
+		return lrecords; 
 	}
 	
 	@Override
@@ -122,14 +129,12 @@ public class LeaveServiceImpl implements LeaveService {
 	@Override
 	public ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(Integer managerId) {
 		ArrayList<LeaveRecord> lrecords = new ArrayList<LeaveRecord>();
-		List<LeaveRecord> leaveRecord = lrepo.findLeaveRecordByManagerId(managerId);
-		
+		List<LeaveRecord> leaveRecord = lrepo.findAll();
 		for (Iterator<LeaveRecord> iterator = leaveRecord.iterator(); iterator.hasNext();) {
 			LeaveRecord leaveRecord2 = (LeaveRecord) iterator.next();
-			String leaveRecord2Status = leaveRecord2.getLeaveStatus().toString();
-			if (leaveRecord2Status=="APPLIED")
 			lrecords.add(leaveRecord2);
+			
 		}
-		return lrecords;
+		return lrecords; 
 	}
 }
