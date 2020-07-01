@@ -43,8 +43,7 @@ public class ManagerController{
 	
 	@GetMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
-		model.addAttribute("leave", lservice.findById(id));
-		LeaveRecord record = lservice.findById(id);
+		model.addAttribute("leave", lservice.findLeaveRecordById(id));
 		return "manager_leaveDetails";
 	}
 	

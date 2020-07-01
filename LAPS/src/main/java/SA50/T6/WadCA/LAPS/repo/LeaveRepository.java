@@ -34,5 +34,4 @@ public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer> {
 	
 	@Query("SELECT lr FROM LeaveRecord lr WHERE lr.managerId = :managerId AND (lr.leaveStatus = 0 OR lr.leaveStatus = 4)")
 	ArrayList<LeaveRecord> findPendingLeaveRecordByManagerId(@Param("managerId")Integer managerId);
-
 }
