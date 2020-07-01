@@ -14,20 +14,37 @@
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Search</h3>
 		<form th:action="@{/staff/search}" method="post">
 			<fieldset>
-				<!--Category <select th:field=${staff.designation.designation}>-->
+				<!--Category <select th:field=${staff.designation.designation}>
 				Category <select th:field=${staff.designation} name="leaveType">
 					<option th:each="leave:${leaveTypeList}" th:value="${leave}"
 						th:text="${leave}">
 				</select>
+			</fieldset>-->
+			<fieldset>
+				Category<select name="LType">
+					<option
+						th:each="LTypeOpt : ${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+						th:value="${LTypeOpt}" th:text="${LTypeOpt.displayValue}"></option>
+						
+				</select>
 			</fieldset>
 			<fieldset>
+				Status<select name="status">
+					<option
+						th:each="status : ${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
+						th:value="${status}" th:text="${status.displayValue}"></option>
+						
+				</select>
+			</fieldset>
+			<!--<fieldset>
 			<!-- leavetype should not repeat -->
-				<!--  Status <select th:field=${staff.leaveStatus}>-->
+			<!--  Status <select th:field=${staff.leaveStatus}
 				Status <select name="leaveStatus">
 					<option th:each="status:${leaveStatuses}" th:value="${status}"
 						th:text="${status}">
 				</select>
-			</fieldset>
+			</fieldset>-->
+
 			<fieldset>
 				<button type="submit">Search</button>
 			</fieldset>
@@ -35,28 +52,29 @@
 
 
 		<h3 th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
-		
+
 		<table class="list">
-	 	<thead>
-	 	<tr>
-	 		<th style="width:20%">From</th>
-			<th style="width:22.5%">To</th>
-			<th style="width:22.5%">Category</th>
-			<th style="width:17.5%">Status</th>
-			<th style="width:17.5%">Action</th>
-		</tr>
-		</thead>
-		
-		<tbody id="leaveRecordTable">
-		<tr th:if="${#lists.isEmpty(lrecords)}">
-			<td colspan="5">No leave records found.</td>
-		</tr>
-		<tr th:if="${not #lists.isEmpty(lrecords)}" th:each="leave:${lrecords}">
-				<td th:text="${leave.leaveStartDate}">From</td>
-				<td th:text="${leave.leaveEndDate}">To</td>
-				<td th:text="${leave.leaveType}">Category</td>
-				<td th:text="${leave.leaveStatus}">Status</td>
-				<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
+			<thead>
+				<tr>
+					<th style="width: 20%">From</th>
+					<th style="width: 22.5%">To</th>
+					<th style="width: 22.5%">Category</th>
+					<th style="width: 17.5%">Status</th>
+					<th style="width: 17.5%">Action</th>
+				</tr>
+			</thead>
+
+			<tbody id="leaveRecordTable">
+				<tr th:if="${#lists.isEmpty(lrecords)}">
+					<td colspan="5">No leave records found.</td>
+				</tr>
+				<tr th:if="${not #lists.isEmpty(lrecords)}"
+					th:each="leave:${lrecords}">
+					<td th:text="${leave.leaveStartDate}">From</td>
+					<td th:text="${leave.leaveEndDate}">To</td>
+					<td th:text="${leave.leaveType}">Category</td>
+					<td th:text="${leave.leaveStatus}">Status</td>
+					<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
 		</table>
 		<p>
 			<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>

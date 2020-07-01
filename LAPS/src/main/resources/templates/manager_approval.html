@@ -3,11 +3,18 @@
 <head>
 <title th:utext="#{manager.approval.page.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" media="all" 
-          href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/search.js"></script>
 </head>
 <body>
-	<header th:insert="staff_login.html :: header"> </header>
+	<header th:insert="manager_homepage.html :: header"> </header>
 	 
 	 <div class="content">
 	 	<h2 th:utext="#{manager.approval.page.title}"></h2>
@@ -36,21 +43,8 @@
 				th:href="@{/manager/details/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a></td>
 		</tr>
 		</tbody>
-		</table>	
+		</table>
 	 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-$(document).ready(function(){
-	  $("#userInput").on("keyup", function() {
-	    var value = $(this).val().toLowerCase();
-	    $("#leaveRecordTable tr").filter(function() {
-	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-	    });
-	  });
-	});
-</script>
 
 </body>
 </html>

@@ -50,6 +50,15 @@
 								th:value="${designationOptn}" th:text="${designationOptn}"></option>
 					</select></td>
 				</tr>
+				<!-- <tr>
+					<td>Managed By</td>
+					<td><select th:field="${staff.manager}">
+							 <option th:value="Null" selected>--Select--</option>
+				
+							<option th:each="manager : ${managers}" th:value="${manager.staffId}"
+								th:text="${manager.username}"></option>
+					</select></td>
+				</tr> -->
 				<tr>
 					<td>Total Annual Leave</td>
 					<td><input type="text" th:field="*{totalAnnualLeave}">

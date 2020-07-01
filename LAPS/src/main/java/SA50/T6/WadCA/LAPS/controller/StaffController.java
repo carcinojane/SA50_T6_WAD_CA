@@ -73,6 +73,11 @@ public class StaffController {
 		session.setAttribute("staffId", staff.getStaffId());
 		return "staff_login";
 	}
+	
+	@GetMapping("/.home")
+	public String menu() {
+		return "staff_homepage";
+	}
 
 	@PostMapping("/home")
 	public String home(@ModelAttribute("staff") @Valid Staff staff, BindingResult bindingResult,
@@ -92,7 +97,7 @@ public class StaffController {
 			return "redirect:/manager/home";
 		}
 
-		return "staff_homepage";
+		return "redirect:/staff/.home";
 	}
 
 	@GetMapping("/logout")
