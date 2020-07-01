@@ -1,10 +1,9 @@
-package SA50.T6.WadCA.LAPS.controller;
 
+package SA50.T6.WadCA.LAPS.controller;
 
 
 import java.time.DayOfWeek;
 import java.util.List;
-
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -13,33 +12,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-
-import org.springframework.web.bind.WebDataBinder;
-
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-
-import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.Staff;
-
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
-
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
+
+
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @SessionAttributes("display")
@@ -69,8 +65,8 @@ public class StaffController {
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
 	}
-	
-	@InitBinder
+  
+  	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 		
 	}
@@ -93,15 +89,16 @@ public class StaffController {
 		}
 		model.addAttribute("staff", staff);
 		session.setAttribute("display", staff.getUsername());
+		session.setAttribute("staff", staff);
 		return "staff_homepage";
 		//return "forward:/manager/home";
-	}
-	
-	@GetMapping("/logout")
-	public String logout(@ModelAttribute("staff") Staff staff, Model model, SessionStatus status) {
+	  }
+  
+    @GetMapping("/logout")
+	  public String logout(@ModelAttribute("staff") Staff staff, Model model, SessionStatus status) {
 		status.setComplete();
 		return "forward:/staff/login";
-	}	
+	  }	
 	
 //	@GetMapping("/list")
 //	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
@@ -110,8 +107,9 @@ public class StaffController {
 //	}
 	
 	@GetMapping("/apply")
-	public String apply(Model model, int staffId) {
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staffId)) ;
+	public String apply(Model model, HttpSession session) {
+		Staff staff = (Staff)session.getAttribute("staff");
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
 		return ("staff_applyLeave");
 	}
 	
@@ -137,6 +135,9 @@ public class StaffController {
 	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "staff_applyLeave_add";
+		}
+		if(leaveRecord.getLeaveType().equals("Annual Leave") || leaveRecord.getLeaveType().equals("Medical Leave")) {
+			leaveRecord.setLeaveStartTime('N');
 		}
 		if(leaveRecord.getLeaveStatus() == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
@@ -173,25 +174,25 @@ public class StaffController {
 		return "staff_LeaveHistory";
 	}
 	
-//	@GetMapping("/history/details/{id}")
-//	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
-//		//check LeaveStatus
-//		model.addAttribute("leave", lservice.findById(id));
-//		LeaveRecord record = lservice.findById(id);
-//		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
-//			return "staff_leaveHistory_datails_edit";
-//		} else {
-//			return "staff_leaveHistory_details";
-//		}
-//	}
-	
-	@GetMapping("/history/details")
-	public String leaveDetails(int id, Model model) {
+	@GetMapping("/history/details/{id}")
+	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		//check LeaveStatus
 		model.addAttribute("leave", lservice.findById(id));
-		return "staff_leaveHistory_details";
-		
+		LeaveRecord record = lservice.findById(id);
+		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
+			return "staff_leaveHistory_datails_edit";
+		} else {
+			return "staff_leaveHistory_details";
+		}
 	}
+	
+	/*
+	 * @GetMapping("/history/details") public String leaveDetails(int id, Model
+	 * model) { //check LeaveStatus model.addAttribute("leave",
+	 * lservice.findById(id)); return "staff_leaveHistory_details";
+	 * 
+	 * }
+	 */
 	
 	@GetMapping("/history/details/edit")
 	public String editLeaveDetails(Model model, int id) {
@@ -199,6 +200,5 @@ public class StaffController {
 		return "staff_leaveHistory_details_edit";
 	}
 	
-	
-	
 }
+

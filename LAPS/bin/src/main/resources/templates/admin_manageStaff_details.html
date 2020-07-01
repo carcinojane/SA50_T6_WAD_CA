@@ -11,7 +11,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.details.page.title}"></h2>
-		<table th:object="${staff}">
+		<table class="list" th:object="${staff}">
 			<tr>
 				<td>Staff Id</td>
 				<td th:text=${staff.staffId}>Staff Id</td>
@@ -55,7 +55,8 @@
 			</tr>
 		</table>
 		<a href="EditStaff.html"
-			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}">Edit</a>
+			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}">Edit</a> | 
+			<a href="Back.html" th:href="@{/admin/manageStaff}">Back</a>
 
 
 

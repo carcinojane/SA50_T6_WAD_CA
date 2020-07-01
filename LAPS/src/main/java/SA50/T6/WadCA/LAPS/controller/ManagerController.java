@@ -35,9 +35,9 @@ public class ManagerController{
 	}
 	
 	@GetMapping("/approval")
-	public String approval(Model model, HttpSession session) {
-		//List<LeaveRecord> lrecords = lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId"));
-		//model.addAttribute("lrecords", lrecords) ;
+	public String approval(Model model, HttpSession session) {		
+		List<LeaveRecord> lrecords = lservice.findPendingLeaveRecordByManagerId((int)session.getAttribute("managerId")); 
+		model.addAttribute("lrecords", lrecords) ; 
 		return "manager_approval";
 	}
 	
@@ -60,6 +60,12 @@ public class ManagerController{
 		return "forward:/manager/approval";}
 		
 		return "manager_leaveDetails";	
+	}
+	
+	@GetMapping(value = "/history/{id}")
+	public String staffRecord(Model model, @PathVariable("id") Integer id) {
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
+		return "manager_PastLeaveRecords";
 	}
 	
 }

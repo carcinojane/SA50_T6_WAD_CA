@@ -10,24 +10,31 @@ import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 public class LeaveType{
 	//composite key
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	@Id
 	private Designation designation;
 	private String leaveType;
 	private float entitlement;
+	
 	private float minClaim;
 	
 	public LeaveType() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public LeaveType(Designation designation, String leaveType, int entitlement, float minClaim) {
+	public LeaveType(Designation designation, String leaveType, float entitlement, float minClaim) {
 		super();
 		this.designation = designation;
 		this.leaveType = leaveType;
 		this.entitlement = entitlement;
 		this.minClaim = minClaim;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	public Designation getDesignation() {
 		return designation;
@@ -44,7 +51,7 @@ public class LeaveType{
 	public float getEntitlement() {
 		return entitlement;
 	}
-	public void setEntitlement(int entitlement) {
+	public void setEntitlement(float entitlement) {
 		this.entitlement = entitlement;
 	}
 	public float getMinClaim() {
