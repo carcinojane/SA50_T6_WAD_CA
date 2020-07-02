@@ -52,9 +52,8 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Transactional
 	public void deleteLeaveRecord(LeaveRecord leaveRecord) {
-		leaveRecord.setLeaveStatus(LeaveStatus.CANCELLED);
-		lrepo.save(leaveRecord);
 
+		lrepo.delete(leaveRecord);
 	}
 
 	@Transactional
@@ -63,7 +62,7 @@ public class LeaveServiceImpl implements LeaveService {
 		LocalDate to = leave.getLeaveEndDate();
 		float numOfDay = 0;
 		LocalDate curr = from;
-
+		
 		do {
 			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
 				numOfDay += 0.5;
@@ -71,11 +70,11 @@ public class LeaveServiceImpl implements LeaveService {
 				numOfDay += 0.5;
 			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
 				numOfDay ++;
-
+			
 			curr = curr.plusDays(1);
-		}while(curr.compareTo(to)!=0);
-
-
+		}while(curr.isBefore(to));
+		
+		
 		return numOfDay;
 	}
 
@@ -202,3 +201,4 @@ public class LeaveServiceImpl implements LeaveService {
 
 
 }
+

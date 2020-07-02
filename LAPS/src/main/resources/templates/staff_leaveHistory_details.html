@@ -43,12 +43,16 @@
 				<td th:text="${leave.workDissemination}"></td>
 			</tr>
 		</table>
-
-		<a th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
+		<a  th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}" th:href="@{/staff/apply/cancel/}+${leave.leaveId}">
+			<button style="background-color: green">Cancel</button>
+		</a>
+		<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} " th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
 			<button style="background-color: grey">Update</button>
-		</a> <a th:href="@{/staff/history/details/delete/}+${leave.leaveId}">
+		</a> <a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} " th:href="@{/staff/apply/delete/}+${leave.leaveId}">
 			<button style="background-color: red">Delete</button>
 		</a>
+		
+		<a href="Back.html" th:href="@{/staff/apply}">Back</a>
 
 	</div>
 </body>
