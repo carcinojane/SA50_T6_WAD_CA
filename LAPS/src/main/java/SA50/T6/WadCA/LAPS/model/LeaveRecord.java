@@ -34,13 +34,14 @@ public class LeaveRecord{
 	@ManyToOne
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
 	private Staff staff;
+
 //	@ManyToOne
 //	@JoinColumns({
 //		@JoinColumn(name="id", insertable=false, updatable=false),
 //		@JoinColumn(name="designation", insertable=false, updatable=false)
 //	})
 //	private LeaveType leaveType;
-	
+
 	private LType leaveType;
 	private String workDissemination;
 	private int contact;
@@ -267,6 +268,12 @@ public class LeaveRecord{
 
 	public void setLeaveType(LType leaveType) {
 		this.leaveType = leaveType;
+
+		//this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
+	}
+	public String getLeaveTypeDisplay() {
+		return leaveTypeDisplay;
+
 	}
 	
 	public char getLeaveStartTime() {

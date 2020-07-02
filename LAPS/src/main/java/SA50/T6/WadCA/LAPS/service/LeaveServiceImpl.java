@@ -47,8 +47,9 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Transactional
 	public void deleteLeaveRecord(LeaveRecord leaveRecord) {
-		leaveRecord.setLeaveStatus(LeaveStatus.CANCELLED);
-		lrepo.save(leaveRecord);
+//		leaveRecord.setLeaveStatus(LeaveStatus.CANCELLED);
+//		lrepo.save(leaveRecord);
+		lrepo.delete(leaveRecord);
 		
 	}
 
@@ -68,7 +69,7 @@ public class LeaveServiceImpl implements LeaveService {
 				numOfDay ++;
 			
 			curr = curr.plusDays(1);
-		}while(curr.compareTo(to)!=0);
+		}while(curr.isBefore(to));
 		
 		
 		return numOfDay;

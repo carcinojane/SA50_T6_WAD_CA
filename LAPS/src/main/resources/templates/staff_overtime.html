@@ -13,7 +13,7 @@
  <h3>Compensation Leave Balance</h3>
  <p th:text="${compLeave}"></p>
  
- <form th:object="${overtime}" th:action="@{/staff/overtime/save}" method="post">
+ <form th:object="${overtime}" th:action="@{/staff/overtime/save}" method="get">
  	<fieldset>
  		<input type="hidden" th:field=*{overtimeId}>
  	</fieldset>
@@ -27,7 +27,7 @@
  	</fieldset>
  </form>
  
- <p><a href="staff_applyLeave.html" th:href="@{/staff/home}">Back</a></p>
+ <p><a href="staff_homepage.html" th:href="@{/staff/home}">Back</a></p>
 </div>
 </body>
 </html>
