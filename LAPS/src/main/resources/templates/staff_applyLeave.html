@@ -79,7 +79,8 @@
 					<td th:text="${leave.leaveEndDate}">To</td>
 					<td th:text="${leave.leaveType}">Category</td>
 					<td th:text="${leave.leaveStatus}">Status</td>
-					<td th:href="@{/staff/history/details} + ${leave.leaveId}">Details</td>
+					<td><a href= "staff_leaveHistory_details" th:href="${'/staff/history/details/' + {leave.leaveId}}"></a>Details</td>
+				</tr>		
 		</table>
 		<p><a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a></p>
 	</div>

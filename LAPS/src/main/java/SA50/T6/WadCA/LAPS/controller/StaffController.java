@@ -78,10 +78,15 @@ public class StaffController {
 		this.oservice = oserviceImpl;
 	}
 
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-
-	}
+//	@InitBinder("leaveRecord")
+//	protected void initLeaveBinder(WebDataBinder binder) {
+//		binder.addValidators(new ApplyLeaveValidator());
+//	}
+//	
+//	@InitBinder("overtime")
+//	protected void initOvertimeBinder(WebDataBinder binder) {
+//		binder.addValidators(new OvertimeValidator());
+//	}
 
 	@GetMapping("/login")
 	public String Login(@ModelAttribute("staff") Staff staff, String username, String password, HttpSession session) {
@@ -123,22 +128,12 @@ public class StaffController {
 		return "forward:/staff/login";
 	}	
 
-	//	@GetMapping("/list")
-	//	public String list(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, int staffId) {
-	//		lservice.findLeaveRecordByStaffId(staffId);
-	//		return ("staff_applyLeave");
-	//	}
 
 	@GetMapping(value="/apply")
 	public String apply(Model model, HttpSession session) {
 
 		Staff staff = (Staff)session.getAttribute("staff");
-		//model.addAttribute("staff",staff);
-		//model.addAttribute("leaveTypeList",ltservice.findAllLeaveTypeNames());
-		//model.addAttribute("leaveStatuses",lservice.findAllLeaveStatus());
-		
 		ArrayList<LeaveRecord> lrecords = lservice.findLeaveRecordByStaffId(staff.getStaffId());
-
 		model.addAttribute("lrecords", lrecords);
 
 
@@ -189,19 +184,16 @@ public class StaffController {
 		return "staff_applyLeave_add";
 	}
 	
-	@RequestMapping("/apply/save")
-	public String save(@ModelAttribute("leaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
+	@RequestMapping(value="/apply/save")
+	public String save(@RequestParam(value="leaveType")LType leaveType,@ModelAttribute("leaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
 		if(result.hasErrors()) {
 			return "staff_applyLeave_add";
 		}
 		
-		
-//		leaveRecord.setLeaveStartDate(LocalDate.parse(start, DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
-//		leaveRecord.setLeaveEndDate(LocalDate.parse(end, DateTimeFormatter.ofPattern("dd-MMM-yyyy")));
-		
 		if(leaveRecord.getLeaveType().equals(LType.AnnualLeave) ||
 		  leaveRecord.getLeaveType().equals(LType.MedicalLeave)) {
-		  leaveRecord.setLeaveStartTime('N'); }
+		  leaveRecord.setLeaveStartTime('N'); 
+		  leaveRecord.setLeaveEndTime('N');}
 		 
 		if(leaveRecord.getLeaveStatus() == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
@@ -222,8 +214,9 @@ public class StaffController {
 	}
 	
 
-	@GetMapping("/apply/delete")
-	public String delete(@ModelAttribute("LeaveRecord")LeaveRecord leaveRecord, HttpSession session) {
+	@GetMapping("/apply/delete/{id}")
+	public String delete(@PathVariable("id") Integer id, HttpSession session) {
+		LeaveRecord leaveRecord = lservice.findById(id);
 		lservice.deleteLeaveRecord(leaveRecord);
 		return"forward:/staff/apply";
 	}
@@ -245,12 +238,9 @@ public class StaffController {
 	public String leaveDetails(@PathVariable("id") Integer id, Model model) {
 		//check LeaveStatus
 		model.addAttribute("leave", lservice.findById(id));
-		LeaveRecord record = lservice.findById(id);
-		if(record.getLeaveStatus() == LeaveStatus.APPLIED || record.getLeaveStatus() == LeaveStatus.UPDATED) {
-			return "staff_leaveHistory_datails_edit";
-		} else {
+		
 			return "staff_leaveHistory_details";
-		}
+	
 	}
 
 	/*

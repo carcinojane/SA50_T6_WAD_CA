@@ -16,7 +16,7 @@
   <div class="content">
  <h2 th:utext="#{staff.applyLeave.title}"></h2>
  <h3>Apply Leave Form</h3>
- <form th:object="${leaveRecord}" th:action="@{/staff/apply/save}" method="post">
+ <form th:object="${leaveRecord}" th:action="@{/staff/apply/save}" method="GET">
  	<fieldset>
  		<input type="hidden" th:field="*{leaveId}">
  	</fieldset>
@@ -51,7 +51,7 @@
  	</fieldset>
 <!--  	 <fieldset th:if="*{leaveType == 'Compensation Leave'}"> -->
  		To Time
- 		<select th:field=*{leaveStartTime}>
+ 		<select th:field=*{leaveEndTime}>
  			<option th:value="'P'" >PM</option>
  			<option th:value="'A'" >AM</option>
  			<option th:value="'N'" >N/A</option>
