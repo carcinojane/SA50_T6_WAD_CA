@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:utext="#{staff.applyLeave.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all" 
+          href="../../css/main.css" th:href="@{/css/main.css}" />
+  </head>
+<body>
+ <header th:insert="staff_login.html :: header"> </header>
+ <div class="content">
+ <h2 th:utext="#{staff.overtime.title}"></h2>
+ <h3>Compensation Leave Balance</h3>
+ <p th:text="${compLeave}"></p>
+ 
+ <form th:object="${overtime}" th:action="@{/staff/overtime/save}" method="post">
+ 	<fieldset>
+ 		<input type="hidden" th:field=*{overtimeId}>
+ 	</fieldset>
+ 	<fieldset>
+ 		Overtime hour(s)
+ 		<input type="text" th:field="*{hours}">
+ 		<p th:if="${#fields.hasErrors('hours')}" th:errors="*{hours}"></p>
+ 	</fieldset>
+ 	<fieldset>
+ 		<button type="submit">Submit</button>
+ 	</fieldset>
+ </form>
+ 
+ <p><a href="staff_applyLeave.html" th:href="@{/staff/home}">Back</a></p>
+</div>
+</body>
+</html>

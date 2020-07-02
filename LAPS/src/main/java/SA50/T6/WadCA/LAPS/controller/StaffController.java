@@ -25,12 +25,15 @@ import org.springframework.web.bind.support.SessionStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Overtime;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.service.OvertimeService;
+import SA50.T6.WadCA.LAPS.service.OvertimeServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
 
@@ -62,6 +65,14 @@ public class StaffController {
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
 	}
+	
+	@Autowired
+	protected OvertimeService oservice;
+	
+	@Autowired
+	public void setOvertimeService(OvertimeServiceImpl oserviceImpl) {
+		this.oservice = oserviceImpl;
+	}
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -89,9 +100,10 @@ public class StaffController {
 		if(!registeredStaff.getPassword().equals(staff.getPassword())) {
 			return "staff_login";
 		}
-		model.addAttribute("staff", staff);
-		session.setAttribute("display", staff.getUsername());
-		session.setAttribute("staff", sservice.findStaffObjByUsername(staff.getUsername()));
+		model.addAttribute("staff", registeredStaff);
+		session.setAttribute("display", registeredStaff.getUsername());
+		session.setAttribute("staff", sservice.findStaffObjByUsername(registeredStaff.getUsername()));
+		session.setAttribute("staffId", registeredStaff.getStaffId());
 
 		if (registeredStaff.getDesignation()==Designation.manager){
 			return "redirect:/manager/home";
@@ -162,12 +174,13 @@ public class StaffController {
 	public String balance(Model model, HttpSession session) {
 		//int staffId = (int) session.getAttribute("staffId");
 		model.addAttribute("staff", sservice.findStaffById((int)session.getAttribute("staffId")));
-		return "staff_leaveBlance";
+		return "staff_leaveBalance";
 	}
 
 	@GetMapping("/history")
 	public String history(Model model, HttpSession session) {
-		Staff staff = (Staff)session.getAttribute("staff");	
+		int staffId =(int)session.getAttribute("staffId");
+		Staff staff = sservice.findStaffById(staffId);
 		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
 		return "staff_LeaveHistory";
 	}
@@ -192,6 +205,33 @@ public class StaffController {
 	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
 		lservice.deleteLeaveRecord(lservice.findById(id));
 			return "redirect:/staff/history";
+	}
+	
+	@GetMapping("/overtime")
+	public String overtime(Model model, HttpSession session) {
+		int staffId =(int)session.getAttribute("staffId");
+		Staff staff = sservice.findStaffById(staffId);
+		model.addAttribute("compLeave", staff.getTotalCompensationLeave());
+		model.addAttribute("overtime", new Overtime());
+		return "staff_overtime";
+	}
+	
+	@RequestMapping(value="/overtime/save")
+	public String OTsave(@ModelAttribute("overtime") @Valid Overtime overtime, BindingResult result,HttpSession session) {
+		if (result.hasErrors()) {
+			return "staff_overtime";
+		}
+		Staff staff = sservice.findStaffById((int)session.getAttribute("staffId"));
+		//set staffId;
+		overtime.setStaff(staff);
+		oservice.SaveOvertime(overtime);
+		//calculate total compensation leave 
+		float currCompLeave = oservice.FindCompensationLeaveAwarded(overtime.getHours());
+		float totalCompLeave = staff.getTotalCompensationLeave() + currCompLeave;
+		staff.setTotalCompensationLeave(totalCompLeave);
+		sservice.saveStaff(staff);
+		
+		return "staff_homepage";
 	}
 
 
