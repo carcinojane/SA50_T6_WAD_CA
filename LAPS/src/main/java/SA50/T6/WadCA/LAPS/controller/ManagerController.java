@@ -55,20 +55,15 @@ public class ManagerController{
 		//return "redirect:/manager/approve/"+id;
 		return "redirect:/manager/staffLeaveDetails/"+id;
 	}
-
-//	@GetMapping(value = "/reject/{id}")
-//	public String rejectLeave(@PathVariable("id") Integer id, HttpSession session) {
-//		LeaveRecord record = lservice.findById(id);
-//		lservice.rejectLeave(record);
-//
-//		return "redirect:/manager/staffLeaveDetails/"+id;
-//	}
 	
-	@GetMapping(value = "/reject/{id}")
-	public String rejectLeave(@PathVariable("id") Integer id, HttpSession session) {
-		lservice.rejectLeave(id);
-
-		return "redirect:/manager/staffLeaveDetails/"+id;
+	@GetMapping(value= "/save")
+	public String saveLeave(  @ModelAttribute("leave") @Valid LeaveRecord leave, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "manager_leaveDetails";
+		}
+		lservice.saveLeaveRecord(leave);
+		return "manager_leaveDetails";
 	}
 
 	@GetMapping(value = "/history/{id}")
