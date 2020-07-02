@@ -1,5 +1,4 @@
 package SA50.T6.WadCA.LAPS.model;
-//import java.io.Serializable;
 
 import javax.persistence.*;
 
@@ -19,7 +18,6 @@ public class LeaveType{
 	
 	public LeaveType() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public LeaveType(Designation designation, LType leaveType, float entitlement, float minClaim) {
 		super();

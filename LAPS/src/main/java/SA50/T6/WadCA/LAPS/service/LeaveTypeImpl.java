@@ -67,22 +67,28 @@ public class LeaveTypeImpl implements LeaveTypeService {
 		return (ArrayList<LeaveType>) ltrepo.findAll();
 	}
 
-	@Override
+	@Transactional
 	public LeaveType findLeaveTypeToEdit(LType leaveType, Designation designation) {
 		LeaveType record=ltrepo.findLeaveTypeToEdit(leaveType, designation);
 		return record;
 	}
 
-	@Override
+	@Transactional
 	public Collection<LType> findByDesignation(Designation designation) {
 		// TODO Auto-generated method stub
 		return ltrepo.findByDesignation(designation);
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveType> findLeaveTypeByDesignation(Designation designation) {
 		// TODO Auto-generated method stub
 		return ltrepo.findLeaveTypeByDesignation(designation);
+	}
+
+	@Transactional
+	public LeaveType findById(Integer id) {
+		// TODO Auto-generated method stub
+		return ltrepo.findById(id).get();
 	}
 	
 }

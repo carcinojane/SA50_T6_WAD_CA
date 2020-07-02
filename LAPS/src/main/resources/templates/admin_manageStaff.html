@@ -16,16 +16,16 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
-		<a href="/admin/.home">Back</a> | <a href="/admin/manageStaff/add">Add
-			New Staff</a>
-		<h2 th:if="${not #lists.isEmpty(staffs)}">Staff List</h2>
+		<a href="/admin/.home" th:utext="#{page.back}">Back</a> | <a href="/admin/manageStaff/add" th:utext="#{admin.manageStaff.add.page.title}">
+	</a>
+		<h2 th:if="${not #lists.isEmpty(staffs)}" th:utext="#{admin.manageStaff.StaffList}">Staff List</h2>
 		<br />
 		<form th:action="@{/admin/manageStaff/search}">
 			<table style="width:30%">
 				<tr>
 					<td><input type="text" name="username"
 						placeholder="Enter username"/>
-						<button style="background-color:black">Search</button></td>
+						<button style="background-color:black" th:utext="#{button.search}">Search</button></td>
 				</tr>
 			</table>
 
@@ -33,13 +33,12 @@
 		<br />
 		<table class="list" th:if="${not #lists.isEmpty(staffs)}">
 			<tr>
-				<th>Staff Id</th>
-				<th>User Name</th>
-				<th>Start Date</th>
-				<th>Designation</th>
-				<th>Detail</th>
-				<th>Delete</th>
-				<!-- <th>Delete</th> -->
+				<th th:utext="#{admin.manageStaff.StaffId}"></th>
+				<th th:utext="#{admin.manageStaff.UserName}"></th>
+				<th th:utext="#{admin.manageStaff.StartDate}"></th>
+				<th th:utext="#{admin.manageStaff.Designation}"></th>
+				<th th:utext="#{button.detail}"></th>
+				<th th:utext="#{button.delete}"></th>
 			</tr>
 			<tr th:each="staff:${staffs}">
 				<td th:text=${staff.staffId}>Staff Id</td>
@@ -47,7 +46,7 @@
 				<td th:text=${staff.startDate}>Start Date</td>
 				<td th:text=${staff.designation}>Designation</td>
 				<td><a href="DetailStaff.html"
-					th:href="@{/admin/manageStaff/details/}+${staff.staffId}">Detail</a></td>
+					th:href="@{/admin/manageStaff/details/}+${staff.staffId}" th:utext="#{button.detail}"></a></td>
 				<!-- <td><a href="DeleteStaff.html"
 					th:href="@{/admin/manageStaff/delete/}+${staff.staffId}">Delete</a></td> -->
 			</tr>

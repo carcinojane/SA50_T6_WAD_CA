@@ -168,6 +168,7 @@ public class StaffController {
 				|| type==(LType.MedicalLeave)) {
 			leaveRecord.setLeaveStartTime('N');
 			leaveRecord.setLeaveEndTime('N');
+
 		}
 		
 		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();

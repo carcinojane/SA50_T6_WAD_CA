@@ -20,4 +20,7 @@ public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer> {
 	
 	@Query("select lt from LeaveType lt where lt.designation= :designation")
 	List<LeaveType> findLeaveTypeByDesignation(@Param("designation")Designation designation);
+	
+	@Query("Select lt from LeaveType lt where lt.id = :id")
+	LeaveType findLeaveTypeById(@Param("id")Integer id);
 }
