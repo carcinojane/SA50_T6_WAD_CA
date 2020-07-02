@@ -17,7 +17,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		<a href="/admin/manageLeaveType">Back</a>
+		<a href="/admin/manageLeaveType" th:utext="#{page.back}">Back</a>
 		<form action="#" th:object="${leavetype}"
 			th:action="@{/admin/manageLeaveType/save}" method="post">
 			<table class="list">
@@ -29,30 +29,30 @@
 				</tr>
 				<tr>
 
-					<td>Designation</td>
+					<td th:utext="#{admin.manageStaff.Designation}"></td>
 					<td th:text=${leavetype.designation}></td>
 				</tr>
 				<tr>
-					<td>Leave Type</td>
+					<td  th:utext="#{admin.manageLeave.LeaveType}"></td>
 					<td th:text=${leavetype.leaveType}></td>
 				</tr>
 
 				<tr>
-					<td>Entitlement</td>
+					<td th:utext="#{admin.manageLeave.Entitlement}"></td>
 					<td><input type="text" th:field="*{entitlement}">
 						<p th:if="${#fields.hasErrors('entitlement')}"
 							th:errors="*{entitlement}"></p></td>
 				</tr>
 				<tr>
-					<td>Minimum Claim</td>
+					<td th:utext="#{admin.manageLeave.MinClaim}"></td>
 					<td><input type="text" th:field="*{minClaim}">
 						<p th:if="${#fields.hasErrors('minClaim')}"
 							th:errors="*{minClaim}"></p></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
-						type="reset" value="Reset" /></td>
+					<td><input type="submit" value="Save"/> &nbsp; &nbsp; <input
+						type="reset" value="Reset"/></td>
 				</tr>
 			</table>
 		</form>

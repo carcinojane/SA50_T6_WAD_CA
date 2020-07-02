@@ -52,20 +52,20 @@ public class LapsApplication {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			//create manager
-			Staff manager1 = new Staff("manager1","password",2,60,18);
+			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
-			Staff manager2 = new Staff("manager2","password2",2,60,18);
+			Staff manager2 = new Staff("manager2","password2","manager2@gmail.com",2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager2);
-			Staff head = new Staff("Head","password3",2,60,18);
+			Staff head = new Staff("Head","password3","head@gmail.com",2,60,18);
 			head.setDesignation(Staff.Designation.admin);
 			staffRepo.save(head);
 			
 			//create staff
-			Staff staff1 = new Staff("staff1","password");
-			Staff staff2 = new Staff("staff2","password");
-			Staff staff3 = new Staff("staff3","password3");
+			Staff staff1 = new Staff("staff1","password","staff1@gmail.com");
+			Staff staff2 = new Staff("staff2","password","staff2@gmail.com");
+			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com");
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);

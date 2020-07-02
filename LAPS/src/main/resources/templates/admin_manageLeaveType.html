@@ -17,15 +17,15 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		<a href="/admin/.home">Back</a>
+		<a href="/admin/.home" th:utext="#{page.back}"></a>
 		<table class="list">
 			<tr>
 				
-				<th>Designation</th>
-				<th>Leave Type</th>
-				<th>Entitlement</th>
-				<th>Minimum Claim</th>
-				<th>Edit</th>
+				<th th:utext="#{admin.manageStaff.Designation}"></th>
+				<th th:utext="#{admin.manageLeave.LeaveType}"></th>
+				<th th:utext="#{admin.manageLeave.Entitlement}"></th>
+				<th th:utext="#{admin.manageLeave.MinClaim}"></th>
+				<th th:utext="#{button.edit}"></th>
 
 			</tr>
 			<tr th:each="leavetype:${leavetypes}">
@@ -35,7 +35,7 @@
 				<td th:text=${leavetype.entitlement}>Entitlement</td>
 				<td th:text=${leavetype.minClaim}>MinClaim</td>
 				<td><a
-					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}">Edit</a>
+					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}" th:utext="#{button.edit}"></a>
 				</td>
 
 			</tr>

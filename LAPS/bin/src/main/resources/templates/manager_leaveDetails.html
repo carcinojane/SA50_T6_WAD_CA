@@ -16,22 +16,27 @@
 	 
 	 <div class="content">
 	 	<h1 th:utext="#{manager.approval.details.page.title}">Leave Details</h1>
-	 	<table  class="list">
-	 	<tr><td>From</td><td th:text="${leave.leaveStartDate}"></td></tr>
-	 	<tr><td>To</td><td th:text="${leave.leaveEndDate}"></td></tr>
-	 	<tr><td>Category</td><td th:text="${leave.leaveTypeDisplay}"></td></tr>
-	 	<tr><td>Status</td><td th:text="${leave.leaveStatus.displayValue}"></td></tr>
-	 	<tr><td>Reason</td><td th:text="${leave.reason}"></td></tr>
-	 	<tr><td>Work Dissemination</td><td th:text="${leave.workDissemination}"></td></tr>
+	 	<table  class="details">
+	 	<tr><th style="width: 20%">Employee Id</th><td th:text="${leave.staffId}"></td></tr>
+	 	<tr><th style="width: 20%">From</th><td th:text="${leave.leaveStartDate}"></td></tr>
+	 	<tr><th style="width: 20%">To</th><td th:text="${leave.leaveEndDate}"></td></tr>
+	 	<tr><th style="width: 20%">Category</th><td th:text="${leave.leaveTypeDisplay}"></td></tr>
+	 	<tr><th style="width: 20%">Status</th><td th:text="${leave.leaveStatus.displayValue}"></td></tr>
+	 	<tr><th style="width: 20%">Contact</th><td th:text="${leave.contact}"></td></tr>
+	 	<tr><th style="width: 20%">Reason</th><td th:text="${leave.reason}"></td></tr>
+	 	<tr><th style="width: 20%">Work Dissemination</th><td th:text="${leave.workDissemination}"></td></tr>
 		</table>
 		<div class="status">
 	 	  	<ul>
 	 	  		<li>
-	 	  			<a th:href="@{/manager/approval}"><button style="background-color:grey">Back</button></a>
 	 	  			<a th:href="@{/manager/approve}"><button style="background-color:green">Approve</button></a>
 					<a th:href="@{/manager/reject}"><button style="background-color:red">Reject</button></a>
-				   <a href="manager_PastLeaveRecords.html" th:href="@{/manager/history/}+#{session.staff.staffId}">
-					<button style="background-color:grey" th:utext="#{manager.history.page.title}"> </button></a>
+	 	  		</li>
+	 	  		<li>
+	 	  		<a th:href="@{/manager/approval}"><button style="width:186px; background-color:grey">Back to Approval</button></a>
+	 	  		</li>
+	 	  		<li>
+	 	  		<a th:href="@{/manager/history/}+${leave.staffId}"><button style="width:186px; background-color:grey">Leave History</button></a>
 	 	  		</li>
 	 	  	</ul>
 	 	</div>
