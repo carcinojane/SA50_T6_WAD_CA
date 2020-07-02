@@ -42,6 +42,12 @@
 							th:errors="*{password}"></p></td>
 				</tr>
 				<tr>
+					<td>Email</td>
+					<td><input type="text" th:field="*{email}">
+						<p th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}"></p></td>
+				</tr>
+				<tr>
 					<td>Start Date</td>
 					<td><input type="text" th:field="*{startDate}"
 						placeholder="dd-MM-yyyy" />
