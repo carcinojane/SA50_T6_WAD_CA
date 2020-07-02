@@ -28,6 +28,7 @@ import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
+import SA50.T6.WadCA.LAPS.model.Staff.Status;
 import SA50.T6.WadCA.LAPS.service.AdminService;
 import SA50.T6.WadCA.LAPS.service.AdminServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
@@ -102,8 +103,13 @@ public class AdminController {
 
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
-		model.addAttribute("staffs", sservice.findAllStaff());
+		model.addAttribute("staffs", sservice.findAllActiveStaff());
 		return "admin_manageStaff";
+	}
+	@RequestMapping(value = "/manageStaff/inactive")
+	public String ViewInactiveStaff(Model model) {
+		model.addAttribute("staffs", sservice.findAllInActiveStaff());
+		return "admin_manageStaff_ViewInActiveStaff";
 	}
 
 	@GetMapping("/manageStaff/details/{id}")
@@ -154,6 +160,7 @@ public class AdminController {
 		}
 		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
 		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setStatus(Status.active);
 		staff.setManager(manager);
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
@@ -176,15 +183,35 @@ public class AdminController {
 		}
 		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
 		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setStatus(Status.active);
 		staff.setManager(manager);
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
 	}
 	
-//	@GetMapping("/manageStaff/delete/{id}")
-//	public String deleteStaff(@PathVariable("id") Integer id) {
-//		sservice.deleteStaff(sservice.findStaffById(id));
-//		return "forward:/admin/manageStaff";
+	@GetMapping("/manageStaff/delete/{id}")
+	public String deleteStaff(@PathVariable("id") Integer id, Model model) {
+		Staff staff=sservice.findStaffById(id);
+//		if(staff.getDesignation()==Designation.manager) {
+//			Staff newManager=new Staff();
+//			ArrayList<String> mnames = sservice.findAllManagerNames();
+//			model.addAttribute("staff", staff);
+//			model.addAttribute("managerNames", mnames);
+//			model.addAttribute("newManager", newManager);
+//			return "admin_manageStaff_refer";
+//		}
+		staff.setStatus(Status.inactive);
+		sservice.saveStaff(staff);		
+		return "forward:/admin/manageStaff";
+	}
+	
+//	@RequestMapping(value = "manageStaff/refer")
+//	public String referManager(@ModelAttribute("newManager") Staff newManager, @ModelAttribute("staff") Staff oldManager,Model model) {
+//		System.out.println("referManager Method: " + newManager + oldManager);
+//		Staff manager = sservice.findManagerByUsername(newManager.getManager().getUsername());
+//		manager = sservice.findStaffById(manager.getStaffId());
+//		sservice.referManager(oldManager,newManager);
+//		return "admin_manageStaff";
 //	}
 
 	@RequestMapping(value = "/manageLeaveType")

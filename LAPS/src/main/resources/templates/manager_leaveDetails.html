@@ -10,12 +10,13 @@
 
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/popup.js"></script>
 </head>
 <body>
 	<header th:insert="manager_homepage.html :: header"> </header>
 	 
 	 <div class="content">
-	 	<h1 th:utext="#{manager.approval.details.page.title}">Leave Details</h1>
+	 	<h1 th:utext="#{manager.approval.details.page.title}"></h1>
 	 	<table  class="details">
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.empId}"></th><td th:text="${leave.staffId}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.from}"></th><td th:text="${leave.leaveStartDate}"></td></tr>
@@ -29,19 +30,67 @@
 		<div class="status">
 	 	  	<ul>
 	 	  		<li>
+	 	  			<a th:href="@{/manager/approval}"><button style="background-color:grey" th:utext="#{manager.button.backtoapproval}"></button></a>
+	 	  		</li>
+	 	  		<li>
+	 	  			<a th:href="@{/manager/history/}+${leave.staffId}"><button style="background-color:grey" th:utext="#{manager.history.page.title}"></button></a>
+	 	  			
+	 	  		</li>
+	 	  		<li>
 	 	  			<a th:href="@{/manager/approve/}+${leave.leaveId}"><button style="background-color:green" th:utext="#{button.approve}"></button></a>
-					<a th:href="@{/manager/reject/}+${leave.leaveId}"><button style="background-color:red" th:utext="#{button.reject}"></button></a>
 	 	  		</li>
 	 	  		<li>
-	 	  		<!--  <a th:href="@{/manager/approval}"><button style="width:186px; background-color:grey" th:utext="#{manager.button.backtoapproval}"></button></a>
-	 	  		</li>
-	 	  		<li>
-	 	  		<a th:href="@{/manager/history/}+${leave.staffId}"><button style="width:186px; background-color:grey" th:utext="#{manager.history.page.title}"></button></a>-->
+	 	  		
 	 	  		</li>
 	 	  	</ul>
 	 	</div>
-			
-	 </div>
+	 	<button class="open-button" onclick="openForm()" th:utext="#{button.reject}"></button>
 
+		<div class="form-popup" id="myForm">
+   		<form action="#" th:object="${leave}" th:action="@{/manager/save}" method="get" class="form-container">
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{leaveId}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{staffId}">  
+		</fieldset>
+		<h4 th:utext="#{manager.message.reasonforrejection}"></h4>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{managerId}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<select th:field="*{leaveStatus}">
+    		<option value="REJECTED">Rejected</option>
+  		</select>
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{reason}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{leaveStartDate}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<textarea rows="5" cols="34" style="resize: vertical;" placeholder="Enter Reason" name="reasonforrejection" required th:field="*{reasonForRejection}"></textarea>
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{leaveEndDate}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{leaveType}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{workDissemination}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<input type="hidden" th:field="*{contact}">  
+		</fieldset>
+		<fieldset style="border:none">
+		<button type="submit" style="background-color:red" th:utext="#{button.reject}"></button>
+		</fieldset>
+   		<button type="button" class="btn cancel" onclick="closeForm()" th:utext="#{button.cancel}"></button>
+  		</form>
+		</div>
+	 </div>
 </body>
+
 </html>

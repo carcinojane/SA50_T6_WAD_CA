@@ -16,6 +16,7 @@ import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
+import SA50.T6.WadCA.LAPS.model.Staff.Status;
 import SA50.T6.WadCA.LAPS.repo.AdminRepository;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 import SA50.T6.WadCA.LAPS.repo.StaffRepository;
@@ -53,7 +54,7 @@ public class LapsApplication {
 		return args -> {
 			//create manager
 
-			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",2,60,18);
+			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
 			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",2,60,18);
@@ -64,6 +65,7 @@ public class LapsApplication {
 			staffRepo.save(head);
 			
 			//create staff
+
 			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",0f,60f,14f);
 			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",1f,60f,14f);
 			Staff staff3 = new Staff("staff3","password","staff3@gmail.com",1.5f,60f,14f);
@@ -73,6 +75,7 @@ public class LapsApplication {
 				Staff staff5 = new Staff("staff5","password","staff5@gmail.com",0f,60f,14f);
 				//staff with 0 Medical leave	
 				Staff staff6 = new Staff("staff6","password","staff6@gmail.com",0f,0f,14f);
+
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);

@@ -37,6 +37,10 @@ public class Staff {
 	
 	@Email(message="Email should be in a valid format. Eg: aaa@email.com")
 	private String email;
+	private Status status;
+	public enum Status{
+	active,inactive
+	}
 
 	// self-referencing staff to manger: staffId
 	@ManyToOne
@@ -63,6 +67,27 @@ public class Staff {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public Staff(@NotEmpty(message = "Username is mendatory!!") String username,
+			@NotNull @Size(min = 6, max = 15) String password,
+			@Email(message = "Email should be in a valid format. Eg: aaa@email.com") String email, Status status,
+			Staff manager, Set<Staff> subordinates, Designation designation, float totalCompensationLeave,
+			float totalMedicalLeave, float totalAnnualLeave, LocalDate startDate) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.status = status;
+		this.manager = manager;
+		this.subordinates = subordinates;
+		this.designation = designation;
+		this.totalCompensationLeave = totalCompensationLeave;
+		this.totalMedicalLeave = totalMedicalLeave;
+		this.totalAnnualLeave = totalAnnualLeave;
+		this.startDate = startDate;
+	}
+
 
 	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,
 			@Email String email, Staff manager, Set<Staff> subordinates, Designation designation,
@@ -80,22 +105,24 @@ public class Staff {
 		this.startDate = startDate;
 	}
 
-	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email,
+	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email,Status status,
 			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email=email;
+		this.status=status;
 		this.totalCompensationLeave = totalCompensationLeave;
 		this.totalMedicalLeave = totalMedicalLeave;
 		this.totalAnnualLeave = totalAnnualLeave;
 	}
 
-	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email) {
+	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email,Status status) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.email=email;
+		this.status=status;
 	}
 
 	public boolean isManager(Staff staff) {
@@ -137,6 +164,17 @@ public class Staff {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+
+	public Status getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 
 	public Staff getManager() {
 		return manager;
