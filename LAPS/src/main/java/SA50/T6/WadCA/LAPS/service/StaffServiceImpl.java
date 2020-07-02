@@ -87,6 +87,22 @@ public class StaffServiceImpl implements StaffService {
 		srepo.delete(staff);
 		
 	}
+
+	@Override
+	public ArrayList<Staff> findAllActiveStaff() {
+		return (ArrayList<Staff>) srepo.findAllActiveStaff();
+	}
+
+	@Override
+	public ArrayList<Staff> findAllInActiveStaff() {
+		return (ArrayList<Staff>) srepo.findAllInActiveStaff();
+	}
+
+	@Override
+	public void referManager(Staff oldManager, Staff newManager) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 	

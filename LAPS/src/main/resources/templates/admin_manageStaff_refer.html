@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{admin.manageStaff.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+</head>
+<body>
+	<header th:insert="admin_homepage.html :: header"> </header>
+
+	<div class="content">
+		<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
+		<a href="/admin/manageStaff" th:utext="#{page.back}">Back</a>
+		<form action="#" 
+			th:action="@{/admin/manageStaff/refer}" method="post">
+			<input type="hidden" th:field="${staff}">
+		<table class="list">
+			<tr>
+				<td th:utext="#{admin.manageStaff.refer}"></td>
+				<td><select th:field="${newManager.username}">
+							<option th:each="managerName : ${managerNames}" th:value="${managerName}"
+								th:text="${managerName}"></option>
+					</select></td>
+			</tr>
+			<tr><td></td><td><input type="submit" value="Comfirm"/></td></tr>
+		</table>
+		</form>
+		<br />
+
+	</div>
+
+</body>
+</html>

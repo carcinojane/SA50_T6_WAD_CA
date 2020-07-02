@@ -28,6 +28,7 @@ import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.Overtime;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
+import SA50.T6.WadCA.LAPS.model.Staff.Status;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
@@ -97,6 +98,10 @@ public class StaffController {
 			return "staff_login";
 		} 
 		Staff registeredStaff = sservice.findStaffByName(staff.getUsername());
+		if(registeredStaff.getStatus()==Status.inactive) {
+			model.addAttribute("error", "You do not have permission!!!!!");
+			return "staff_login";
+		}
 		if(!registeredStaff.getPassword().equals(staff.getPassword())) {
 			return "staff_login";
 		}
