@@ -22,11 +22,11 @@ public class LeaveRecord{
 	
 	@NotNull(message = "Reason is mandatory field")
 	private String reason;
-	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveStartDate;
 	private char leaveStartTime;
-	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveEndDate;
 	private char leaveEndTime;
@@ -35,7 +35,6 @@ public class LeaveRecord{
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
 	private Staff staff;
 	@ManyToOne
-	//@JoinColumn(name="leaveType", insertable=false, updatable=false)
 	@JoinColumns({
 		@JoinColumn(name="id", insertable=false, updatable=false),
 		@JoinColumn(name="designation", insertable=false, updatable=false)
@@ -70,7 +69,7 @@ public class LeaveRecord{
 	
 	
 	
-	
+	//add leave
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
 			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
@@ -217,7 +216,7 @@ public class LeaveRecord{
 	
 
 
-	public String getWorkDessemination() {
+	public String getWorkDissemination() {
 		return workDissemination;
 	}
 
@@ -230,7 +229,7 @@ public class LeaveRecord{
 		this.staffId = staffId;
 	}
 
-	public void setWorkDessemination(String workDessemination) {
+	public void setWorkDissemination(String workDessemination) {
 		this.workDissemination = workDessemination;
 	}
 

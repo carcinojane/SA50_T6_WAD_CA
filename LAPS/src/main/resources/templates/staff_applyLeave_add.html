@@ -1,7 +1,7 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title th:utext="#{staff.applyLeave.title}"></title>
+<title th:utext="#{admin.manageStaff.add.page.title}"></title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
@@ -12,64 +12,76 @@
 <script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
- <header th:insert="staff_homepage.html :: header"> </header>
-  <div class="content">
- <h2 th:utext="#{staff.applyLeave.title}"></h2>
- <h3>Apply Leave Form</h3>
- <form th:object="${leaveRecord}" th:action="@{/staff/save}" method="post">
- 	<fieldset>
- 		<input type="hidden" th:field="*{id}">
- 	</fieldset>
- 	<fieldset>
- 		Leave Category
- 		<select th:field=*{leaveType.leaveType}>
- 			<option th:each="leave:${leaveTypeList}" th:value="${leave}" th:text="${leave}">
- 		</select>
- 	</fieldset>
- 	<fieldset>
- 		From Date
- 		<input type="date" th:field="*{leaveStartDate}">
- 		<p th:if="${#fields.hasErrors('leaveStartDate')}" th:errors="*{leaveStartDate}"></p>
- 	</fieldset>
- 	<fieldset th:if="${staff.leaveType.leaveType == Compensation Leave}">
- 		From Time
- 		<select th:field=*{leaveStartTime}>
- 			<option th:value="'P'" >PM</option>
- 			<option th:value="'A'" >AM</option>
- 			<option th:value="'N'" >N/A</option>
- 		</select>
- 	</fieldset>
- 	<fieldset>
- 		To
- 		<input type="date" th:field="*{leaveEndDate}">
- 		<p th:if="${#fields.hasErrors('leaveEndDate')}" th:errors="*{leaveEndDate}"></p>
- 	</fieldset>
- 	 <fieldset th:if="*{leaveType.leaveType == 'Compensation Leave'}">
- 		To Time
- 		<select th:field=*{leaveStartTime}>
- 			<option th:value="'P'" >PM</option>
- 			<option th:value="'A'" >AM</option>
- 			<option th:value="'N'" >N/A</option>
- 		</select>
- 	</fieldset>
- 	<fieldset>
- 		Reason
- 		<input type="text" th:field="*{reason}">
- 		<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p>
- 	</fieldset>
- 	<fieldset>
- 		Work Dissemination
- 		<input type="text" th:field="*{workDissemination}">
- 	</fieldset>
- 	<fieldset>
- 		Contact Details
- 		<input type="text" th:field="*{contact}">
- 	</fieldset>
- 	<fieldset>
- 		<button type="submit">Save</button>
- 	</fieldset>
- </form>
- 	<p><a href="staff_applyLeave.html" th:href="@{/staff/apply}">Back</a></p>
- </div>
+	<header th:insert="staff_homepage.html :: header"> </header>
+
+	<div class="content">
+		<h2 th:utext="#{staff.applyLeave.title}"></h2>
+		<a href="Back.html" th:href="@{/admin/manageStaff}">Back</a>
+
+		<form action="#" th:object="${LeaveRecord}"
+			th:action="@{/staff/apply/save}" method="post">
+
+			<table class="list">
+			<tr><td><input type="hidden" th:field="*{leaveId}"></td></tr>
+				<tr>
+					<td>Leave Category</td>
+					<td><select th:field=*{leaveType}>
+							<option th:each="leave:${leaveTypeList}" th:value="${leave}"
+								th:text="${leave.leaveType.displayValue}">
+					</select></td>
+				</tr>
+				<tr>
+
+					<td>From Date</td>
+					<td><input type="date" th:field="*{leaveStartDate}">
+						<p th:if="${#fields.hasErrors('leaveStartDate')}"
+							th:errors="*{leaveStartDate}"></p></td>
+				</tr>
+				<tr>
+					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
+					<td>From Time</td>
+					<td><select th:field=*{leaveStartTime}>
+							<option th:value="'P'">PM</option>
+							<option th:value="'A'">AM</option>
+							<option th:value="'N'">N/A</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>To</td>
+					<td><input type="date" th:field="*{leaveEndDate}">
+						<p th:if="${#fields.hasErrors('leaveEndDate')}"
+							th:errors="*{leaveEndDate}"></td>
+				</tr>
+				<tr>
+					<td>To Time</td>
+					<td><select th:field=*{leaveStartTime}>
+							<option th:value="'P'">PM</option>
+							<option th:value="'A'">AM</option>
+							<option th:value="'N'">N/A</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Reason</td>
+					<td><input type="text" th:field="*{reason}">
+						<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p></td>
+				</tr>
+				<tr>
+					<td>Work Dissemination</td>
+					<td><input type="text" th:field="*{workDissemination}"></td>
+				</tr>
+				<tr>
+					<td>Contact Details</td>
+					<td><input type="text" th:field="*{contact}"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
+				</tr>
+
+			</table>
+		</form>
+	</div>
+
 </body>
 </html>

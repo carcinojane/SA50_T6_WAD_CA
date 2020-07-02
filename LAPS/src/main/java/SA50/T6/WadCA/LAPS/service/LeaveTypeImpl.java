@@ -1,6 +1,7 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,6 +71,18 @@ public class LeaveTypeImpl implements LeaveTypeService {
 	public LeaveType findLeaveTypeToEdit(LType leaveType, Designation designation) {
 		LeaveType record=ltrepo.findLeaveTypeToEdit(leaveType, designation);
 		return record;
+	}
+
+	@Override
+	public Collection<LType> findByDesignation(Designation designation) {
+		// TODO Auto-generated method stub
+		return ltrepo.findByDesignation(designation);
+	}
+
+	@Override
+	public List<LeaveType> findLeaveTypeByDesignation(Designation designation) {
+		// TODO Auto-generated method stub
+		return ltrepo.findLeaveTypeByDesignation(designation);
 	}
 	
 }

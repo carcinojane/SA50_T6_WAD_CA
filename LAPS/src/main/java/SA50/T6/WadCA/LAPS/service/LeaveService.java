@@ -10,6 +10,7 @@ import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
+import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 
 public interface LeaveService {
 	public ArrayList<LeaveRecord> findLeaveRecordByManagerId(Integer managerId);
@@ -32,6 +33,7 @@ public interface LeaveService {
 	public List<LeaveRecord> findByIdAndStatusAndType(Integer id,LeaveStatus leaveStatus, LeaveType leaveType);
 	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId);
 	public Boolean checkStatus(LeaveRecord leaveRecord);
+	
 
 	
 }

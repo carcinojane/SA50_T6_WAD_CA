@@ -1,6 +1,8 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
@@ -13,4 +15,6 @@ public interface LeaveTypeService {
 	public void save(LeaveType leaveType);
 	public ArrayList<LeaveType> findAllLeaveType();
 	public LeaveType findLeaveTypeToEdit(LType leaveType,Designation designation);
+	public Collection<LType> findByDesignation(Designation designation);
+	public List<LeaveType> findLeaveTypeByDesignation(Designation designation);
 }
