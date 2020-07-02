@@ -240,7 +240,7 @@ Show the link that contains should open and close the topnav (.icon) */
   margin: 0;
   position: absolute;
   top: 45%;
-  left: 72%;
+  left: 77%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
@@ -255,21 +255,20 @@ Show the link that contains should open and close the topnav (.icon) */
   margin: 4px 15px;
 }
 .content .status button{
-  width: 100px;
+  width: 125px;
   border-radius: 6px;
   border: none;
   color: white;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  margin: 4px 15px;
+  margin: 4px 35px;
 }
 
 .content .status button:hover {
-  width: 120px;
-  height: 50px;
+  height: 60px;
   font-size: 16px;
 }
 
