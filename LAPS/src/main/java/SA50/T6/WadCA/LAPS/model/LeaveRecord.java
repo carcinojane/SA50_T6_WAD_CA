@@ -35,7 +35,6 @@ public class LeaveRecord{
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
 	private Staff staff;
 	@ManyToOne
-	//@JoinColumn(name="leaveType", insertable=false, updatable=false)
 	@JoinColumns({
 		@JoinColumn(name="id", insertable=false, updatable=false),
 		@JoinColumn(name="designation", insertable=false, updatable=false)

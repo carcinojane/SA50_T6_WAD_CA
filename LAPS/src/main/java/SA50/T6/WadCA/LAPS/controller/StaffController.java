@@ -2,6 +2,9 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -62,10 +65,10 @@ public class StaffController {
 	public void setStaffService(StaffServiceImpl sserviceImpl) {
 		this.sservice = sserviceImpl;
 	}
-	
+
 	@Autowired
 	protected OvertimeService oservice;
-	
+
 	@Autowired
 	public void setOvertimeService(OvertimeServiceImpl oserviceImpl) {
 		this.oservice = oserviceImpl;
@@ -81,7 +84,7 @@ public class StaffController {
 		session.setAttribute("staffId", staff.getStaffId());
 		return "staff_login";
 	}
-	
+
 	@GetMapping("/.home")
 	public String menu() {
 		return "staff_homepage";
@@ -123,16 +126,13 @@ public class StaffController {
 		return ("staff_applyLeave");
 	}
 
-	
+
 
 	@GetMapping("/apply/add")
 	public String applyLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, Model model, HttpSession session) {
 		leaveRecord = new LeaveRecord();
 		Staff staff = (Staff)session.getAttribute("staff");
 		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
-		//model.addAttribute("leaveTypeList", ltservice.findAllLeaveTypeNames());
-		//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
-		//model.addAttribute("leaveTypeList", ltservice.findByDesignation(designation));
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 
 		return "staff_applyLeave_add";
@@ -166,12 +166,15 @@ public class StaffController {
 		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
 		leaveRecord.setManagerId(managerId);
 
-//		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
-//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
-//			return "staff_applyLeave_add";
-//		} else 
+		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
+		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY 
+				|| leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return "staff_applyLeave_add";
+		} else 
 			lservice.saveLeaveRecord(leaveRecord);
-			return "forward:/staff_applyLeave";
+		return "forward:/staff_applyLeave";
 	}
 
 
@@ -208,15 +211,15 @@ public class StaffController {
 			return "redirect:/staff/history/details/"+id;
 		}
 		model.addAttribute("leave",leaveRecord);
-			return "staff_leaveHistory_details_edit";
+		return "staff_leaveHistory_details_edit";
 	}
-	
+
 	@GetMapping("/history/details/delete/{id}")
 	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
 		lservice.deleteLeaveRecord(lservice.findById(id));
-			return "redirect:/staff/history";
+		return "redirect:/staff/history";
 	}
-	
+
 	@GetMapping("/overtime")
 	public String overtime(Model model, HttpSession session) {
 		int staffId =(int)session.getAttribute("staffId");
@@ -225,7 +228,7 @@ public class StaffController {
 		model.addAttribute("overtime", new Overtime());
 		return "staff_overtime";
 	}
-	
+
 	@RequestMapping(value="/overtime/save")
 	public String OTsave(@ModelAttribute("overtime") @Valid Overtime overtime, BindingResult result,HttpSession session) {
 		if (result.hasErrors()) {
@@ -240,7 +243,7 @@ public class StaffController {
 		float totalCompLeave = staff.getTotalCompensationLeave() + currCompLeave;
 		staff.setTotalCompensationLeave(totalCompLeave);
 		sservice.saveStaff(staff);
-		
+
 		return "staff_homepage";
 	}
 
