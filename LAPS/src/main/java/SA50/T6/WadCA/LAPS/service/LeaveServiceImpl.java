@@ -62,6 +62,19 @@ public class LeaveServiceImpl implements LeaveService {
 		LocalDate to = leave.getLeaveEndDate();
 		float numOfDay = 0;
 		LocalDate curr = from;
+		
+		do {
+			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
+				numOfDay += 0.5;
+			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == 'A')
+				numOfDay += 0.5;
+			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
+				numOfDay ++;
+			
+			curr = curr.plusDays(1);
+		}while(curr.isBefore(to));
+		
+		
 		return numOfDay;
 	}
 
