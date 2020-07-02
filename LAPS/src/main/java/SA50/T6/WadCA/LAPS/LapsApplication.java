@@ -60,23 +60,34 @@ public class LapsApplication {
 			Staff manager2 = new Staff("manager2","password2","manager2@gmail.com",Status.inactive,2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager2);
-			Staff head = new Staff("Head","password3","head@gmail.com",Status.active,2,60,18);
-			head.setDesignation(Staff.Designation.admin);
+			Staff head = new Staff("Head Manager","password3","head@gmail.com",Status.active,2,60,18);
+			head.setDesignation(Staff.Designation.manager);
 			staffRepo.save(head);
+			Staff manager3 = new Staff("manager3","password3","manager3@gmail.com",Status.active,2,60,18);
+			manager3.setDesignation(Staff.Designation.manager);
+			staffRepo.save(manager3);
 			
 			//create staff
 			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active);
 			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",Status.active);
-			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com",Status.inactive);
+			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com",Status.active);
+			Staff staff4 = new Staff("staff4","password4","staff4@gmail.com",Status.active);
+			Staff staff5 = new Staff("staff5","password5","staff5@gmail.com",Status.active);
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);
 			staff2.setDesignation(Staff.Designation.employee);
-			staff3.setManager(manager2);
+			staff3.setManager(manager3);
 			staff3.setDesignation(Staff.Designation.employee);
+			staff4.setManager(manager3);
+			staff4.setDesignation(Staff.Designation.employee);
+			staff5.setManager(manager3);
+			staff5.setDesignation(Staff.Designation.employee);
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
+			staffRepo.save(staff4);
+			staffRepo.save(staff5);
 			
 			//create admin
 			Admin admin1=new Admin("May Thu Kyaw","admin1", "password");

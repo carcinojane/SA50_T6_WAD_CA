@@ -99,14 +99,7 @@ public class StaffServiceImpl implements StaffService {
 	}
 
 	@Override
-	public void referManager(Staff oldManager, Staff newManager) {
-		// TODO Auto-generated method stub
-		
+	public ArrayList<Staff> findSubordinates(Staff staff) {
+		return (ArrayList<Staff>) srepo.findAllSubordinates(staff);
 	}
-	
-
-	
-	
-	
-	
 }

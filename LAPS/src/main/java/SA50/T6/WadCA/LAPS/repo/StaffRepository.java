@@ -35,7 +35,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	@Query("Select s from Staff s Where s.status=1")
 	ArrayList<Staff> findAllInActiveStaff();
 	
-	@Query("Update Staff s set s.manager= :Newmanager Where s.manager= :Oldmanager")
-	Void referManager(@Param("Oldmanager") Staff oldManager, @Param("Newmanager") Staff newManager);
+	@Query("Select s from Staff s Where s.manager= :staff AND s.status=0")
+	ArrayList<Staff> findAllSubordinates(@Param("staff") Staff staff);
 			
 }
