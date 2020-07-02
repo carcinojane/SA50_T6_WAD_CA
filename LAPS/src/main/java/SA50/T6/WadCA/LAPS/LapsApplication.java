@@ -52,6 +52,7 @@ public class LapsApplication {
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			//create manager
+
 			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
@@ -121,23 +122,9 @@ public class LapsApplication {
 			System.out.println(l1.getLeaveType().getDisplayValue());
 			System.out.println(l4.getWorkDissemination());
 			System.out.println(annual_emp.getLeaveType().getDisplayValue());
-			
+
 			
 
-
-//		LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);
-//		LeaveType medical_emp = new LeaveType(Designation.employee, "Medical Leave", 60f,1f);
-//		LeaveType compensation_emp = new LeaveType(Designation.employee, "Compensation Leave", 2f, 0.5f);
-//		LeaveType annual_mng = new LeaveType(Designation.manager, "Annual Leave", 18f, 1f);
-//		LeaveType medical_mng = new LeaveType(Designation.manager, "Medical Leave", 60f, 1f);
-//		LeaveType compensation_mng = new LeaveType(Designation.manager, "Compensation Leave", 2f, 0.5f);
-//
-//		ltservice.save(annual_emp);
-//		ltservice.save(medical_emp);
-//		ltservice.save(compensation_emp);
-//		ltservice.save(annual_mng);
-//		ltservice.save(medical_mng);
-//		ltservice.save(compensation_mng);
 
 
 	};
