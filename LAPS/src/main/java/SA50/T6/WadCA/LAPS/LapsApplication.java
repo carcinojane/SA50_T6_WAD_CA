@@ -57,24 +57,24 @@ public class LapsApplication {
 			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
-			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",2,60,18);
+			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",Status.active, 2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager2);
-			Staff head = new Staff("Head","password","head@gmail.com",2,60,18);
+			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
 			head.setDesignation(Staff.Designation.admin);
 			staffRepo.save(head);
 			
 			//create staff
 
-			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",0f,60f,14f);
-			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",1f,60f,14f);
-			Staff staff3 = new Staff("staff3","password","staff3@gmail.com",1.5f,60f,14f);
+			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active, 0f,60f,14f);
+			Staff staff2 = new Staff("staff2","password","staff2@gmail.com", Status.active, 1f,60f,14f);
+			Staff staff3 = new Staff("staff3","password","staff3@gmail.com", Status.active, 1.5f,60f,14f);
 				//staff with 0 Annual leave	
-				Staff staff4 = new Staff("staff4","password","staff4@gmail.com",2f,60f,0f);
+				Staff staff4 = new Staff("staff4","password","staff4@gmail.com",Status.active, 2f,60f,0f);
 				//staff with 0 Compensation leave	
-				Staff staff5 = new Staff("staff5","password","staff5@gmail.com",0f,60f,14f);
+				Staff staff5 = new Staff("staff5","password","staff5@gmail.com",Status.active, 0f,60f,14f);
 				//staff with 0 Medical leave	
-				Staff staff6 = new Staff("staff6","password","staff6@gmail.com",0f,0f,14f);
+				Staff staff6 = new Staff("staff6","password","staff6@gmail.com",Status.active, 0f,0f,14f);
 
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
