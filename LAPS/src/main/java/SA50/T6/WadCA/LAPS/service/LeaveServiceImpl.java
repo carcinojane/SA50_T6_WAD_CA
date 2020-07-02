@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
-import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 
 @Service
@@ -83,13 +83,13 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LeaveType leaveType) {
+	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LType leaveType) {
 		// TODO Auto-generated method stub
 		return lrepo.findByIdAndLeaveType(id, leaveType);
 	}
 
 	@Transactional
-	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LeaveType leaveType) {
+	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LType leaveType) {
 		// TODO Auto-generated method stub
 		return lrepo.findByIdAndStatusAndType(id, leaveType, leaveStatus);
 	}

@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
-import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 
@@ -30,8 +30,8 @@ public interface LeaveService {
 	public void deleteLeaveRecord(LeaveRecord leaveRecord);
 	public float numOfLeaveApplied(LeaveRecord leaveRecord);
 	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus);
-	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LeaveType leaveType);
-	public List<LeaveRecord> findByIdAndStatusAndType(Integer id,LeaveStatus leaveStatus, LeaveType leaveType);
+	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LType leaveType);
+	public List<LeaveRecord> findByIdAndStatusAndType(Integer id,LeaveStatus leaveStatus, LType leaveType);
 	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId);
 	public Boolean checkStatus(LeaveRecord leaveRecord);
 	public void approveLeave(LeaveRecord leaveRecord);
