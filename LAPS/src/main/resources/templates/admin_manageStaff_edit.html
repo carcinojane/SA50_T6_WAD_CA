@@ -16,6 +16,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.edit.page.title}"></h2>
+		<a href="Back.html" th:href="@{/admin/manageStaff}" th:utext="#{page.back}">Back</a>
 		<form action="#" th:object="${staff}"
 			th:action="@{/admin/manageStaff/edit/save}" method="post">
 			<table class="list">
@@ -32,30 +33,30 @@
 				
 				<tr>
 
-					<td>User Name</td>
+					<td th:utext="#{admin.manageStaff.UserName}">User Name</td>
 					<td th:text="*{username}"></td>
 				</tr>
 				<tr>
-					<td>Password</td>
+					<td th:utext="#{admin.manageStaff.Password}">Password</td>
 					<td><input type="text" th:field="*{password}">
 						<p th:if="${#fields.hasErrors('password')}"
 							th:errors="*{password}"></p></td>
 				</tr>
 				<tr>
-					<td>Email</td>
+					<td th:utext="#{admin.manageStaff.Email}">Email</td>
 					<td><input type="text" th:field="*{email}">
 						<p th:if="${#fields.hasErrors('email')}"
 							th:errors="*{email}"></p></td>
 				</tr>
 				<tr>
-					<td>Start Date</td>
+					<td th:utext="#{admin.manageStaff.StartDate}">Start Date</td>
 					<td><input type="text" th:field="*{startDate}"
 						placeholder="dd-MM-yyyy" />
 						<p th:if="${#fields.hasErrors('startDate')}"
 							th:errors="*{startDate}" /></td>
 				</tr>
 				<tr>
-					<td>Designation</td>
+					<td th:utext="#{admin.manageStaff.Designation}">Designation</td>
 					<td><select th:field="${staff.designation}">
 							<option
 								th:each="designationOptn : ${T(SA50.T6.WadCA.LAPS.model.Staff.Designation).values()}"
@@ -63,38 +64,38 @@
 					</select></td>
 				</tr>
 				<tr>
-					<td>Managed By</td>
+					<td th:utext="#{admin.manageStaff.ManagedBy}">Managed By</td>
 					<td><select th:field="*{manager.username}">
 							<option th:each="managerName : ${managerNames}" th:value="${managerName}"
 								th:text="${managerName}"></option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>Total Annual Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalAnnualLeave}">Total Annual Leave</td>
 					<td><input type="text" th:field="*{totalAnnualLeave}">
 						<p th:if="${#fields.hasErrors('totalAnnualLeave')}"
 							th:errors="*{totalAnnualLeave}"></p></td>
 				</tr>
 				<tr>
-					<td>Total Medical Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalMedicalLeave}">Total Medical Leave</td>
 					<td><input type="text" th:field="*{totalMedicalLeave}">
 						<p th:if="${#fields.hasErrors('totalMedicalLeave')}"
 							th:errors="*{totalMedicalLeave}"></p></td>
 				</tr>
 				<tr>
-					<td>Total Compensation Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalCompensationLeave}">Total Compensation Leave</td>
 					<td><input type="text" th:field="*{totalCompensationLeave}">
 						<p th:if="${#fields.hasErrors('totalCompensationLeave')}"
 							th:errors="*{totalCompensationLeave}"></p></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
-						type="reset" value="Reset" /></td>
+					<td><input type="submit" value="Save"/> &nbsp; &nbsp; <input
+						type="reset" vale="Reset"/></td>
 				</tr>
 
 			</table>
-			<a href="Back.html" th:href="@{/admin/manageStaff}">Back</a>
+			
 		</form>
 	</div>
 </body>
