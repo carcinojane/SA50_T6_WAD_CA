@@ -14,7 +14,7 @@ public class OvertimeServiceImpl implements OvertimeService{
 	@Override
 	public float FindCompensationLeaveAwarded(int overtime) {
 		int daysAwarded = overtime/4;
-		float unitsAwarded = daysAwarded/2;
+		float unitsAwarded = (float)daysAwarded/2;
 		return unitsAwarded;
 	}
 

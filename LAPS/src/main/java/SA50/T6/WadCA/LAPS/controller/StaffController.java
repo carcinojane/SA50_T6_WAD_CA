@@ -139,10 +139,13 @@ public class StaffController {
 	}
 
 	@RequestMapping(value="/apply/save")
-	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, Model model,HttpSession session) {
-//		if(result.hasErrors()) {
-//			return "redirect:/staff/apply/add";
-//		}
+	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,
+			BindingResult result, Model model,
+			HttpSession session) {
+		
+		if(result.hasErrors()) {
+			return "redirect:/staff/apply/add";
+		}
 		
 		Staff staff = (Staff)session.getAttribute("staff");
 		int staffId = staff.getStaffId();
@@ -159,13 +162,13 @@ public class StaffController {
 		}else {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
-
-
-//		LType type = leaveRecord.getLeaveType().getLeaveType();
-//		if(type ==(LType.AnnualLeave) 
-//				|| type==(LType.MedicalLeave)) {
-//			leaveRecord.setLeaveStartTime('N');
-//		}
+		
+		LType type = leaveRecord.getLeaveType();
+		if(type ==(LType.AnnualLeave) 
+				|| type==(LType.MedicalLeave)) {
+			leaveRecord.setLeaveStartTime('N');
+			leaveRecord.setLeaveEndTime('N');
+		}
 		
 		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
 		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
@@ -180,11 +183,40 @@ public class StaffController {
 	}
 
 
-	@GetMapping("/apply/delete")
-	public String delete(@ModelAttribute("LeaveRecord")LeaveRecord leaveRecord, HttpSession session) {
+	@GetMapping("/apply/cancel/{id}")
+	public String cancel(@PathVariable("id") Integer id, HttpSession session) {
+		LeaveRecord leaveRecord = lservice.findById(id);
+		Staff staff = (Staff)session.getAttribute("staff");
+		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
+		float balance = 0;
+		if(leaveRecord.getLeaveType()== LType.AnnualLeave) {
+			balance = staff.getTotalAnnualLeave() + numOfLeave;
+			staff.setTotalAnnualLeave(balance);
+			sservice.saveStaff(staff);
+		} else if(leaveRecord.getLeaveType()== LType.MedicalLeave) {
+			balance = staff.getTotalMedicalLeave() + numOfLeave;
+			staff.setTotalMedicalLeave(balance);
+			sservice.saveStaff(staff);
+		} else {
+			balance = staff.getTotalCompensationLeave() + numOfLeave;
+			staff.setTotalCompensationLeave(balance);
+			sservice.saveStaff(staff);
+		}
+		leaveRecord.setLeaveStatus(LeaveStatus.CANCELLED);
+		lservice.saveLeaveRecord(leaveRecord);
+		
+		return "forward:/staff/apply";
+	}
+	
+
+	@GetMapping("/apply/delete/{id}")
+	public String delete(@PathVariable("id") Integer id, HttpSession session) {
+		LeaveRecord leaveRecord = lservice.findById(id);
 		lservice.deleteLeaveRecord(leaveRecord);
+		
 		return"forward:/staff/apply";
 	}
+	
 	@GetMapping("/balance")
 	public String balance(Model model, HttpSession session) {
 		//int staffId = (int) session.getAttribute("staffId");
@@ -216,11 +248,11 @@ public class StaffController {
 		return "staff_leaveHistory_details_edit";
 	}
 
-	@GetMapping("/history/details/delete/{id}")
-	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
-		lservice.deleteLeaveRecord(lservice.findById(id));
-		return "redirect:/staff/history";
-	}
+//	@GetMapping("/history/details/delete/{id}")
+//	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
+//		lservice.deleteLeaveRecord(lservice.findById(id));
+//		return "redirect:/staff/history";
+//	}
 
 	@GetMapping("/overtime")
 	public String overtime(Model model, HttpSession session) {
@@ -231,10 +263,10 @@ public class StaffController {
 		return "staff_overtime";
 	}
 
-	@RequestMapping(value="/overtime/save")
+	@GetMapping("/overtime/save")
 	public String OTsave(@ModelAttribute("overtime") @Valid Overtime overtime, BindingResult result,HttpSession session) {
 		if (result.hasErrors()) {
-			return "staff_overtime";
+			return "/staff_overtime";
 		}
 		Staff staff = sservice.findStaffById((int)session.getAttribute("staffId"));
 		//set staffId;
@@ -245,8 +277,8 @@ public class StaffController {
 		float totalCompLeave = staff.getTotalCompensationLeave() + currCompLeave;
 		staff.setTotalCompensationLeave(totalCompLeave);
 		sservice.saveStaff(staff);
-
-		return "staff_homepage";
+		
+		return "forward:/staff/overtime";
 	}
 
 
