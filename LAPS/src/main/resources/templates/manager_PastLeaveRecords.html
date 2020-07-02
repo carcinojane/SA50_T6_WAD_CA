@@ -38,7 +38,7 @@
 					th:each="leave:${lrecords}">
 					<td th:text="${leave.leaveStartDate}">From</td>
 					<td th:text="${leave.leaveEndDate}">To</td>
-					<td th:text="${leave.leaveTypeDisplay}">Category</td>
+					<td th:text="${leave.leaveType.displayValue}">Category</td>
 					<td th:text="${leave.leaveStatus.displayValue}">Status</td>
 					<td><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"
 						th:utext="#{manager.approval.details.page.title}"></a></td>
