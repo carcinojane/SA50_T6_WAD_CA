@@ -23,49 +23,53 @@ public class ManagerController{
 
 	@Autowired
 	protected LeaveService lservice;
-	
+
 	@Autowired
 	public void setLeaveService(LeaveServiceImpl lserviceImpl) {
 		this.lservice = lserviceImpl;
 	}
-	
+
 	@GetMapping("/home")
 	public String home() {
 		return "manager_homepage";
 	}
-	
+
 	@GetMapping("/approval")
 	public String approval(Model model, HttpSession session) {		
 		Staff staff = (Staff)session.getAttribute("staff");	
 		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(staff.getStaffId()));
 		return "manager_approval";
 	}
-	
+
 	@RequestMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
-	
+
 	@GetMapping(value = "/approve")
 	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
-		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+		if(!lservice.approveLeave(leaveRecord)) {
+			int id = leaveRecord.getLeaveId();
+			return "redirect:/manager/staffLeaveDetails/"+id;
+		}
 		return "manager_approval";
 	}
-	
+
 	@GetMapping(value = "/reject")
 	public String rejectLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
 		if (leaveRecord.getReasonForRejection()!=null) {
-		leaveRecord.setLeaveStatus(LeaveStatus.REJECTED);
-		return "forward:/manager/approval";}
-		
+			lservice.rejectLeave(leaveRecord);
+			int id = leaveRecord.getLeaveId();
+			return "forward:/manager/staffLeaveDetails/"+id;}
+
 		return "manager_leaveDetails";	
 	}
-	
+
 	@GetMapping(value = "/history/{id}")
 	public String staffRecord(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
 		return "manager_PastLeaveRecords";
 	}
-	
+
 }
