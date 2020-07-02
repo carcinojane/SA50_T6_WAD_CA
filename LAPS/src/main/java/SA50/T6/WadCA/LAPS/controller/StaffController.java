@@ -140,16 +140,17 @@ public class StaffController {
 
 	@RequestMapping(value="/apply/save")
 	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, Model model,HttpSession session) {
-		if(result.hasErrors()) {
-			return "redirect:/staff/apply/add";
-		}
+//		if(result.hasErrors()) {
+//			return "redirect:/staff/apply/add";
+//		}
+		
+		Staff staff = (Staff)session.getAttribute("staff");
+		int staffId = staff.getStaffId();
+		leaveRecord.setStaffId(staffId);
 
-		LType leaveType = leaveRecord.getLeaveType().getLeaveType();
-		if(leaveType ==(LType.AnnualLeave) 
-				|| leaveType==(LType.MedicalLeave)) {
-			leaveRecord.setLeaveStartTime('N');
-		}
-
+		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
+		leaveRecord.setManagerId(managerId);
+		
 		LeaveStatus leaveStatus = leaveRecord.getLeaveStatus();
 		if(leaveStatus == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
@@ -159,22 +160,23 @@ public class StaffController {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
 
-		Staff staff = (Staff)session.getAttribute("staffId");
-		int staffId = staff.getStaffId();
-		leaveRecord.setStaffId(staffId);
 
-		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
-		leaveRecord.setManagerId(managerId);
-
+//		LType type = leaveRecord.getLeaveType().getLeaveType();
+//		if(type ==(LType.AnnualLeave) 
+//				|| type==(LType.MedicalLeave)) {
+//			leaveRecord.setLeaveStartTime('N');
+//		}
+		
 		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
-		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY 
-				|| leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY 
-				|| leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY 
-				|| leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
-			return "staff_applyLeave_add";
+		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
+		if(leaveStartDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveStartDate.getDayOfWeek() == DayOfWeek.SUNDAY 
+				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return "redirect:/staff/apply/add";
 		} else 
 			lservice.saveLeaveRecord(leaveRecord);
-		return "forward:/staff_applyLeave";
+		return "redirect:/staff/apply";
 	}
 
 

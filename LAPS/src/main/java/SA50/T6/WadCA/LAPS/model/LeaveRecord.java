@@ -22,11 +22,11 @@ public class LeaveRecord{
 	
 	@NotNull(message = "Reason is mandatory field")
 	private String reason;
-	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveStartDate;
 	private char leaveStartTime;
-	@DateTimeFormat(pattern = "dd-MMM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message = "From date is mandatory field")
 	private LocalDate leaveEndDate;
 	private char leaveEndTime;
@@ -69,7 +69,7 @@ public class LeaveRecord{
 	
 	
 	
-	
+	//add leave
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
 			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
