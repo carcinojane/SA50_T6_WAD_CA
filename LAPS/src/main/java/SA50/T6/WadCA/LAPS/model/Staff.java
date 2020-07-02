@@ -1,8 +1,8 @@
 package SA50.T6.WadCA.LAPS.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,9 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,7 +28,7 @@ public class Staff {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int staffId;
 	
-	@NotNull
+	@NotEmpty(message="Username is mendatory!!")
 	@Column(unique = true)
 	private String username;
 	@NotNull
@@ -56,18 +55,18 @@ public class Staff {
 	private float totalCompensationLeave;
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private Date startDate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate startDate;
 
 	public Staff() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Staff(@NotNull String username, @NotNull @Size(min = 6, max = 15) String password,
+	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,
 			@Email String email, Staff manager, Set<Staff> subordinates, Designation designation,
-			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave, Date startDate) {
+			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave, LocalDate startDate) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -81,7 +80,7 @@ public class Staff {
 		this.startDate = startDate;
 	}
 
-	public Staff(@NotNull String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email,
+	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email,
 			float totalCompensationLeave, float totalMedicalLeave, float totalAnnualLeave) {
 		super();
 		this.username = username;
@@ -92,7 +91,7 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 	}
 
-	public Staff(@NotNull String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email) {
+	public Staff(@NotEmpty String username, @NotNull @Size(min = 6, max = 15) String password,@Email String email) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -179,11 +178,11 @@ public class Staff {
 		this.totalAnnualLeave = totalAnnualLeave;
 	}
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 

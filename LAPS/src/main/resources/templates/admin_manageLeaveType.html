@@ -31,7 +31,7 @@
 			<tr th:each="leavetype:${leavetypes}">
 				
 				<td th:text=${leavetype.designation}>Designation</td>
-				<td th:text=${leavetype.leaveType}>LeaveType</td>
+				<td th:text=${leavetype.leaveType.displayValue}>LeaveType</td>
 				<td th:text=${leavetype.entitlement}>Entitlement</td>
 				<td th:text=${leavetype.minClaim}>MinClaim</td>
 				<td><a

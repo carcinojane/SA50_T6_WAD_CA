@@ -181,11 +181,11 @@ public class AdminController {
 		return "forward:/admin/manageStaff";
 	}
 	
-	@GetMapping("/manageStaff/delete/{id}")
-	public String deleteStaff(@PathVariable("id") Integer id) {
-		sservice.deleteStaff(sservice.findStaffById(id));
-		return "forward:/admin/manageStaff";
-	}
+//	@GetMapping("/manageStaff/delete/{id}")
+//	public String deleteStaff(@PathVariable("id") Integer id) {
+//		sservice.deleteStaff(sservice.findStaffById(id));
+//		return "forward:/admin/manageStaff";
+//	}
 
 	@RequestMapping(value = "/manageLeaveType")
 	public String manageLeaveType(Model model) {
