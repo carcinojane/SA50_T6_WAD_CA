@@ -38,6 +38,7 @@
 				<th>Start Date</th>
 				<th>Designation</th>
 				<th>Detail</th>
+				<th>Delete</th>
 				<!-- <th>Delete</th> -->
 			</tr>
 			<tr th:each="staff:${staffs}">
@@ -48,7 +49,7 @@
 				<td><a href="DetailStaff.html"
 					th:href="@{/admin/manageStaff/details/}+${staff.staffId}">Detail</a></td>
 				<!-- <td><a href="DeleteStaff.html"
-					th:href="@{/admin/manageStaff/delete/}+${staff.staffId}">Delete</a></td>	 -->
+					th:href="@{/admin/manageStaff/delete/}+${staff.staffId}">Delete</a></td> -->
 			</tr>
 		</table>
 	</div>
