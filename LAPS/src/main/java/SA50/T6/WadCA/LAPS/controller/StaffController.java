@@ -139,10 +139,13 @@ public class StaffController {
 	}
 
 	@RequestMapping(value="/apply/save")
-	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, Model model,HttpSession session) {
-//		if(result.hasErrors()) {
-//			return "redirect:/staff/apply/add";
-//		}
+	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,
+			BindingResult result, Model model,
+			HttpSession session) {
+		
+		if(result.hasErrors()) {
+			return "redirect:/staff/apply/add";
+		}
 		
 		Staff staff = (Staff)session.getAttribute("staff");
 		int staffId = staff.getStaffId();
@@ -159,13 +162,12 @@ public class StaffController {
 		}else {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
-
-
-//		LType type = leaveRecord.getLeaveType().getLeaveType();
-//		if(type ==(LType.AnnualLeave) 
-//				|| type==(LType.MedicalLeave)) {
-//			leaveRecord.setLeaveStartTime('N');
-//		}
+		
+		LType type = leaveRecord.getLeaveType();
+		if(type ==(LType.AnnualLeave) 
+				|| type==(LType.MedicalLeave)) {
+			leaveRecord.setLeaveStartTime('N');
+		}
 		
 		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
 		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();

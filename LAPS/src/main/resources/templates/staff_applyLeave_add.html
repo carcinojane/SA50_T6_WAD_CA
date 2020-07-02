@@ -16,7 +16,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
-		<a href="Back.html" th:href="@{/admin/manageStaff}">Back</a>
+		<a href="Back.html" th:href="@{/staff/apply}">Back</a>
 
 		<form action="#" th:object="${LeaveRecord}"
 			th:action="@{/staff/apply/save}" method="post">
@@ -26,7 +26,7 @@
 				<tr>
 					<td>Leave Category</td>
 					<td><select th:field=*{leaveType}>
-							<option th:each="leave:${leaveTypeList}" th:value="${leave}"
+							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
 								th:text="${leave.leaveType.displayValue}">
 					</select></td>
 				</tr>
@@ -78,7 +78,6 @@
 					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
 						type="reset" value="Reset" /></td>
 				</tr>
-
 			</table>
 		</form>
 	</div>
