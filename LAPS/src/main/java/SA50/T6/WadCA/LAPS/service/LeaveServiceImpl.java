@@ -2,6 +2,7 @@ package SA50.T6.WadCA.LAPS.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
-import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 
 @Service
@@ -136,6 +136,18 @@ public class LeaveServiceImpl implements LeaveService {
 		}
 		return false;
 	}
+
+	@Transactional
+	public void approveLeave(LeaveRecord leaveRecord) {
+		long result = ChronoUnit.DAYS.between(leaveRecord.getLeaveStartDate(), leaveRecord.getLeaveEndDate());
+		if(leaveRecord.getStaff().getTotalAnnualLeave()>= result) {
+			leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+			lrepo.save(leaveRecord);
+		}
+		
+	}
+	
+	
 
 	
 }

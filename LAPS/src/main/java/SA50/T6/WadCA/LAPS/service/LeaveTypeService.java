@@ -17,4 +17,5 @@ public interface LeaveTypeService {
 	public LeaveType findLeaveTypeToEdit(LType leaveType,Designation designation);
 	public Collection<LType> findByDesignation(Designation designation);
 	public List<LeaveType> findLeaveTypeByDesignation(Designation designation);
+	public LeaveType findById(Integer id);
 }

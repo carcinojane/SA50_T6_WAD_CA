@@ -1,3 +1,4 @@
+
 package SA50.T6.WadCA.LAPS.service;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public interface LeaveService {
 	public List<LeaveRecord> findByIdAndStatusAndType(Integer id,LeaveStatus leaveStatus, LeaveType leaveType);
 	public ArrayList<LeaveRecord> findLeaveRecordByStaffId(Integer staffId);
 	public Boolean checkStatus(LeaveRecord leaveRecord);
+	public void approveLeave(LeaveRecord leaveRecord);
 	
 
 	

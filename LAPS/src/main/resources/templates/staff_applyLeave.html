@@ -25,20 +25,23 @@
 		<input type="hidden" id="dummy1" class="search-key" placeholder="">     
         <input type="hidden" id="dummy2" class="search-key" placeholder="">
         
-		<select id="leavetype" class="search-key">
+		<!--  <select id="leavetype" class="search-key">
           <option value="">Select a leave category</option>
           <option value="Annual Leave">Annual Leave</option>
           <option value="Medical Leave">Medical Leave</option>
           <option value="Compensation Leave">Compensation Leave</option>
+        </select>-->
+        
+        <select id="leavetype" class="search-key">
+          <option value="">Select a leave category</option>
+          <option th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+          th:value="${typeOpt.displayValue}" th:text="${typeOpt.displayValue}"></option>
         </select>
         
-        <select id="leavestatus" class="search-key">
+         <select id="leavestatus" class="search-key">
           <option value="">Select a leave status</option>
-          <option value="Applied">Applied</option>
-          <option value="Approved">Approved</option>
-          <option value="Rejected">Rejected</option>
-          <option value="Cancelled">Cancelled</option>
-          <option value="Updated">Updated</option>
+          <option th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
+          th:value="${statusOpt.displayValue}" th:text="${statusOpt.displayValue}"></option>
         </select>
         
         <input type="hidden" id="dummy3" class="search-key" placeholder="">
@@ -62,7 +65,7 @@
 			<tr th:each="leave:${lrecords}">
 				<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
 				<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
-				<td data-input="leavetype" th:text="${leave.leaveTypeDisplay}">Category</td>
+				<td data-input="leavetype" th:text="${leave.leaveType.displayValue}">Category</td>
 				<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
 				<td data-input="dummy3"><a th:href="@{/staff/history/details/}+${leave.leaveId}"
 						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
