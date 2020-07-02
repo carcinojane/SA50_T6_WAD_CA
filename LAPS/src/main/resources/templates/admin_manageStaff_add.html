@@ -30,13 +30,19 @@
 					<td>User Name</td>
 					<td><input type="text" th:field="*{username}">
 						<p th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}"></p></td>
+							th:errors="*{username}" required></p></td>
 				</tr>
 				<tr>
 					<td>Password</td>
 					<td><input type="text" th:field="*{password}">
 						<p th:if="${#fields.hasErrors('password')}"
-							th:errors="*{password}"></p></td>
+							th:errors="*{password}" required></p></td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><input type="text" th:field="*{email}">
+						<p th:if="${#fields.hasErrors('email')}"
+							th:errors="*{email}"></p></td>
 				</tr>
 				<tr>
 					<td>Start Date</td>
