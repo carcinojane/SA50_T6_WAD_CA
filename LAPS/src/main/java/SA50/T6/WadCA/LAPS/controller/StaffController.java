@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
@@ -240,13 +241,55 @@ public class StaffController {
 	}
 
 	@GetMapping("/history/details/edit/{id}")
-	public String editLeaveDetails(Model model, @PathVariable("id") Integer id) {
+	public String editLeaveDetails( Model model, @PathVariable("id") Integer id, HttpSession session) {
+		
 		LeaveRecord leaveRecord=lservice.findById(id);
 		if(!lservice.checkStatus(leaveRecord)) {
 			return "redirect:/staff/history/details/"+id;
 		}
 		model.addAttribute("leave",leaveRecord);
+		Staff staff = (Staff)session.getAttribute("staff");
+		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 		return "staff_leaveHistory_details_edit";
+	}
+	
+	@RequestMapping(value="/history/details/edit/save")
+	public String saveUpdatedLeave(@ModelAttribute("leaveRecord") @Valid LeaveRecord leaveRecord,
+			BindingResult result, Model model,HttpSession session, RedirectAttributes redirect) {
+		
+		if(result.hasErrors()) {
+			return "redirect:/staff/apply/add";
+		}
+
+		Staff staff = (Staff)session.getAttribute("staff");
+		int staffId = staff.getStaffId();
+		leaveRecord.setStaffId(staffId);
+		redirect.addAttribute("id", leaveRecord.getLeaveId());
+
+		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
+		leaveRecord.setManagerId(managerId);
+		
+		leaveRecord.setLeaveStatus(LeaveStatus.UPDATED); 
+		
+		LType type = leaveRecord.getLeaveType();
+		if(type ==(LType.AnnualLeave) 
+				|| type==(LType.MedicalLeave)) {
+			leaveRecord.setLeaveStartTime('N');
+			leaveRecord.setLeaveEndTime('N');
+
+		}
+		
+		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
+		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
+		if(leaveStartDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveStartDate.getDayOfWeek() == DayOfWeek.SUNDAY 
+				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+			return "redirect:/staff/history/details/edit/{id}";
+		} else 
+			lservice.saveLeaveRecord(leaveRecord);
+		return "redirect:/staff/apply";
 	}
 
 //	@GetMapping("/history/details/delete/{id}")

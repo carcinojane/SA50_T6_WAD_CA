@@ -17,7 +17,13 @@
 	<div class="content">
 		<h1 th:utext="#{manager.approval.details.page.title}">Leave
 			Details</h1>
+			
+		<a href="Back.html" th:href="@{/staff/apply}">Back</a>
 		<table class="list">
+			<tr>
+				<td>Category</td>
+				<td th:text="${leave.leaveType.displayValue}"></td>
+			</tr>
 			<tr>
 				<td>From</td>
 				<td th:text="${leave.leaveStartDate}"></td>
@@ -27,20 +33,20 @@
 				<td th:text="${leave.leaveEndDate}"></td>
 			</tr>
 			<tr>
-				<td>Category</td>
-				<td th:text="${leave.leaveType.displayValue}"></td>
-			</tr>
-			<tr>
-				<td>Status</td>
-				<td th:text="${leave.leaveStatus.displayValue}"></td>
-			</tr>
-			<tr>
 				<td>Reason</td>
 				<td th:text="${leave.reason}"></td>
 			</tr>
 			<tr>
 				<td>Work Dissemination</td>
 				<td th:text="${leave.workDissemination}"></td>
+			</tr>
+			<tr>
+				<td>Contact Details</td>
+				<td th:text="${leave.contact}"></td>
+			</tr>
+			<tr>
+				<td>Status</td>
+				<td th:text="${leave.leaveStatus.displayValue}"></td>
 			</tr>
 		</table>
 		<a  th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}" th:href="@{/staff/apply/cancel/}+${leave.leaveId}">
@@ -52,7 +58,7 @@
 			<button style="background-color: red">Delete</button>
 		</a>
 		
-		<a href="Back.html" th:href="@{/staff/apply}">Back</a>
+		
 
 	</div>
 </body>
