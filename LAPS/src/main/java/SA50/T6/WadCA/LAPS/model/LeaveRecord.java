@@ -271,10 +271,10 @@ public class LeaveRecord{
 
 		//this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
 	}
-	public String getLeaveTypeDisplay() {
-		return leaveTypeDisplay;
-
-	}
+//	public String getLeaveTypeDisplay() {
+//		return leaveTypeDisplay;
+//
+//	}
 	
 	public char getLeaveStartTime() {
 		return leaveStartTime;

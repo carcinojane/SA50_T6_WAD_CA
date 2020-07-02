@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
+import SA50.T6.WadCA.LAPS.service.StaffService;
+import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
 
 @Controller
 @RequestMapping("/manager")
@@ -27,6 +30,14 @@ public class ManagerController{
 	@Autowired
 	public void setLeaveService(LeaveServiceImpl lserviceImpl) {
 		this.lservice = lserviceImpl;
+	}
+	
+	@Autowired
+	protected StaffService sservice;
+
+	@Autowired
+	public void setStaffService(StaffServiceImpl sserviceImpl) {
+		this.sservice = sserviceImpl;
 	}
 	
 	@GetMapping("/home")
@@ -50,6 +61,22 @@ public class ManagerController{
 	@GetMapping(value = "/approve")
 	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
 		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+		Staff staff =(Staff)session.getAttribute("staff");
+		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
+		float balance = 0;
+		if(leaveRecord.getLeaveType()== LType.AnnualLeave) {
+			balance = staff.getTotalAnnualLeave() + numOfLeave;
+			staff.setTotalAnnualLeave(balance);
+			sservice.saveStaff(staff);
+		} else if(leaveRecord.getLeaveType()== LType.MedicalLeave) {
+			balance = staff.getTotalMedicalLeave() + numOfLeave;
+			staff.setTotalMedicalLeave(balance);
+			sservice.saveStaff(staff);
+		} else {
+			balance = staff.getTotalCompensationLeave() + numOfLeave;
+			staff.setTotalCompensationLeave(balance);
+			sservice.saveStaff(staff);
+		}
 		return "manager_approval";
 	}
 	
