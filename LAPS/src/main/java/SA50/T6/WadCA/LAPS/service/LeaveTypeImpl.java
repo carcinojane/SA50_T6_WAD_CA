@@ -78,5 +78,11 @@ public class LeaveTypeImpl implements LeaveTypeService {
 		// TODO Auto-generated method stub
 		return ltrepo.findByDesignation(designation);
 	}
+
+	@Override
+	public List<LeaveType> findLeaveTypeByDesignation(Designation designation) {
+		// TODO Auto-generated method stub
+		return ltrepo.findLeaveTypeByDesignation(designation);
+	}
 	
 }

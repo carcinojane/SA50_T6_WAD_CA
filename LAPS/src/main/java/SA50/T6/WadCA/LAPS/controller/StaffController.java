@@ -2,8 +2,6 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -18,13 +16,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
-import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Overtime;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
@@ -134,36 +131,49 @@ public class StaffController {
 		Staff staff = (Staff)session.getAttribute("staff");
 		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 		//model.addAttribute("leaveTypeList", ltservice.findAllLeaveTypeNames());
-//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
-		model.addAttribute("leaveTypeList", ltservice.findByDesignation(designation));
-		
+		//		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeNamesByDesignation(designation));
+		//model.addAttribute("leaveTypeList", ltservice.findByDesignation(designation));
+		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+
 		return "staff_applyLeave_add";
 	}
 
-	@GetMapping("/apply/save")
-	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, HttpSession session) {
+	@RequestMapping(value="/apply/save")
+	public String save(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,BindingResult result, Model model,HttpSession session) {
 		if(result.hasErrors()) {
-			return "staff_applyLeave_add";
+			return "redirect:/staff/apply/add";
 		}
-		if(leaveRecord.getLeaveType().equals("Annual Leave") || leaveRecord.getLeaveType().equals("Medical Leave")) {
+
+		LType leaveType = leaveRecord.getLeaveType().getLeaveType();
+		if(leaveType ==(LType.AnnualLeave) 
+				|| leaveType==(LType.MedicalLeave)) {
 			leaveRecord.setLeaveStartTime('N');
 		}
-		if(leaveRecord.getLeaveStatus() == LeaveStatus.APPLIED) {
+
+		LeaveStatus leaveStatus = leaveRecord.getLeaveStatus();
+		if(leaveStatus == LeaveStatus.APPLIED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.UPDATED);
-		} else if(leaveRecord.getLeaveStatus()==LeaveStatus.APPROVED) {
+		} else if(leaveStatus==LeaveStatus.APPROVED) {
 			leaveRecord.setLeaveStatus(LeaveStatus.CANCELLED);
 		}else {
 			leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
 		}
-		leaveRecord.setManagerId((sservice.findStaffById((int)session.getAttribute("staffId")).getManager().getStaffId()));
-		leaveRecord.setStaffId((int)session.getAttribute("staffId"));
-		//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
-		//			return "staff_applyLeave_add";
-		//		} else 
 
-		lservice.saveLeaveRecord(leaveRecord);
-		return "forward:/staff/apply";
+		Staff staff = (Staff)session.getAttribute("staffId");
+		int staffId = staff.getStaffId();
+		leaveRecord.setStaffId(staffId);
+
+		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
+		leaveRecord.setManagerId(managerId);
+
+//		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
+//		if(leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveStartDate().getDayOfWeek() == DayOfWeek.SUNDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SATURDAY || leaveRecord.getLeaveEndDate().getDayOfWeek() == DayOfWeek.SUNDAY) {
+//			return "staff_applyLeave_add";
+//		} else 
+			lservice.saveLeaveRecord(leaveRecord);
+			return "forward:/staff_applyLeave";
 	}
+
 
 	@GetMapping("/apply/delete")
 	public String delete(@ModelAttribute("LeaveRecord")LeaveRecord leaveRecord, HttpSession session) {

@@ -123,6 +123,7 @@ public class LapsApplication {
 			System.out.println(l4.getWorkDissemination());
 			System.out.println(annual_emp.getLeaveType().getDisplayValue());
 			
+			
 
 
 //		LeaveType annual_emp = new LeaveType(Designation.employee, "Annual Leave", 14f, 1f);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
 import SA50.T6.WadCA.LAPS.model.LeaveStatus;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
+import SA50.T6.WadCA.LAPS.model.Staff.Designation;
 import SA50.T6.WadCA.LAPS.repo.LeaveRepository;
 
 @Service
@@ -136,4 +137,5 @@ public class LeaveServiceImpl implements LeaveService {
 		return false;
 	}
 
+	
 }
