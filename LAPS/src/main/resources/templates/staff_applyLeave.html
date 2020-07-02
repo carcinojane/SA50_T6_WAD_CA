@@ -25,13 +25,6 @@
 		<input type="hidden" id="dummy1" class="search-key" placeholder="">     
         <input type="hidden" id="dummy2" class="search-key" placeholder="">
         
-		<!--  <select id="leavetype" class="search-key">
-          <option value="">Select a leave category</option>
-          <option value="Annual Leave">Annual Leave</option>
-          <option value="Medical Leave">Medical Leave</option>
-          <option value="Compensation Leave">Compensation Leave</option>
-        </select>-->
-        
         <select id="leavetype" class="search-key">
           <option value="">Select a leave category</option>
           <option th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"

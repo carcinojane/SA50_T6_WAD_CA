@@ -40,6 +40,7 @@ public class LeaveRecord{
 //		@JoinColumn(name="designation", insertable=false, updatable=false)
 //	})
 //	private LeaveType leaveType;
+	
 	private LType leaveType;
 	private String workDissemination;
 	private int contact;
