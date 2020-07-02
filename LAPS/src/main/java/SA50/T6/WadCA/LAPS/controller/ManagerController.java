@@ -1,10 +1,12 @@
 package SA50.T6.WadCA.LAPS.controller;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,23 +49,26 @@ public class ManagerController{
 		return "manager_leaveDetails";
 	}
 
-	@GetMapping(value = "/approve")
-	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
-		if(!lservice.approveLeave(leaveRecord)) {
-			int id = leaveRecord.getLeaveId();
-			return "redirect:/manager/staffLeaveDetails/"+id;
-		}
-		return "manager_approval";
+	@GetMapping(value = "/approve/{id}")
+	public String approveLeave(@PathVariable("id") Integer id, HttpSession session) {
+		lservice.approveLeave(id);
+		//return "redirect:/manager/approve/"+id;
+		return "redirect:/manager/staffLeaveDetails/"+id;
 	}
 
-	@GetMapping(value = "/reject")
-	public String rejectLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
-		if (leaveRecord.getReasonForRejection()!=null) {
-			lservice.rejectLeave(leaveRecord);
-			int id = leaveRecord.getLeaveId();
-			return "forward:/manager/staffLeaveDetails/"+id;}
+//	@GetMapping(value = "/reject/{id}")
+//	public String rejectLeave(@PathVariable("id") Integer id, HttpSession session) {
+//		LeaveRecord record = lservice.findById(id);
+//		lservice.rejectLeave(record);
+//
+//		return "redirect:/manager/staffLeaveDetails/"+id;
+//	}
+	
+	@GetMapping(value = "/reject/{id}")
+	public String rejectLeave(@PathVariable("id") Integer id, HttpSession session) {
+		lservice.rejectLeave(id);
 
-		return "manager_leaveDetails";	
+		return "redirect:/manager/staffLeaveDetails/"+id;
 	}
 
 	@GetMapping(value = "/history/{id}")

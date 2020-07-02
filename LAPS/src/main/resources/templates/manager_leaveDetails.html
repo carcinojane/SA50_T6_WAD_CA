@@ -29,8 +29,8 @@
 		<div class="status">
 	 	  	<ul>
 	 	  		<li>
-	 	  			<a th:href="@{/manager/approve}"><button style="background-color:green" th:utext="#{button.approve}"></button></a>
-					<a th:href="@{/manager/reject}"><button style="background-color:red" th:utext="#{button.reject}"></button></a>
+	 	  			<a th:href="@{/manager/approve/}+${leave.leaveId}"><button style="background-color:green" th:utext="#{button.approve}"></button></a>
+					<a th:href="@{/manager/reject/}+${leave.leaveId}"><button style="background-color:red" th:utext="#{button.reject}"></button></a>
 	 	  		</li>
 	 	  		<li>
 	 	  		<!--  <a th:href="@{/manager/approval}"><button style="width:186px; background-color:grey" th:utext="#{manager.button.backtoapproval}"></button></a>

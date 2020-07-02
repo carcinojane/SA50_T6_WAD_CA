@@ -2,7 +2,6 @@ package SA50.T6.WadCA.LAPS.service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +61,7 @@ public class LeaveServiceImpl implements LeaveService {
 		LocalDate to = leave.getLeaveEndDate();
 		float numOfDay = 0;
 		LocalDate curr = from;
-		
+
 		do {
 			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
 				numOfDay += 0.5;
@@ -70,11 +69,11 @@ public class LeaveServiceImpl implements LeaveService {
 				numOfDay += 0.5;
 			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
 				numOfDay ++;
-			
+
 			curr = curr.plusDays(1);
 		}while(curr.isBefore(to));
-		
-		
+
+
 		return numOfDay;
 	}
 
@@ -142,61 +141,67 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public boolean approveLeave(LeaveRecord leaveRecord) {
-		leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
-		lrepo.save(leaveRecord);
-		return true;
+	public boolean approveLeave(Integer id) {
+		//		leaveRecord.setLeaveStatus(LeaveStatus.APPLIED);
+		//		lrepo.save(leaveRecord);
+		//		return true;
+		LeaveRecord leaveRecord = lrepo.findById(id).get();
+		if(checkStatus(leaveRecord)) {
+			Staff staff = leaveRecord.getStaff();
+			float days = numOfLeaveApplied(leaveRecord);
+			LType leaveType = leaveRecord.getLeaveType();
 
-//		Staff staff = leaveRecord.getStaff();
-//		float days = (float)ChronoUnit.DAYS.between(leaveRecord.getLeaveStartDate(), leaveRecord.getLeaveEndDate());
-//		LType leaveType = leaveRecord.getLeaveType();
-//
-//		float totalAnnualLeave = staff.getTotalAnnualLeave();
-//		float totalMedicalLeave = staff.getTotalMedicalLeave();
-//		float totalCompensationLeave = staff.getTotalCompensationLeave();
-//
-//		if(leaveType==LType.AnnualLeave) {
-//			if(totalAnnualLeave>= days) {
-//				leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
-//				float balance = totalAnnualLeave-days;
-//				lrepo.save(leaveRecord);
-//				staff.setTotalAnnualLeave(balance);
-//				srepo.save(staff);
-//				return true;
-//			}
-//
-//		}
-//
-//		else if(leaveType==LType.MedicalLeave) {
-//			if(totalMedicalLeave>= days) {
-//				leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
-//				float balance = totalMedicalLeave-days;
-//				lrepo.save(leaveRecord);
-//				staff.setTotalMedicalLeave(balance);
-//				srepo.save(staff);
-//				return true;
-//			}
-//
-//		}
-//
-//		else if(leaveType==LType.Compensation) {
-//			if(totalCompensationLeave>= days) {
-//				leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
-//				float balance = totalCompensationLeave-days;
-//				lrepo.save(leaveRecord);
-//				staff.setTotalMedicalLeave(balance);
-//				srepo.save(staff);
-//				return true;
-//			}
-//		}
-//		return false;
+			float totalAnnualLeave = staff.getTotalAnnualLeave();
+			float totalMedicalLeave = staff.getTotalMedicalLeave();
+			float totalCompensationLeave = staff.getTotalCompensationLeave();
+
+			if(leaveType==LType.AnnualLeave) {
+				if(totalAnnualLeave>= days) {
+					leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+					float balance = totalAnnualLeave-days;
+					lrepo.save(leaveRecord);
+					staff.setTotalAnnualLeave(balance);
+					srepo.save(staff);
+					return true;
+				}
+
+			}
+
+			else if(leaveType==LType.MedicalLeave) {
+				if(totalMedicalLeave>= days) {
+					leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+					float balance = totalMedicalLeave-days;
+					lrepo.save(leaveRecord);
+					staff.setTotalMedicalLeave(balance);
+					srepo.save(staff);
+					return true;
+				}
+
+			}
+
+			else if(leaveType==LType.Compensation) {
+				if(totalCompensationLeave>= days) {
+					leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
+					float balance = totalCompensationLeave-days;
+					lrepo.save(leaveRecord);
+					staff.setTotalMedicalLeave(balance);
+					srepo.save(staff);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Transactional
-	public void rejectLeave(LeaveRecord leaveRecord) {
-		leaveRecord.setLeaveStatus(LeaveStatus.REJECTED);
-		lrepo.save(leaveRecord);
-		
+	public void rejectLeave(Integer id) {
+		LeaveRecord record = lrepo.findById(id).get();
+		if(checkStatus(record)) {
+		//if(checkStatus(record)&&record.getReason()!=null) {
+			record.setLeaveStatus(LeaveStatus.REJECTED);
+		}
+		lrepo.save(record);
+
 	}
 
 
