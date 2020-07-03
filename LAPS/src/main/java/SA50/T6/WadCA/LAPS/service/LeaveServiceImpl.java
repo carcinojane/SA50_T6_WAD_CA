@@ -244,23 +244,57 @@ public class LeaveServiceImpl implements LeaveService {
 		return lrepo.findLeaveRecordByManagerId(id);
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<LeaveRecord> leaveRecords= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			Month startMonth = record.getLeaveStartDate().getMonth();
+			Month endMonth = record.getLeaveEndDate().getMonth();
 
-	@Override
+			if(startMonth.equals(endMonth)
+					&& startMonth.equals(month)) {
+				leaveRecords.add(record);
+			}
+			
+			if(startMonth.compareTo(month)==-1 && endMonth.equals(month)) {
+				leaveRecords.add(record);
+			}
+			if(endMonth.compareTo(month)==1 && 
+					startMonth.equals(month) ||startMonth.compareTo(month)==-1) {
+				leaveRecords.add(record);
+			}
+		}
+		
+				return leaveRecords;
+	}
+	
+	@Transactional
 	public List<Month> LeaveMonths(ArrayList<LeaveRecord> records) {
-		// TODO Auto-generated method stub
 		List<Month> months= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
 			LeaveRecord record = (LeaveRecord)iterator.next();
-			Month month = record.getLeaveStartDate().getMonth();
-			if(!months.contains(month)) {
-				months.add(month);
+			Month startMonth = record.getLeaveStartDate().getMonth();
+			Month endMonth= record.getLeaveEndDate().getMonth();
+			
+			if(startMonth.equals(endMonth)) {
+				if(!months.contains(startMonth)) {
+					months.add(startMonth);
+				}
 			}
+			else {
+				Month month = startMonth;
+				while(!month.equals(endMonth)) {
+					month.plus(1);
+					if(!months.contains(month)) {
+						months.add(month);
+					}
+				}
+				
+			}
+			
 		}
 		return months;
 	}
