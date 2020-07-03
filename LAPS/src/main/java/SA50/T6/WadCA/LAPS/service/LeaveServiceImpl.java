@@ -224,7 +224,9 @@ public class LeaveServiceImpl implements LeaveService {
         {
         	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
             //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
-            for (LeaveRecord record : records)
+        	bw.write("LeaveId,StaffId,Name,Category,Start_date,End_date,Status");
+        	bw.newLine();
+        	for (LeaveRecord record : records)
             {
                 StringBuffer oneLine = new StringBuffer();
                 oneLine.append(record.getLeaveId());
@@ -259,24 +261,24 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
+	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Integer month) {
 		List<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
 			LeaveRecord record = (LeaveRecord)iterator.next();
-			Month startMonth = record.getLeaveStartDate().getMonth();
-			Month endMonth = record.getLeaveEndDate().getMonth();
+			int startMonth = record.getLeaveStartDate().getMonth().getValue();
+			int endMonth = record.getLeaveEndDate().getMonth().getValue();
 
-			if(startMonth.equals(endMonth)
-					&& startMonth.equals(month)) {
+			if(startMonth==endMonth
+					&& startMonth==month) {
 				leaveRecords.add(record);
 			}
 			
-			if(startMonth.compareTo(month)==-1 && endMonth.equals(month)) {
+			if(startMonth<month && endMonth==month) {
 				leaveRecords.add(record);
 			}
-			if(endMonth.compareTo(month)==1 && 
-					startMonth.equals(month) ||startMonth.compareTo(month)==-1) {
+			if(endMonth>month && 
+					startMonth==month ||startMonth<month) {
 				leaveRecords.add(record);
 			}
 		}
