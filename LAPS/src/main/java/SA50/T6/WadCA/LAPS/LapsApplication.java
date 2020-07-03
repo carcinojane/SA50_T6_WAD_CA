@@ -56,16 +56,24 @@ public class LapsApplication {
 
 			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
-			staffRepo.save(manager1);
+			manager1.setStartDate(LocalDate.of(2010, 01, 01));
+			
 			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",Status.active, 2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
-			staffRepo.save(manager2);
+			manager2.setStartDate(LocalDate.of(2018, 01, 01));
+			
 			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
 			head.setDesignation(Staff.Designation.admin);
+			head.setStartDate(LocalDate.of(2000, 01, 01));
 			staffRepo.save(head);
 			
 			Staff manager3 = new Staff("manager3","password","manager3@gmail.com",Status.active,2,60,18);
 			manager3.setDesignation(Staff.Designation.manager);
+			manager3.setStartDate(LocalDate.of(2017, 01, 01));
+			
+			manager1.setManager(head);manager2.setManager(head);manager3.setManager(head);
+			staffRepo.save(manager1);
+			staffRepo.save(manager2);
 			staffRepo.save(manager3);
 			
 			//create staff
@@ -81,22 +89,23 @@ public class LapsApplication {
 
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
+			staff1.setStartDate(LocalDate.of(2020, 01, 01));
 			staff2.setManager(manager1);
 			staff2.setDesignation(Staff.Designation.employee);
+			staff2.setStartDate(LocalDate.of(2020, 01, 01));
 			staff3.setManager(manager3);
 			staff3.setDesignation(Staff.Designation.employee);
+			staff3.setStartDate(LocalDate.of(2020, 01, 01));
 
 			staff4.setManager(manager2);
 			staff4.setDesignation(Staff.Designation.employee);
+			staff4.setStartDate(LocalDate.of(2020, 01, 01));
 			staff5.setManager(manager2);
 			staff5.setDesignation(Staff.Designation.employee);
+			staff5.setStartDate(LocalDate.of(2020, 01, 01));
 			staff6.setManager(manager2);
 			staff6.setDesignation(Staff.Designation.employee);
-
-			staff4.setManager(manager3);
-			staff4.setDesignation(Staff.Designation.employee);
-			staff5.setManager(manager3);
-			staff5.setDesignation(Staff.Designation.employee);
+			staff6.setStartDate(LocalDate.of(2020, 01, 01));
 
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
