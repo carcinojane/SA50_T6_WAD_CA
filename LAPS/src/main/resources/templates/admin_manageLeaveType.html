@@ -34,9 +34,7 @@
 				<td th:text=${leavetype.leaveType.displayValue}>LeaveType</td>
 				<td th:text=${leavetype.entitlement}>Entitlement</td>
 				<td th:text=${leavetype.minClaim}>MinClaim</td>
-				<td><a
-					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}" th:utext="#{button.edit}"></a>
-				</td>
+				<td><a th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{button.edit}"></button></a></td>
 
 			</tr>
 		</table>
