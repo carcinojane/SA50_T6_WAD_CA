@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title th:utext="#{staff.leaveHistory.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="../../css/main.css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css" media="all"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/search.js"></script>
+</head>
+<body>
+	<header th:insert="staff_homepage.html :: header"> </header>
+	<div class="content">
+		<h2 th:utext="#{manager.subordinateLeave.page.title}"></h2>
+		<div class="search" th:if="${not #lists.isEmpty(lrecords)}">
+			<h3>Search</h3>
+			<input id="userInput" type="text" placeholder="&#xF002; Search"
+				style="font-family: Arial, FontAwesome">
+		</div>
+		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
+			<input type="hidden" id="dummy1" class="search-key" placeholder="">
+			<input type="hidden" id="dummy2" class="search-key" placeholder="">
+
+			<select id="leavetype" class="search-key">
+				<option value="">Select a leave category</option>
+				<option
+					th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+					th:value="${typeOpt.displayValue}"
+					th:text="${typeOpt.displayValue}"></option>
+			</select> <select id="leavestatus" class="search-key">
+				<option value="">Select a leave status</option>
+				<option
+					th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
+					th:value="${statusOpt.displayValue}"
+					th:text="${statusOpt.displayValue}"></option>
+			</select> <input type="hidden" id="dummy3" class="search-key" placeholder="">
+
+		</div>
+		<h3 style="width: 400px;" th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
+
+		<p th:if="${#lists.isEmpty(lrecords)}"
+			th:text=#{message.noleavehistory}>No leave records found.</p>
+		<table id="leavetable" class="list"
+			th:if="${not #lists.isEmpty(lrecords)}">
+			<thead>
+				<tr>
+					<th style="width: 17%" th:utext="#{table.heading.empId}"></th>
+					<th style="width: 17%" th:utext="#{table.heading.leavetype}"></th>
+					<th style="width: 17%" th:utext="#{table.heading.from}"></th>
+					<th style="width: 17%" th:utext="#{table.heading.to}"></th>
+					<th style="width: 16%" th:utext="#{table.heading.status}"></th>
+					<th style="width: 16%" th:utext="#{table.heading.action}"></th>
+				</tr>
+			</thead>
+			<tbody id="leaveRecordTable">
+				<tr th:each="leave:${lrecords}">
+					<td data-input="leavetype" th:text="${leave.staffId}"></td>
+					<td data-input="dummy1" th:text="${leave.leaveStartDate}"></td>
+					<td data-input="dummy2" th:text="${leave.leaveEndDate}"></td>
+					<td data-input="leavetype"
+						th:text="${leave.leaveType.displayValue}"></td>
+					<td data-input="leavestatus"
+						th:text="${leave.leaveStatus.displayValue}"></td>
+					<td data-input="dummy3"><a
+						th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"
+						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="../../js/filter.js"></script>
+</body>
+</html>
