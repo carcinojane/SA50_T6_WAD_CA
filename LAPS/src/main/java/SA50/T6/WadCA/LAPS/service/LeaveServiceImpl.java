@@ -17,6 +17,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LType;
@@ -34,6 +36,9 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Autowired
 	StaffRepository srepo;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Transactional
 	public ArrayList<LeaveRecord> findAll() {
@@ -258,6 +263,23 @@ public class LeaveServiceImpl implements LeaveService {
 			}
 		}
 		return months;
+	}
+
+	@Override
+	public List<LeaveRecord> findLeaveRecordByStaffId(int staffId,int status,int start,int size) {
+		String sqlStr="";
+		if (status==-1) {
+			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
+		}else {
+			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" and t.leave_status="+status+" limit "+start+","+size;
+		}
+		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
+	}
+
+	@Override
+	public List<LeaveRecord> countSize(int staffId) {
+		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
+		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
 
 
