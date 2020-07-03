@@ -64,8 +64,11 @@ public class LapsApplication {
 			head.setDesignation(Staff.Designation.admin);
 			staffRepo.save(head);
 			
+			Staff manager3 = new Staff("manager3","password","manager3@gmail.com",Status.active,2,60,18);
+			manager3.setDesignation(Staff.Designation.manager);
+			staffRepo.save(manager3);
+			
 			//create staff
-
 			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active, 0f,60f,14f);
 			Staff staff2 = new Staff("staff2","password","staff2@gmail.com", Status.active, 1f,60f,14f);
 			Staff staff3 = new Staff("staff3","password","staff3@gmail.com", Status.active, 1.5f,60f,14f);
@@ -80,14 +83,21 @@ public class LapsApplication {
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);
 			staff2.setDesignation(Staff.Designation.employee);
-			staff3.setManager(manager2);
+			staff3.setManager(manager3);
 			staff3.setDesignation(Staff.Designation.employee);
+
 			staff4.setManager(manager2);
 			staff4.setDesignation(Staff.Designation.employee);
 			staff5.setManager(manager2);
 			staff5.setDesignation(Staff.Designation.employee);
 			staff6.setManager(manager2);
 			staff6.setDesignation(Staff.Designation.employee);
+
+			staff4.setManager(manager3);
+			staff4.setDesignation(Staff.Designation.employee);
+			staff5.setManager(manager3);
+			staff5.setDesignation(Staff.Designation.employee);
+
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
