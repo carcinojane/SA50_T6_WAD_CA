@@ -54,11 +54,12 @@ public class LapsApplication {
 		return args -> {
 			//create manager
 
-			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
+
+			Staff manager1 = new Staff("manager1","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			manager1.setStartDate(LocalDate.of(2010, 01, 01));
 			
-			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",Status.active, 2,60,18);
+			Staff manager2 = new Staff("manager2","password","waiyankm93@gmail.com",Status.active, 2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			manager2.setStartDate(LocalDate.of(2018, 01, 01));
 			
@@ -66,8 +67,8 @@ public class LapsApplication {
 			head.setDesignation(Staff.Designation.admin);
 			head.setStartDate(LocalDate.of(2000, 01, 01));
 			staffRepo.save(head);
-			
-			Staff manager3 = new Staff("manager3","password","manager3@gmail.com",Status.active,2,60,18);
+
+			Staff manager3 = new Staff("manager3","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager3.setDesignation(Staff.Designation.manager);
 			manager3.setStartDate(LocalDate.of(2017, 01, 01));
 			
@@ -96,8 +97,7 @@ public class LapsApplication {
 			staff3.setManager(manager3);
 			staff3.setDesignation(Staff.Designation.employee);
 			staff3.setStartDate(LocalDate.of(2020, 01, 01));
-
-			staff4.setManager(manager2);
+			staff4.setManager(manager3);
 			staff4.setDesignation(Staff.Designation.employee);
 			staff4.setStartDate(LocalDate.of(2020, 01, 01));
 			staff5.setManager(manager2);
@@ -154,10 +154,12 @@ public class LapsApplication {
 			lr5.setLeaveType(LType.AnnualLeave);
 			
 			lRepo.save(lr1);lRepo.save(lr2);lRepo.save(lr3);lRepo.save(lr4);lRepo.save(lr5);
+
 			
 			System.out.println(lr1.getLeaveType().getDisplayValue());
 			System.out.println(lr4.getWorkDissemination());
 			System.out.println(annual_emp.getLeaveType().getDisplayValue());		
+
 
 	};
 

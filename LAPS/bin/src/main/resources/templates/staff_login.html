@@ -17,7 +17,7 @@
  		<div class="topnav" id="myTopnav">
  			<img src="../../images/logo.png">
  			
- 			<a onclick="location.href='/LAPS'">Home</a>
+ 			<a onclick="location.href='/LAPS'" th:utext="#{page.home}"></a>
  			
  			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
  			<i class="fa fa-bars"></i>
@@ -25,7 +25,7 @@
  		</div>
  		
  		<div class="footer">
- 			<p>Company Name &copy; All rights reserved.</p>
+ 			<p th:utext="#{page.footer}"></p>
  		</div>
  </header>
  
@@ -43,6 +43,7 @@
           <form class="modal-content animate" th:object="${staff}" th:action="@{/staff/home}" action="/action_page.php" method="post">
             <div class="container">
               <h2>Staff Login</h2>
+              <h2 th:text="${error}"></h2>
               		<label for="uname">
 					<b>Username</b>
 					</label>

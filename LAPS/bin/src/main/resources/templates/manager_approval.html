@@ -17,35 +17,61 @@
 	<header th:insert="manager_homepage.html :: header"> </header>
 	 
 	 <div class="content">
-	 	<h2 th:utext="#{manager.approval.page.title}"></h2>
-	 	<input id="userInput" type="text" placeholder="Search..">
-	 	<table class="list">
+	 	<h1 th:utext="#{manager.approval.page.title}"></h1>
+	 	<div class="search" th:if="${not #lists.isEmpty(lrecords)}">
+		<h3>Search</h3>
+		<input id="userInput" type="text" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome">
+		</div>
+		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
+		<input type="hidden" id="dummy1" class="search-key" placeholder="">
+		
+		<select id="leavetype" class="search-key">
+          <option value="">Select a leave category</option>
+          <option th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+          th:value="${typeOpt.displayValue}" th:text="${typeOpt.displayValue}"></option>
+        </select>
+		     
+        <input type="hidden" id="dummy2" class="search-key" placeholder="">
+        <input type="hidden" id="dummy3" class="search-key" placeholder="">
+        
+         <select id="leavestatus" class="search-key">
+          <option value="">Select a leave status</option>
+          <option value="APPLIED">Applied</option>
+          <option value="UPDATED">Updated</option>
+        </select>
+        
+        <input type="hidden" id="dummy4" class="search-key" placeholder="">
+         
+		</div>
+	 	<table id="leavetable" class="list">
 	 	<thead>
 	 	<tr>
-	 		<th style="width:20%">Employee Id</th>
-			<th style="width:22.5%">From</th>
-			<th style="width:22.5%">To</th>
-			<th style="width:17.5%">Status</th>
-			<th style="width:17.5%">Action</th>
+	 		<th style="width:17%" th:utext="#{table.heading.empId}"></th>
+	 		<th style="width:17%" th:utext="#{table.heading.leavetype}"></th>
+			<th style="width:17%" th:utext="#{table.heading.from}"></th>
+			<th style="width:17%" th:utext="#{table.heading.to}"></th>
+			<th style="width:16%" th:utext="#{table.heading.status}"></th>
+			<th style="width:16%" th:utext="#{table.heading.action}"></th>
 		</tr>
 		</thead>
 		
 		<tbody id="leaveRecordTable">
 		<tr th:if="${#lists.isEmpty(lrecords)}">
-			<td colspan="5">No pending leave for approval.</td>
+			<td colspan="5" th:utext="#{manager.message.nopendingleave}"></td>
 		</tr>
 		<tr th:if="${not #lists.isEmpty(lrecords)}" th:each="lrecord:${lrecords}">
-			<td th:text=${lrecord.staffId}>Staff Id</td>
-			<td th:text=${lrecord.leaveStartDate}>From</td>
-			<td th:text=${lrecord.leaveEndDate}>To</td>
-			<td th:text=${lrecord.leaveStatus}>Status</td>
-			<td><a href="manager_approvalDetails.html"
+			<td data-input="dummy1" th:text=${lrecord.staffId}></td>
+			<td data-input="leavetype" th:text="${lrecord.leaveType.displayValue}"></td>
+			<td data-input="dummy2" th:text=${lrecord.leaveStartDate}></td>
+			<td data-input="dummy3" th:text=${lrecord.leaveEndDate}></td>
+			<td data-input="leavestatus" th:text=${lrecord.leaveStatus}></td>
+			<td data-input="dummy4"><a href="manager_approvalDetails.html"
 				th:href="@{/manager/staffLeaveDetails/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a>
 				<a th:href="@{/manager/history/}+${lrecord.staffId}" th:utext="#{manager.history.page.title}"></a></td>
 		</tr>
 		</tbody>
 		</table>
 	 </div>
-
+	 <script type="text/javascript" src="../../js/filter.js"></script>
 </body>
 </html>

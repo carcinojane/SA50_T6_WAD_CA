@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -13,6 +14,7 @@ public class Overtime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int overtimeId;
 	@NotNull
+	@Min(4)
 	private int hours;
 	@ManyToOne
 	private Staff staff;

@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
 <script type="text/javascript" src="../../js/search.js"></script>
@@ -18,55 +19,60 @@
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
 		<div class="search" th:if="${not #lists.isEmpty(lrecords)}">
-		<h3>Search</h3>
-		<input id="userInput" type="text" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome">
+			<h3>Search</h3>
+			<input id="userInput" type="text" placeholder="&#xF002; Search"
+				style="font-family: Arial, FontAwesome">
 		</div>
 		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
-		<input type="hidden" id="dummy1" class="search-key" placeholder="">     
-        <input type="hidden" id="dummy2" class="search-key" placeholder="">
-        
-        <select id="leavetype" class="search-key">
-          <option value="">Select a leave category</option>
-          <option th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
-          th:value="${typeOpt.displayValue}" th:text="${typeOpt.displayValue}"></option>
-        </select>
-        
-         <select id="leavestatus" class="search-key">
-          <option value="">Select a leave status</option>
-          <option th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
-          th:value="${statusOpt.displayValue}" th:text="${statusOpt.displayValue}"></option>
-        </select>
-        
-        <input type="hidden" id="dummy3" class="search-key" placeholder="">
-         
-		</div>
-  
-		<h3 style="width:400px;" th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
+			<input type="hidden" id="dummy1" class="search-key" placeholder="">
+			<input type="hidden" id="dummy2" class="search-key" placeholder="">
 
-        <p th:if="${#lists.isEmpty(lrecords)}">No leave records found.</p>
-        <table id="leavetable" class="list" th:if="${not #lists.isEmpty(lrecords)}">
-        <thead>
-            <tr>
-                <th style="width: 20%">From</th>
-				<th style="width: 22.5%">To</th>
-				<th style="width: 22.5%">Category</th>
-				<th style="width: 17.5%">Status</th>
-				<th style="width: 17.5%">Action</th>
-            </tr>
-		</thead>
-		<tbody id="leaveRecordTable">
-			<tr th:each="leave:${lrecords}">
-				<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
-				<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
-				<td data-input="leavetype" th:text="${leave.leaveType.displayValue}">Category</td>
-				<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
-				<td data-input="dummy3"><a th:href="@{/staff/history/details/}+${leave.leaveId}"
+			<select id="leavetype" class="search-key">
+				<option value="">Select a leave category</option>
+				<option
+					th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+					th:value="${typeOpt.displayValue}"
+					th:text="${typeOpt.displayValue}"></option>
+			</select> <select id="leavestatus" class="search-key">
+				<option value="">Select a leave status</option>
+				<option
+					th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
+					th:value="${statusOpt.displayValue}"
+					th:text="${statusOpt.displayValue}"></option>
+			</select> <input type="hidden" id="dummy3" class="search-key" placeholder="">
+
+		</div>
+
+		<h3 style="width: 400px;" th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
+
+		<p th:if="${#lists.isEmpty(lrecords)}">No leave records found.</p>
+		<table id="leavetable" class="list"
+			th:if="${not #lists.isEmpty(lrecords)}">
+			<thead>
+				<tr>
+					<th style="width: 20%">From</th>
+					<th style="width: 22.5%">To</th>
+					<th style="width: 22.5%">Category</th>
+					<th style="width: 17.5%">Status</th>
+					<th style="width: 17.5%">Action</th>
+				</tr>
+			</thead>
+			<tbody id="leaveRecordTable">
+				<tr th:each="leave:${lrecords}">
+					<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
+					<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
+					<td data-input="leavetype"
+						th:text="${leave.leaveType.displayValue}">Category</td>
+					<td data-input="leavestatus"
+						th:text="${leave.leaveStatus.displayValue}">Status</td>
+					<td data-input="dummy3"><a
+						th:href="@{/staff/history/details/}+${leave.leaveId}"
 						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
-            </tr>
-		</tbody>
-    	</table>
-    
-    	<p style="width:10%; margin-left:45%; margin-right:45%;">
+				</tr>
+			</tbody>
+		</table>
+
+		<p style="width: 10%; margin-left: 45%; margin-right: 45%;">
 			<a href="staff_applyLeave_add.html" th:href="@{/staff/apply/add}"><button>Add</button></a>
 		</p>
 	</div>
