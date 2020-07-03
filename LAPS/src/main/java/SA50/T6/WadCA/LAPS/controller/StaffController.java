@@ -184,11 +184,12 @@ public class StaffController {
 		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
 		
 		if(leaveRecord.getLeaveType() == LType.Compensation) {
-			if(leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() =="NA") {
+			if(leaveRecord.getLeaveStartTime().contentEquals("NA") || leaveRecord.getLeaveEndTime().contentEquals("NA")) {
 				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
-				model.addAttribute("msg","Please speficy the From Time and To Time");
+				model.addAttribute("time","Please speficy the From Time and To Time");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 				return"staff_applyLeave_add";
+				
 			}
 		}
 		
@@ -339,9 +340,13 @@ public class StaffController {
 
 	@GetMapping("/history")
 	public String history(Model model, HttpSession session,HttpServletRequest request,@RequestParam(value = "page", required = false, defaultValue = "1") String page) {
+
+		  int staffId =(int)session.getAttribute("staffId"); 
+=======
 		  Staff staff =(Staff)session.getAttribute("staff"); 
-		//  Staff staff =sservice.findStaffById(staffId); 
+//      Staff staff =sservice.findStaffById(staffId); 
 //		  model.addAttribute("lrecords",lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
+
 		String status_param = request.getParameter("status");
 		if (status_param == null || status_param == "" || status_param.equals("-1")) {
 			status_param = "-1";
@@ -350,12 +355,14 @@ public class StaffController {
 		System.out.println("Request parameter：status" + status);
 		int totalNum = lservice.countSize(staff.getStaffId()).size();
 		PageBean pageBean = new PageBean(Integer.parseInt(page), 5);
+
 		List<LeaveRecord> findLeaveRecordByStaffId = lservice.findLeaveRecordByStaffIdPage(staff.getStaffId(), status,
 				pageBean.getStart(), pageBean.getPageSize());
 		String genPagination = PageUtil.genPagination("/staff/history", totalNum, Integer.parseInt(page), 10, null);
 		model.addAttribute("pageCode", genPagination);
 		model.addAttribute("lrecords", findLeaveRecordByStaffId);
 		LeaveRecord findById = lservice.findById(staff.getStaffId());
+
 		LType leaveType = findById.getLeaveType();
 		model.addAttribute("leaveType", leaveType);
 		return "staff_LeaveHistory";
