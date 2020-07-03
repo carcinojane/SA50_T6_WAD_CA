@@ -196,7 +196,7 @@ public class AdminController {
 	@RequestMapping(value="/manageStaff/delete/{id}",method= {RequestMethod.DELETE,RequestMethod.GET})
 	public String deleteStaff(@PathVariable("id") Integer id, Model model) {
 		Staff staff=sservice.findStaffById(id);
-		if(staff.getDesignation()==Designation.manager) {
+		if(staff.getDesignation()==Designation.manager || staff.getDesignation()==Designation.admin) {
 			ArrayList<Staff> subordinates=sservice.findSubordinates(staff);
 			System.out.println("Sub: "+ subordinates);
 			for (Staff staff2 : subordinates) {

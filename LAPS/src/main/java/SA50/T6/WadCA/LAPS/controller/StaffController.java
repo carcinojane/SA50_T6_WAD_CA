@@ -4,7 +4,9 @@ package SA50.T6.WadCA.LAPS.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,6 +44,8 @@ import SA50.T6.WadCA.LAPS.service.OvertimeService;
 import SA50.T6.WadCA.LAPS.service.OvertimeServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
+import SA50.T6.WadCA.LAPS.utils.PageBean;
+import SA50.T6.WadCA.LAPS.utils.PageUtil;
 
 @Controller
 @SessionAttributes("display")
@@ -331,12 +336,29 @@ public class StaffController {
 	}
 
 	@GetMapping("/history")
-	public String history(Model model, HttpSession session) {
-		int staffId =(int)session.getAttribute("staffId");
-		Staff staff = sservice.findStaffById(staffId);
-		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
+	public String history(Model model, HttpSession session,HttpServletRequest request,@RequestParam(value = "page", required = false, defaultValue = "1") String page) {
+		  int staffId =(int)session.getAttribute("staffId"); 
+		  Staff staff =sservice.findStaffById(staffId); 
+//		  model.addAttribute("lrecords",lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
+		String status_param = request.getParameter("status");
+		if (status_param == null || status_param == "" || status_param.equals("-1")) {
+			status_param = "-1";
+		}
+		Integer status = Integer.parseInt(status_param);
+		System.out.println("Request parameter：status" + status);
+		int totalNum = lservice.countSize(staff.getStaffId()).size();
+		PageBean pageBean = new PageBean(Integer.parseInt(page), 5);
+		List<LeaveRecord> findLeaveRecordByStaffId = lservice.findLeaveRecordByStaffId(staff.getStaffId(), status,
+				pageBean.getStart(), pageBean.getPageSize());
+		String genPagination = PageUtil.genPagination("/staff/history", totalNum, Integer.parseInt(page), 10, null);
+		model.addAttribute("pageCode", genPagination);
+		model.addAttribute("lrecords", findLeaveRecordByStaffId);
+		LeaveRecord findById = lservice.findById(staffId);
+		LType leaveType = findById.getLeaveType();
+		model.addAttribute("leaveType", leaveType);
 		return "staff_LeaveHistory";
 	}
+
 
 	@GetMapping("/history/details/{id}")
 	public String leaveDetails(@PathVariable("id") Integer id, Model model) {

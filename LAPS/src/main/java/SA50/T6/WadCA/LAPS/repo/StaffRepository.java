@@ -20,7 +20,7 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
 	@Query("Select s from Staff s Where s.status=0 AND s.designation=2 OR s.designation=0")
 	ArrayList<Staff> findAllManagers();
 	
-	@Query("Select s from Staff s Where s.username Like CONCAT('%',:username,'%')")
+	@Query("Select s from Staff s Where s.username Like CONCAT('%',:username,'%') AND s.status=0")
 	ArrayList<Staff> findStaffLikeSearchInput(@Param("username")String username);
 	
 	@Query("Select s.staffId from Staff s Where s.username = :username")

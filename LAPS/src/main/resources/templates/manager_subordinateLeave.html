@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../../js/search.js"></script>
 </head>
 <body>
-	<header th:insert="manager_homepage.html :: header"> </header>
+	<header th:insert="staff_homepage.html :: header"> </header>
 
 	<div class="content">
 		<h2 th:utext="#{manager.subordinateLeave.page.title}"></h2>
@@ -97,6 +97,9 @@
 				</tr>
 			</tbody>
 		</table>
+		<p style="width: 10%; margin-left: 45%; margin-right: 45%;">
+			<a th:href="@{/subordinateLeave/print/}+${month}"><button>Print</button></a>
+		</p>
 	</div>
 	<script type="text/javascript" src="../../js/filter.js"></script>
 </body>

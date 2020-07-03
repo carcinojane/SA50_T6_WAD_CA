@@ -52,6 +52,10 @@ public class LeaveType{
 		this.minClaim = minClaim;
 	}
 
-
+	@Override
+	public String toString() {
+		return "LeaveType [designation=" + designation + ", leaveType=" + leaveType + ", entitlement="
+				+ entitlement + ", minClaim=" + minClaim + "]";
+	}
 
 }

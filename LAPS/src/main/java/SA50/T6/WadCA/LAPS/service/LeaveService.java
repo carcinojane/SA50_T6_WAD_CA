@@ -1,10 +1,11 @@
 
 package SA50.T6.WadCA.LAPS.service;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.repository.query.Param;
 
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
@@ -39,6 +40,6 @@ public interface LeaveService {
 	public List<Month>LeaveMonths(ArrayList<LeaveRecord> records);
 
 	
-
-	
+	List<LeaveRecord> countSize(@Param("staffId")int staffId);
+	List<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")int staffId,@Param("status")int status,int start,int size);
 }
