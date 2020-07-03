@@ -22,6 +22,5 @@ public interface StaffService {
 	public Staff findManagerByUsername(String username);
 	public void deleteStaff(Staff staff);
 	public Staff findStaffObjByUsername(String username);
-	public void referManager(Staff oldManager,Staff newManager);
-
+	public ArrayList<Staff> findSubordinates(Staff staff);
 }
