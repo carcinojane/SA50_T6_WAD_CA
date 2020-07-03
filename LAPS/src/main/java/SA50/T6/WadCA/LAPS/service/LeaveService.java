@@ -37,6 +37,7 @@ public interface LeaveService {
 	public List<LeaveRecord> findByMangerId(Integer id);
 	public List<LeaveRecord>findByMonth(ArrayList<LeaveRecord> records,Month month);
 	public List<Month>LeaveMonths(ArrayList<LeaveRecord> records);
+
 	
 
 	

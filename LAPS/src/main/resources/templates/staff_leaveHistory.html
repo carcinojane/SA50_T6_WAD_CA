@@ -59,7 +59,9 @@
 			<tbody id="leaveRecordTable">
 				<tr th:each="leave:${lrecords}">
 					<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
+					<td data-input="leaveStartTime" th:text="${leave.leaveStartTime}">From Time</td>
 					<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
+					<td data-input="leaveEndTime" th:text="${leave.leaveEndTime}">To Time</td>
 					<td data-input="leavetype"
 						th:text="${leave.leaveType.displayValue}">Category</td>
 					<td data-input="leavestatus"

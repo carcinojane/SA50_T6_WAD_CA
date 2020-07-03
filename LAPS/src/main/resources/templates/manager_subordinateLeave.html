@@ -71,7 +71,9 @@
 					<th style="width: 15%" th:utext="#{table.heading.username}"></th>
 					<th style="width: 15%" th:utext="#{table.heading.leavetype}"></th>
 					<th style="width: 15%" th:utext="#{table.heading.from}"></th>
+					<th style="width: 15%" th:utext="#{table.heading.fromtime}"></th>
 					<th style="width: 15%" th:utext="#{table.heading.to}"></th>
+					<th style="width: 15%" th:utext="#{table.heading.totime}"></th>
 					<th style="width: 15%" th:utext="#{table.heading.status}"></th>
 					<th style="width: 15%" th:utext="#{table.heading.action}"></th>
 				</tr>
@@ -82,7 +84,9 @@
 					<td data-input="dummy2" th:text="${leave.staff.username}"></td>
 					<td style="display:none;"data-input="month" th:text="${leave.leaveStartDate.Month}"></td>
 					<td data-input="dummy3" th:text="${leave.leaveStartDate}"></td>
+					<td data-input="leaveStartTime" th:text="${leave.leaveStartTime}"></td>
 					<td data-input="dummy4" th:text="${leave.leaveEndDate}"></td>
+					<td data-input="leaveEndTime" th:text="${leave.leaveEndTime}"></td>
 					<td data-input="leavetype"
 						th:text="${leave.leaveType.displayValue}"></td>
 					<td data-input="leavestatus"
