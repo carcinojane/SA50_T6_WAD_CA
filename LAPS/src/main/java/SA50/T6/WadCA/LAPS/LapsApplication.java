@@ -68,11 +68,11 @@ public class LapsApplication {
 			staffRepo.save(manager3);
 			
 			//create staff
-			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active);
-			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",Status.active);
-			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com",Status.active);
-			Staff staff4 = new Staff("staff4","password4","staff4@gmail.com",Status.active);
-			Staff staff5 = new Staff("staff5","password5","staff5@gmail.com",Status.active);
+			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active,2,60,18);
+			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",Status.active,0,60,18);
+			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com",Status.active,4,60,18);
+			Staff staff4 = new Staff("staff4","password4","staff4@gmail.com",Status.active,2,60,18);
+			Staff staff5 = new Staff("staff5","password5","staff5@gmail.com",Status.active,2,60,18);
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);
@@ -109,15 +109,15 @@ public class LapsApplication {
 			
 			//create Leave Records
 			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
-					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',4,"",97856210);
+					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',5,"",97856210);
 			l1.setLeaveType(LType.AnnualLeave);
 			lRepo.save(l1);
 			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
-					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',4,"",8662395);
+					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',5,"",8662395);
 			l2.setLeaveType(LType.MedicalLeave);
 			lRepo.save(l2);
 			LeaveRecord l3 = new LeaveRecord(1,LeaveStatus.APPROVED,"It's my birthday!",
-					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',4,"",8662395);
+					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',5,"",8662395);
 			l3.setLeaveType(LType.AnnualLeave);
 			lRepo.save(l3);
 			LeaveRecord l4 = new LeaveRecord(
@@ -125,7 +125,7 @@ public class LapsApplication {
 					"There's a post-covid promotion that I cannot miss",
 					LocalDate.of(2020, 8, 9),'A',
 					LocalDate.of(2020, 8, 9),'A',
-					1,
+					6,
 					LType.AnnualLeave,
 					"N.A.",
 					8662395);
