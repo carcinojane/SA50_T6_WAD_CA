@@ -79,14 +79,14 @@
 			<thead>
 				<tr>
 					<th style="width: 10%" th:utext="#{table.heading.empId}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.username}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.leavetype}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.from}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.fromtime}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.to}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.totime}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.status}"></th>
-					<th style="width: 15%" th:utext="#{table.heading.action}"></th>
+					<th style="width: 13%" th:utext="#{table.heading.username}"></th>
+					<th style="width: 13%" th:utext="#{table.heading.from}"></th>
+					<th style="width: 10%" th:utext="#{table.heading.fromtime}"></th>
+					<th style="width: 13%" th:utext="#{table.heading.to}"></th>
+					<th style="width: 10%" th:utext="#{table.heading.totime}"></th>
+					<th style="width: 11%" th:utext="#{table.heading.leavetype}"></th>
+					<th style="width: 10%" th:utext="#{table.heading.status}"></th>
+					<th style="width: 10%" th:utext="#{table.heading.action}"></th>
 				</tr>
 			</thead>
 			<tbody id="leaveRecordTable">
@@ -102,9 +102,7 @@
 						th:text="${leave.leaveType.displayValue}"></td>
 					<td data-input="leavestatus"
 						th:text="${leave.leaveStatus.displayValue}"></td>
-					<td data-input="dummy5"><a
-						th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"
-						th:utext="#{staff.leaveHistory.details.page.title}"></a></td>
+					<td data-input="dummy5"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"><button style="width:80%; margin-left:10%; background-color: grey" th:utext="#{staff.leaveHistory.details.page.title}"></button></a></td>
 				</tr>
 			</tbody>
 		</table>
