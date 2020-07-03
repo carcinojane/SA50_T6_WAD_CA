@@ -50,6 +50,8 @@
 
 			<input type="hidden" id="dummy3" class="search-key" placeholder="">
 			<input type="hidden" id="dummy4" class="search-key" placeholder="">
+			<input type="hidden" id="dummy5" class="search-key" placeholder="">
+			<input type="hidden" id="dummy6" class="search-key" placeholder="">
 
 			<select id="leavetype" class="search-key">
 				<option value="">Select a leave category</option>
@@ -68,7 +70,7 @@
 				</option>		
 			</select> 
 
-			<input type="hidden" id="dummy5" class="search-key" placeholder="">
+			<input type="hidden" id="dummy7" class="search-key" placeholder="">
 		</div>
 		<h3 style="width: 400px;" th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
 
@@ -95,14 +97,14 @@
 					<td data-input="dummy2" th:text="${leave.staff.username}"></td>
 					<td style="display:none;"data-input="month" th:text="${leave.leaveStartDate.Month}"></td>
 					<td data-input="dummy3" th:text="${leave.leaveStartDate}"></td>
-					<td data-input="leaveStartTime" th:text="${leave.leaveStartTime}"></td>
-					<td data-input="dummy4" th:text="${leave.leaveEndDate}"></td>
-					<td data-input="leaveEndTime" th:text="${leave.leaveEndTime}"></td>
+					<td data-input="dummy4" th:text="${leave.leaveStartTime}"></td>
+					<td data-input="dummy5" th:text="${leave.leaveEndDate}"></td>
+					<td data-input="dummy6" th:text="${leave.leaveEndTime}"></td>
 					<td data-input="leavetype"
 						th:text="${leave.leaveType.displayValue}"></td>
 					<td data-input="leavestatus"
 						th:text="${leave.leaveStatus.displayValue}"></td>
-					<td data-input="dummy5"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"><button style="width:80%; margin-left:10%; background-color: grey" th:utext="#{staff.leaveHistory.details.page.title}"></button></a></td>
+					<td data-input="dummy7"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"><button style="width:80%; margin-left:10%; background-color: grey" th:utext="#{staff.leaveHistory.details.page.title}"></button></a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -342,7 +342,7 @@ public class StaffController {
 	public String history(Model model, HttpSession session,HttpServletRequest request,@RequestParam(value = "page", required = false, defaultValue = "1") String page) {
 
 		  int staffId =(int)session.getAttribute("staffId"); 
-=======
+
 		  Staff staff =(Staff)session.getAttribute("staff"); 
 //      Staff staff =sservice.findStaffById(staffId); 
 //		  model.addAttribute("lrecords",lservice.findLeaveRecordByStaffId(staff.getStaffId())) ;
