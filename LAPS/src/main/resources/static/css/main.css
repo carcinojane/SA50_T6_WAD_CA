@@ -489,3 +489,9 @@ Show the link that contains should open and close the topnav (.icon) */
   margin-right:44%;
   font-size: 16px;
 }
+
+.content .pagination-navi {
+  width:15%;
+  margin-left:42.5%;
+  margin-right:42.5%;
+}

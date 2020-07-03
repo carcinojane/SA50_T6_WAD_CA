@@ -76,13 +76,12 @@ public class LeaveServiceImpl implements LeaveService {
 		LocalDate curr = from;
 
 		do {
-			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
+			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == "PM")
 				numOfDay += 0.5;
-			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == 'A')
+			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == "AM")
 				numOfDay += 0.5;
 			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
 				numOfDay ++;
-
 			curr = curr.plusDays(1);
 		}while(curr.isBefore(to));
 
@@ -315,6 +314,8 @@ public class LeaveServiceImpl implements LeaveService {
 		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
+
+
 
 
 }

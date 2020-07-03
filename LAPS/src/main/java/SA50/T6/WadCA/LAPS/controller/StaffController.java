@@ -174,15 +174,23 @@ public class StaffController {
 		if(result.hasErrors()) {
 			return "redirect:/staff/apply/add";
 		}
-		
-		Staff staff = (Staff)session.getAttribute("staff");
-		int staffId = staff.getStaffId();
+		int staffId = (int)session.getAttribute("staffId");
+		Staff staff = sservice.findStaffById(staffId);
 		String staffName = staff.getUsername();
 		leaveRecord.setStaffId(staffId);
 		
 		LocalDate from = leaveRecord.getLeaveStartDate();
 		LocalDate to = leaveRecord.getLeaveEndDate();
 		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
+		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() =="NA") {
+				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+				model.addAttribute("msg","Please speficy the From Time and To Time");
+				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+				return"staff_applyLeave_add";
+			}
+		}
 		
 		if(from.isAfter(to)) {
 			Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
@@ -214,6 +222,9 @@ public class StaffController {
 		
 		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
 			if(numOfDay > staff.getTotalAnnualLeave()) {
+				System.out.println(numOfDay);
+				System.out.println(staff.getTotalCompensationLeave());
+				System.out.println(staff.getStaffId());
 				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 				model.addAttribute("insufficient","Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
@@ -235,6 +246,9 @@ public class StaffController {
 		
 		if(leaveRecord.getLeaveType() == LType.Compensation) {
 			if(numOfDay > staff.getTotalCompensationLeave()) {
+				System.out.println(numOfDay);
+				System.out.println(staff.getTotalCompensationLeave());
+				System.out.println(staff.getStaffId());
 				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 				model.addAttribute("insufficient","Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
@@ -258,8 +272,8 @@ public class StaffController {
 		LType type = leaveRecord.getLeaveType();
 		if(type ==(LType.AnnualLeave) 
 				|| type==(LType.MedicalLeave)) {
-			leaveRecord.setLeaveStartTime('N');
-			leaveRecord.setLeaveEndTime('N');
+			leaveRecord.setLeaveStartTime("NA");
+			leaveRecord.setLeaveEndTime("NA");
 
 		}
 		
@@ -378,10 +392,14 @@ public class StaffController {
 		
 		applyLeaveValidator.validate(leaveRecord, result);
 		if(result.hasErrors()) {
-			System.out.println("error");
 			return "redirect:/staff/history/details/edit/{id}";
 		}
 		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() =="NA") {
+				return "redirect:/staff/history/details/edit/{id}";
+			}
+		}
 		
 		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
 			if(numOfDay > staff.getTotalAnnualLeave()) {
@@ -413,8 +431,8 @@ public class StaffController {
 		LType type = leaveRecord.getLeaveType();
 		if(type ==(LType.AnnualLeave) 
 				|| type==(LType.MedicalLeave)) {
-			leaveRecord.setLeaveStartTime('N');
-			leaveRecord.setLeaveEndTime('N');
+			leaveRecord.setLeaveStartTime("NA");
+			leaveRecord.setLeaveEndTime("NA");
 
 		}
 		
