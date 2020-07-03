@@ -1,5 +1,11 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -199,6 +205,36 @@ public class LeaveServiceImpl implements LeaveService {
 		}
 		lrepo.save(record);
 
+	}
+	
+	@Transactional
+    public void writeToCSV(ArrayList<LeaveRecord> records)
+    {
+    	final String CSV_SEPARATOR = ",";
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+            for (LeaveRecord record : records)
+            {
+                StringBuffer oneLine = new StringBuffer();
+                oneLine.append(record.getLeaveId());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getStaffId());
+                oneLine.append(CSV_SEPARATOR);
+                bw.write(oneLine.toString());
+                bw.newLine();
+            }
+            bw.flush();
+            bw.close();
+        }
+        catch (UnsupportedEncodingException e) {}
+        catch (FileNotFoundException e){}
+        catch (IOException e){}
+    }
+
+	@Override
+	public List<LeaveRecord> findByMangerId(Integer id) {
+		return lrepo.findLeaveRecordByManagerId(id);
 	}
 
 

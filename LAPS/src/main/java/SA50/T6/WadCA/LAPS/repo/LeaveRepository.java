@@ -37,7 +37,6 @@ public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer> {
 	
 	@Query("SELECT lr FROM LeaveRecord lr WHERE lr.staffId = :staffId")
 	ArrayList<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")Integer staffId);
-
 	
 
 }

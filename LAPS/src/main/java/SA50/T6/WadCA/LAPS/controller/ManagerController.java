@@ -53,53 +53,22 @@ public class ManagerController{
 		model.addAttribute("lrecords", lservice.findPendingLeaveRecordByManagerId(staff.getStaffId()));
 		return "manager_approval";
 	}
+	
+	@GetMapping(value = "/subordinateLeave")
+	public String approveLeave(Model model,HttpSession session) {
+		//lservice.approveLeave(id);
+		//return "redirect:/manager/approve/"+id;
+		Staff manager = (Staff)session.getAttribute("staff");
+		model.addAttribute("lrecords",lservice.findByMangerId(manager.getStaffId()));
+		return "manager_subordinateLeave";
+
+	}
 
 	@RequestMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
 		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
-	
-// 	@GetMapping(value = "/approve")
-// 	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
-// 		Staff staff =(Staff)session.getAttribute("staff");
-// 		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
-// 		float balance = 0;
-		
-// 		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
-// 			if(numOfLeave > staff.getTotalAnnualLeave()) {
-// 				return "redirect:/manager/approve";
-// 			}
-			
-// 		}
-		
-// 		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
-// 			if(numOfLeave > staff.getTotalMedicalLeave()) {
-// 				return "redirect:/manager/approve";
-// 			}
-// 		}
-		
-// 		if(leaveRecord.getLeaveType() == LType.Compensation) {
-// 			if(numOfLeave > staff.getTotalCompensationLeave()) {
-// 				return "redirect:/staff/apply/add";
-// 			}
-// 		}
-		
-// 		if(leaveRecord.getLeaveType()== LType.AnnualLeave) {
-// 			balance = staff.getTotalAnnualLeave() + numOfLeave;
-// 			staff.setTotalAnnualLeave(balance);
-// 			sservice.saveStaff(staff);
-// 		} else if(leaveRecord.getLeaveType()== LType.MedicalLeave) {
-// 			balance = staff.getTotalMedicalLeave() + numOfLeave;
-// 			staff.setTotalMedicalLeave(balance);
-// 			sservice.saveStaff(staff);
-// 		} else {
-// 			balance = staff.getTotalCompensationLeave() + numOfLeave;
-// 			staff.setTotalCompensationLeave(balance);
-// 			sservice.saveStaff(staff);
-// 		}
-// 		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
-// 		return "manager_approval";
 
 	@GetMapping(value = "/approve/{id}")
 	public String approveLeave(@PathVariable("id") Integer id, HttpSession session) {
@@ -124,5 +93,6 @@ public class ManagerController{
 		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
 		return "manager_PastLeaveRecords";
 	}
+	
 
 }

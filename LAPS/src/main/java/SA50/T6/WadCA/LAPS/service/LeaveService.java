@@ -36,6 +36,8 @@ public interface LeaveService {
 	public Boolean checkStatus(LeaveRecord leaveRecord);
 	public boolean approveLeave(Integer id);
 	public void rejectLeave(Integer id);
+	public void writeToCSV(ArrayList<LeaveRecord> records);
+	public List<LeaveRecord> findByMangerId(Integer id);
 	
 
 	
