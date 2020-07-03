@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveRecord;
@@ -33,6 +35,8 @@ import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.service.NotificationService;
+import SA50.T6.WadCA.LAPS.service.NotificationServiceImpl;
 import SA50.T6.WadCA.LAPS.service.OvertimeService;
 import SA50.T6.WadCA.LAPS.service.OvertimeServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
@@ -74,11 +78,26 @@ public class StaffController {
 	public void setOvertimeService(OvertimeServiceImpl oserviceImpl) {
 		this.oservice = oserviceImpl;
 	}
+	
+	@Autowired
+	protected OvertimeValidator overtimeValidator;
+	
+	@Autowired
+	protected ApplyLeaveValidator applyLeaveValidator;
+  
+	protected NotificationService nservice;
+
+	@Autowired
+	public void setNotificationService(NotificationServiceImpl nserviceImpl) {
+		this.nservice = nserviceImpl;
+	}
+
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
 
 	}
+	
 
 	@GetMapping("/login")
 	public String Login(@ModelAttribute("staff") Staff staff, String username, String password, HttpSession session) {
@@ -139,7 +158,6 @@ public class StaffController {
 		Staff staff = (Staff)session.getAttribute("staff");
 		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
-
 		return "staff_applyLeave_add";
 	}
 
@@ -154,7 +172,71 @@ public class StaffController {
 		
 		Staff staff = (Staff)session.getAttribute("staff");
 		int staffId = staff.getStaffId();
+		String staffName = staff.getUsername();
 		leaveRecord.setStaffId(staffId);
+		
+		LocalDate from = leaveRecord.getLeaveStartDate();
+		LocalDate to = leaveRecord.getLeaveEndDate();
+		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
+		
+		if(from.isAfter(to)) {
+			Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+			model.addAttribute("msg","To date should be later than From date");
+			model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+			return"staff_applyLeave_add";
+			//return "redirect:/staff/apply/add";
+
+		}
+		if(leaveRecord.getLeaveType() != LType.MedicalLeave) {
+			if(from.isBefore(LocalDate.now())) {
+				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+				model.addAttribute("msg","From date should be later than today");
+				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+				return"staff_applyLeave_add";
+				//return "redirect:/staff/apply/add";
+			}
+		}
+
+				
+		if(from.getDayOfWeek() == DayOfWeek.SATURDAY || from.getDayOfWeek() == DayOfWeek.SUNDAY || to.getDayOfWeek() == DayOfWeek.SATURDAY || to.getDayOfWeek() == DayOfWeek.SUNDAY)
+		{
+			Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+			model.addAttribute("msg","From or To date falls on PH");
+			model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+			return"staff_applyLeave_add";
+			//return "redirect:/staff/apply/add";
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfDay > staff.getTotalAnnualLeave()) {
+				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+				model.addAttribute("insufficient","Leave entitlement is not sufficient");
+				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+				return"staff_applyLeave_add";
+				//return "redirect:/staff/apply/add";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
+			if(numOfDay > staff.getTotalMedicalLeave()) {
+				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+				model.addAttribute("insufficient","Leave entitlement is not sufficient");
+				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+				return"staff_applyLeave_add";
+				//return "redirect:/staff/apply/add";
+			}
+		}
+		
+		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(numOfDay > staff.getTotalCompensationLeave()) {
+				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+				model.addAttribute("insufficient","Leave entitlement is not sufficient");
+				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
+				return"staff_applyLeave_add";
+				//return "redirect:/staff/apply/add";
+			}
+		}
 
 		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
 		leaveRecord.setManagerId(managerId);
@@ -176,15 +258,21 @@ public class StaffController {
 
 		}
 		
-		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
-		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
-		if(leaveStartDate.getDayOfWeek() == DayOfWeek.SATURDAY 
-				|| leaveStartDate.getDayOfWeek() == DayOfWeek.SUNDAY 
-				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SATURDAY 
-				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-			return "redirect:/staff/apply/add";
-		} else 
+//		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
+//		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
+//		if(leaveStartDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+//				|| leaveStartDate.getDayOfWeek() == DayOfWeek.SUNDAY 
+//				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SATURDAY 
+//				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+//			return "redirect:/staff/apply/add";
+//		} else 
 			lservice.saveLeaveRecord(leaveRecord);
+		Staff reportingManager = sservice.findStaffById(managerId);
+		try {
+			nservice.sendNotification(reportingManager, staffId, staffName);
+		}catch(MailException e) {
+			//catch error
+		}
 		return "redirect:/staff/apply";
 	}
 
@@ -245,13 +333,71 @@ public class StaffController {
 	}
 
 	@GetMapping("/history/details/edit/{id}")
-	public String editLeaveDetails(Model model, @PathVariable("id") Integer id) {
+	public String editLeaveDetails( Model model, @PathVariable("id") Integer id, HttpSession session) {
+		
 		LeaveRecord leaveRecord=lservice.findById(id);
 		if(!lservice.checkStatus(leaveRecord)) {
 			return "redirect:/staff/history/details/"+id;
 		}
 		model.addAttribute("leave",leaveRecord);
+		Staff staff = (Staff)session.getAttribute("staff");
+		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
+		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 		return "staff_leaveHistory_details_edit";
+	}
+	
+	@RequestMapping(value="/history/details/edit/save")
+	public String saveUpdatedLeave(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,
+			BindingResult result, Model model,HttpSession session, RedirectAttributes redirect) {
+		Staff staff = (Staff)session.getAttribute("staff");
+		int staffId = staff.getStaffId();
+		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
+		redirect.addAttribute("id", leaveRecord.getLeaveId());
+		
+		applyLeaveValidator.validate(leaveRecord, result);
+		if(result.hasErrors()) {
+			System.out.println("error");
+			return "redirect:/staff/history/details/edit/{id}";
+		}
+		
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfDay > staff.getTotalAnnualLeave()) {
+				return "redirect:/staff/history/details/edit/{id}";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
+			if(numOfDay > staff.getTotalMedicalLeave()) {
+				return "redirect:/staff/history/details/edit/{id}";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(numOfDay > staff.getTotalCompensationLeave()) {
+				return "redirect:/staff/history/details/edit/{id}";
+			}
+		}
+
+		
+		leaveRecord.setStaffId(staffId);
+		
+
+		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
+		leaveRecord.setManagerId(managerId);
+		
+		leaveRecord.setLeaveStatus(LeaveStatus.UPDATED); 
+		
+		LType type = leaveRecord.getLeaveType();
+		if(type ==(LType.AnnualLeave) 
+				|| type==(LType.MedicalLeave)) {
+			leaveRecord.setLeaveStartTime('N');
+			leaveRecord.setLeaveEndTime('N');
+
+		}
+		
+			lservice.saveLeaveRecord(leaveRecord);
+		return "redirect:/staff/apply";
 	}
 
 //	@GetMapping("/history/details/delete/{id}")
@@ -271,9 +417,13 @@ public class StaffController {
 
 	@GetMapping("/overtime/save")
 	public String OTsave(@ModelAttribute("overtime") @Valid Overtime overtime, BindingResult result,HttpSession session) {
-		if (result.hasErrors()) {
-			return "/staff_overtime";
-		}
+		
+		overtimeValidator.validate(overtime, result);
+			if(result.hasErrors()) {
+				return "staff_overtime";
+			}
+		
+		
 		Staff staff = sservice.findStaffById((int)session.getAttribute("staffId"));
 		//set staffId;
 		overtime.setStaff(staff);

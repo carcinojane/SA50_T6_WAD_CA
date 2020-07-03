@@ -54,45 +54,61 @@ public class LapsApplication {
 		return args -> {
 			//create manager
 
-			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
+			Staff manager1 = new Staff("manager1","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
-			Staff manager2 = new Staff("manager2","password2","manager2@gmail.com",Status.inactive,2,60,18);
+			Staff manager2 = new Staff("manager2","password","waiyankm93@gmail.com",Status.active, 2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager2);
-			Staff head = new Staff("Head Manager","password3","head@gmail.com",Status.active,2,60,18);
-			head.setDesignation(Staff.Designation.manager);
+			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
+			head.setDesignation(Staff.Designation.admin);
 			staffRepo.save(head);
-			Staff manager3 = new Staff("manager3","password3","manager3@gmail.com",Status.active,2,60,18);
+			
+			Staff manager3 = new Staff("manager3","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager3.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager3);
 			
 			//create staff
-			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active);
-			Staff staff2 = new Staff("staff2","password","staff2@gmail.com",Status.active);
-			Staff staff3 = new Staff("staff3","password3","staff3@gmail.com",Status.active);
-			Staff staff4 = new Staff("staff4","password4","staff4@gmail.com",Status.active);
-			Staff staff5 = new Staff("staff5","password5","staff5@gmail.com",Status.active);
+			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active, 0f,60f,14f);
+			Staff staff2 = new Staff("staff2","password","staff2@gmail.com", Status.active, 1f,60f,14f);
+			Staff staff3 = new Staff("staff3","password","staff3@gmail.com", Status.active, 1.5f,60f,14f);
+				//staff with 0 Annual leave	
+				Staff staff4 = new Staff("staff4","password","staff4@gmail.com",Status.active, 2f,60f,0f);
+				//staff with 0 Compensation leave	
+				Staff staff5 = new Staff("staff5","password","staff5@gmail.com",Status.active, 0f,60f,14f);
+				//staff with 0 Medical leave	
+				Staff staff6 = new Staff("staff6","password","staff6@gmail.com",Status.active, 0f,0f,14f);
+
 			staff1.setManager(manager1);
 			staff1.setDesignation(Staff.Designation.employee);
 			staff2.setManager(manager1);
 			staff2.setDesignation(Staff.Designation.employee);
 			staff3.setManager(manager3);
 			staff3.setDesignation(Staff.Designation.employee);
+
+			staff4.setManager(manager2);
+			staff4.setDesignation(Staff.Designation.employee);
+			staff5.setManager(manager2);
+			staff5.setDesignation(Staff.Designation.employee);
+			staff6.setManager(manager2);
+			staff6.setDesignation(Staff.Designation.employee);
+
 			staff4.setManager(manager3);
 			staff4.setDesignation(Staff.Designation.employee);
 			staff5.setManager(manager3);
 			staff5.setDesignation(Staff.Designation.employee);
+
 			staffRepo.save(staff1);
 			staffRepo.save(staff2);
 			staffRepo.save(staff3);
 			staffRepo.save(staff4);
 			staffRepo.save(staff5);
+			staffRepo.save(staff6);
 			
 			//create admin
-			Admin admin1=new Admin("May Thu Kyaw","admin1", "password");
+			Admin admin1=new Admin("Human Resources","admin1", "password");
 			adminRepo.save(admin1);
-
+			
 			LeaveType annual_emp = new LeaveType(Designation.employee, LType.AnnualLeave, 14f, 1f);
 			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f,1f);
 			LeaveType compensation_emp = new LeaveType(Designation.employee, LType.Compensation, 2f, 0.5f);
@@ -108,36 +124,29 @@ public class LapsApplication {
 			ltservice.save(compensation_mng);
 			
 			//create Leave Records
-			LeaveRecord l1 = new LeaveRecord(1,LeaveStatus.APPLIED,"Attend National Day parade",
-					LocalDate.of(2020, 8, 9),'N',LocalDate.of(2020, 8, 9),'N',4,"",97856210);
-			l1.setLeaveType(LType.AnnualLeave);
-			lRepo.save(l1);
-			LeaveRecord l2 = new LeaveRecord(1,LeaveStatus.CANCELLED,"Family matters",
-					LocalDate.of(2020, 10, 9),'A',LocalDate.of(2020, 10, 11),'A',4,"",8662395);
-			l2.setLeaveType(LType.MedicalLeave);
-			lRepo.save(l2);
-			LeaveRecord l3 = new LeaveRecord(1,LeaveStatus.APPROVED,"It's my birthday!",
-					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'A',4,"",8662395);
-			l3.setLeaveType(LType.AnnualLeave);
-			lRepo.save(l3);
-			LeaveRecord l4 = new LeaveRecord(
-					LeaveStatus.APPROVED,
-					"There's a post-covid promotion that I cannot miss",
-					LocalDate.of(2020, 8, 9),'A',
-					LocalDate.of(2020, 8, 9),'A',
-					1,
-					LType.AnnualLeave,
-					"N.A.",
-					8662395);
-			lRepo.save(l4);
+			//Applied Annual leave & on working day
+			LeaveRecord lr1 = new LeaveRecord(1, LeaveStatus.APPLIED,"Japan holiday", 
+					LocalDate.of(2020,7,13),'A', LocalDate.of(2020,7,17),'N',5,"staff2 will take over",97856210);
+			lr1.setLeaveType(LType.AnnualLeave);
+			//Applied Compensation leave
+			LeaveRecord lr2 = new LeaveRecord(1, LeaveStatus.APPLIED,"Off-in-lieu", 
+					LocalDate.of(2020,8,3),'A', LocalDate.of(2020,8,3),'N',5,"staff2 will take over",97856210);
+			lr2.setLeaveType(LType.Compensation);
+			//Applied Medical leave
+			LeaveRecord lr3 = new LeaveRecord(1, LeaveStatus.APPLIED,"Broke arm on holiday", 
+					LocalDate.of(2020,7,20),'A', LocalDate.of(2020,7,31),'N',5,"staff2 will take over",97856210);
+			lr3.setLeaveType(LType.MedicalLeave);
+			//Approved Annual leave
+			LeaveRecord lr4 = new LeaveRecord(1, LeaveStatus.APPROVED,"Clearing leave", 
+					LocalDate.of(2020,7,13),'A', LocalDate.of(2020,7,17),'N',6,"Manager 1 in charge",96223444);
+			lr4.setLeaveType(LType.AnnualLeave);
+			LeaveRecord lr5 = new LeaveRecord(1, LeaveStatus.APPROVED,"It's my birthday!",
+					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'N',5,"Employee Perks",97856210);
+			lr5.setLeaveType(LType.AnnualLeave);
 			
-			System.out.println(l1.getLeaveType().getDisplayValue());
-			System.out.println(l4.getWorkDissemination());
-			System.out.println(annual_emp.getLeaveType().getDisplayValue());
+			lRepo.save(lr1);lRepo.save(lr2);lRepo.save(lr3);lRepo.save(lr4);lRepo.save(lr5);
 
-			
-
-
+		
 
 	};
 

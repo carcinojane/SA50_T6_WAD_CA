@@ -9,6 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import javax.persistence.OneToOne;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -20,14 +25,14 @@ public class LeaveRecord{
 	private int managerId;
 	private LeaveStatus leaveStatus;
 	
-	@NotNull(message = "Reason is mandatory field")
+	@NotEmpty
 	private String reason;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message = "From date is mandatory field")
+	@NotNull
 	private LocalDate leaveStartDate;
 	private char leaveStartTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@NotNull(message = "From date is mandatory field")
+	@NotNull
 	private LocalDate leaveEndDate;
 	private char leaveEndTime;
 	private int staffId;
@@ -271,6 +276,12 @@ public class LeaveRecord{
 
 		//this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
 	}
+
+//	public String getLeaveTypeDisplay() {
+//		return leaveTypeDisplay;
+//
+//	}
+
 	
 	public char getLeaveStartTime() {
 		return leaveStartTime;

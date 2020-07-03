@@ -15,41 +15,68 @@
 	<header th:insert="staff_homepage.html :: header"> </header>
 
 	<div class="content">
-		<h1 th:utext="#{manager.approval.details.page.title}">Leave
+		<h1 th:utext="#{staff.leaveHistory.details.page.title}">Leave
 			Details</h1>
-		<table class="list">
+
+		<table class="details">
 			<tr>
-				<td>From</td>
+				<th style="width: 20%" th:utext="#{table.heading.from}"></th>
 				<td th:text="${leave.leaveStartDate}"></td>
 			</tr>
 			<tr>
-				<td>To</td>
+				<th style="width: 20%" th:utext="#{table.heading.to}"></th>
 				<td th:text="${leave.leaveEndDate}"></td>
 			</tr>
 			<tr>
-				<td>Category</td>
-				<td th:text="${leave.leaveTypeDisplay}"></td>
+				<th style="width: 20%" th:utext="#{table.heading.leavetype}"></th>
+				<td th:text="${leave.leaveType.displayValue}"></td>
 			</tr>
 			<tr>
-				<td>Status</td>
-				<td th:text="${leave.leaveStatus.displayValue}"></td>
+				<th style="width: 20%" th:utext="#{table.heading.contact}"></th>
+				<td th:text="${leave.contact}"></td>
 			</tr>
 			<tr>
-				<td>Reason</td>
+				<th style="width: 20%" th:utext="#{table.heading.reason}"></th>
 				<td th:text="${leave.reason}"></td>
 			</tr>
 			<tr>
-				<td>Work Dissemination</td>
+				<th style="width: 20%" th:utext="#{table.heading.workdissemination}"></th>
 				<td th:text="${leave.workDissemination}"></td>
+			</tr>
+			<tr>
+				<th style="width: 20%" th:utext="#{table.heading.status}"></th>
+				<td th:text="${leave.leaveStatus.displayValue}"></td>
+			</tr>
+			<tr>
+				<th style="width: 20%" th:utext="#{leaveRecord.resonForRejection}"></th>
+				<td th:text="${leave.reasonForRejection}"></td>
 			</tr>
 		</table>
 
-		<a th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
-			<button style="background-color: grey">Update</button>
-		</a> <a th:href="@{/staff/history/details/delete/}+${leave.leaveId}">
-			<button style="background-color: red">Delete</button>
-		</a>
+		<div class="status">
+			<table>
+				<tr>
+				<td><a href="Back.html" th:href="@{/staff/apply}">Back</a></td>
+				<td><a
+						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
+						th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
+							<button style="background-color: grey">Update</button>
+					</a>
+					<a
+						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
+						th:href="@{/staff/apply/delete/}+${leave.leaveId}">
+							<button style="background-color: red">Delete</button>
+					</a> 
+					<td><a
+						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}"
+						th:href="@{/staff/apply/cancel/}+${leave.leaveId}">
+							<button style="background-color: green">Cancel</button>
+					</a></td>
 
+				</tr>
+			</table>
+
+		</div>
 	</div>
 </body>
 </html>
