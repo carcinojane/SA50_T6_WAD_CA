@@ -39,13 +39,13 @@
 
 				<tr>
 					<td th:utext="#{admin.manageLeave.Entitlement}"></td>
-					<td><input type="text" th:field="*{entitlement}">
+					<td><input type="text" th:field="*{entitlement}" required>
 						<p th:if="${#fields.hasErrors('entitlement')}"
 							th:errors="*{entitlement}"></p></td>
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageLeave.MinClaim}"></td>
-					<td><input type="text" th:field="*{minClaim}">
+					<td><input type="text" th:field="*{minClaim}" required>
 						<p th:if="${#fields.hasErrors('minClaim')}"
 							th:errors="*{minClaim}"></p></td>
 				</tr>
