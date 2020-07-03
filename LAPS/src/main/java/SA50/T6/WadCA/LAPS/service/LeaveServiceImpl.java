@@ -1,9 +1,17 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -199,6 +207,57 @@ public class LeaveServiceImpl implements LeaveService {
 		}
 		lrepo.save(record);
 
+	}
+	
+	@Transactional
+    public void writeToCSV(ArrayList<LeaveRecord> records)
+    {
+    	final String CSV_SEPARATOR = ",";
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+            for (LeaveRecord record : records)
+            {
+                StringBuffer oneLine = new StringBuffer();
+                oneLine.append(record.getLeaveId());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getStaffId());
+                oneLine.append(CSV_SEPARATOR);
+                bw.write(oneLine.toString());
+                bw.newLine();
+            }
+            bw.flush();
+            bw.close();
+        }
+        catch (UnsupportedEncodingException e) {}
+        catch (FileNotFoundException e){}
+        catch (IOException e){}
+    }
+
+	@Override
+	public List<LeaveRecord> findByMangerId(Integer id) {
+		return lrepo.findLeaveRecordByManagerId(id);
+	}
+
+	@Override
+	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Month> LeaveMonths(ArrayList<LeaveRecord> records) {
+		// TODO Auto-generated method stub
+		List<Month> months= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			Month month = record.getLeaveStartDate().getMonth();
+			if(!months.contains(month)) {
+				months.add(month);
+			}
+		}
+		return months;
 	}
 
 

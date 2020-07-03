@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +35,8 @@ import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
+import SA50.T6.WadCA.LAPS.service.NotificationService;
+import SA50.T6.WadCA.LAPS.service.NotificationServiceImpl;
 import SA50.T6.WadCA.LAPS.service.OvertimeService;
 import SA50.T6.WadCA.LAPS.service.OvertimeServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
@@ -81,6 +84,14 @@ public class StaffController {
 	
 	@Autowired
 	protected ApplyLeaveValidator applyLeaveValidator;
+  
+	protected NotificationService nservice;
+
+	@Autowired
+	public void setNotificationService(NotificationServiceImpl nserviceImpl) {
+		this.nservice = nserviceImpl;
+	}
+
 
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) {
@@ -161,6 +172,7 @@ public class StaffController {
 		
 		Staff staff = (Staff)session.getAttribute("staff");
 		int staffId = staff.getStaffId();
+		String staffName = staff.getUsername();
 		leaveRecord.setStaffId(staffId);
 		
 		LocalDate from = leaveRecord.getLeaveStartDate();
@@ -255,6 +267,12 @@ public class StaffController {
 //			return "redirect:/staff/apply/add";
 //		} else 
 			lservice.saveLeaveRecord(leaveRecord);
+		Staff reportingManager = sservice.findStaffById(managerId);
+		try {
+			nservice.sendNotification(reportingManager, staffId, staffName);
+		}catch(MailException e) {
+			//catch error
+		}
 		return "redirect:/staff/apply";
 	}
 
