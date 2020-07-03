@@ -18,6 +18,7 @@
 	 
 	 <div class="content">
 	 	<h1 th:utext="#{manager.history.page.title}"></h1>
+	 	<h3 th:text="#{manager.message.youareviewing} + ' ' + #{table.heading.empId} + ': ' + ${staff.staffId} + ', ' + #{table.heading.username} + ': ' + ${staff.username}"></h3>
 		<div class="search" th:if="${not #lists.isEmpty(lrecords)}">
 		<h3>Search</h3>
 		<input id="userInput" type="text" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome">
@@ -43,13 +44,13 @@
 		<table id="leavetable" class="list">
 			<thead>
 				<tr>
-					<th style="width: 20%" th:utext="#{table.heading.from}"></th>	
-					<th style="width: 17.5%" th:utext="#{table.heading.fromtime}"></th>
-					<th style="width: 22.5%" th:utext="#{table.heading.to}"></th>
-					<th style="width: 17.5%" th:utext="#{table.heading.totime}"></th>
-					<th style="width: 22.5%" th:utext="#{table.heading.leavetype}"></th>
-					<th style="width: 17.5%" th:utext="#{table.heading.status}"></th>
-					<th style="width: 17.5%" th:utext="#{table.heading.action}"></th>
+					<th style="width: 14%" th:utext="#{table.heading.from}"></th>	
+					<th style="width: 12%" th:utext="#{table.heading.fromtime}"></th>
+					<th style="width: 14%" th:utext="#{table.heading.to}"></th>
+					<th style="width: 12%" th:utext="#{table.heading.totime}"></th>
+					<th style="width: 16%" th:utext="#{table.heading.leavetype}"></th>
+					<th style="width: 16%" th:utext="#{table.heading.status}"></th>
+					<th style="width: 16%" th:utext="#{table.heading.action}"></th>
 				</tr>
 			</thead>
 
@@ -65,8 +66,7 @@
 					<td data-input="leaveEndTime" th:text="${leave.leaveEndTime}">To Time</td>
 					<td data-input="leavetype" th:text="${leave.leaveType.displayValue}">Category</td>
 					<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
-					<td data-input="dummy3"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"
-						th:utext="#{manager.approval.details.page.title}"></a></td>
+					<td data-input="dummy3"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{manager.approval.details.page.title}"></button></a></td>
 		</table>
 		<div class="zoom">
 			<a th:href="@{/manager/approval}"><button style="background-color:grey;" th:utext="#{manager.button.backtoapproval}"></button></a> 	 

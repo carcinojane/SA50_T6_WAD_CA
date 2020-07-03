@@ -118,6 +118,7 @@ public class ManagerController{
 
 	@GetMapping(value = "/history/{id}")
 	public String staffRecord(Model model, @PathVariable("id") Integer id) {
+		model.addAttribute("staff", sservice.findStaffById(id));
 		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
 		return "manager_PastLeaveRecords";
 	}
