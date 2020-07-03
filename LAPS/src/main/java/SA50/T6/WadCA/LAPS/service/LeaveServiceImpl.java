@@ -8,8 +8,10 @@ import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -235,6 +237,27 @@ public class LeaveServiceImpl implements LeaveService {
 	@Override
 	public List<LeaveRecord> findByMangerId(Integer id) {
 		return lrepo.findLeaveRecordByManagerId(id);
+	}
+
+	@Override
+	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Month> LeaveMonths(ArrayList<LeaveRecord> records) {
+		// TODO Auto-generated method stub
+		List<Month> months= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			Month month = record.getLeaveStartDate().getMonth();
+			if(!months.contains(month)) {
+				months.add(month);
+			}
+		}
+		return months;
 	}
 
 
