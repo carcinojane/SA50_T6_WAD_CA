@@ -235,43 +235,6 @@ Show the link that contains should open and close the topnav (.icon) */
   width: 100%;
 }
 
-.content .status ul{
-  list-style: none;
-  margin: 0;
-  position: absolute;
-  top: 45%;
-  left: 77%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.content .status li{
-  display:flex;
-  justify-content: center;
-}
-
-.content .status a{
-  width: 100px;
-  margin: 4px 15px;
-}
-.content .status button{
-  width: 185px;
-  border-radius: 6px;
-  border: none;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 4px 35px;
-}
-
-.content .status button:hover {
-  height: 60px;
-  font-size: 16px;
-}
-
 /* Full-width input fields */
 .content input[type=text], input[type=password] {
   width: 100%;
@@ -431,19 +394,20 @@ Show the link that contains should open and close the topnav (.icon) */
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  position: absolute;
-  top: 51.5%;
-  left: 76%;
-  width: 185px;
+  width:10%;
+  height:3%;
+  margin-left:45%; 
+  margin-right:45%;
   display: inline-block;
   font-size: 14px;
-  margin: 4px 35px;
   text-align: center;
   text-decoration: none;  
 }
 
 .content .open-button:hover {
-  height: 60px;
+  width:12%;
+  margin-left:44%;
+  margin-right:44%;
   font-size: 16px;
 }
 
@@ -451,8 +415,8 @@ Show the link that contains should open and close the topnav (.icon) */
 .content .form-popup {
   display: none;
   position: fixed;
-  top: 55.5%;
-  left: 74%;
+  bottom: 23.5%;
+  right: 30%;
   border: 3px solid #f1f1f1;
   z-index: 9;
 }
@@ -505,6 +469,23 @@ Show the link that contains should open and close the topnav (.icon) */
 
 /* error message*/
 .red-text{
-	color: red;
-	font-size: 9;
+  color: red;
+  font-size: 9;
+}
+
+.content .zoom button{
+  width:10%;
+  height:3%;
+  border: none;
+  border-radius: 6px;
+  margin-left:45%; 
+  margin-right:45%;
+  font-size: 14px;
+}
+
+.content .zoom button:hover{
+  width:12%;
+  margin-left:44%;
+  margin-right:44%;
+  font-size: 16px;
 }
