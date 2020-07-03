@@ -60,10 +60,29 @@ public class ManagerController{
 	
 	@GetMapping(value = "/approve")
 	public String approveLeave(@ModelAttribute("LeaveRecord") LeaveRecord leaveRecord, HttpSession session) {
-		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
 		Staff staff =(Staff)session.getAttribute("staff");
 		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
 		float balance = 0;
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfLeave > staff.getTotalAnnualLeave()) {
+				return "redirect:/manager/approve";
+			}
+			
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
+			if(numOfLeave > staff.getTotalMedicalLeave()) {
+				return "redirect:/manager/approve";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(numOfLeave > staff.getTotalCompensationLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
+		
 		if(leaveRecord.getLeaveType()== LType.AnnualLeave) {
 			balance = staff.getTotalAnnualLeave() + numOfLeave;
 			staff.setTotalAnnualLeave(balance);
@@ -77,6 +96,7 @@ public class ManagerController{
 			staff.setTotalCompensationLeave(balance);
 			sservice.saveStaff(staff);
 		}
+		leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
 		return "manager_approval";
 	}
 	

@@ -10,6 +10,7 @@
 
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
+<script type="text/javascript" src="../../js/applyLeave.js"></script>
 </head>
 <body>
 	<header th:insert="staff_homepage.html :: header"> </header>
@@ -25,7 +26,7 @@
 			<tr><td><input type="hidden" th:field="*{leaveId}"></td></tr>
 				<tr>
 					<td>Leave Category</td>
-					<td><select th:field=*{leaveType}>
+					<td><select name="leaveType" id="leaveType" th:field=*{leaveType}>
 							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
 								th:text="${leave.leaveType.displayValue}">
 					</select></td>
@@ -33,14 +34,15 @@
 				<tr>
 
 					<td>From Date</td>
-					<td><input type="date" th:field="*{leaveStartDate}">
+					<td><input required= "required" type="date" th:field="*{leaveStartDate}">
 						<p th:if="${#fields.hasErrors('leaveStartDate')}"
-							th:errors="*{leaveStartDate}"></p></td>
+							th:errors="*{leaveStartDate}"></p>
+					</td>
 				</tr>
 				<tr>
 					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
 					<td>From Time</td>
-					<td><select th:field=*{leaveStartTime}>
+					<td><select id="time" th:field=*{leaveStartTime}>
 							<option th:value="'P'">PM</option>
 							<option th:value="'A'">AM</option>
 							<option th:value="'N'">N/A</option>
@@ -48,13 +50,13 @@
 				</tr>
 				<tr>
 					<td>To</td>
-					<td><input type="date" th:field="*{leaveEndDate}">
+					<td><input required= "required" type="date" th:field="*{leaveEndDate}">
 						<p th:if="${#fields.hasErrors('leaveEndDate')}"
 							th:errors="*{leaveEndDate}"></td>
 				</tr>
 				<tr>
 					<td>To Time</td>
-					<td><select th:field=*{leaveEndTime}>
+					<td><select id="time" th:field=*{leaveEndTime}>
 							<option th:value="'P'">PM</option>
 							<option th:value="'A'">AM</option>
 							<option th:value="'N'">N/A</option>
@@ -62,7 +64,7 @@
 				</tr>
 				<tr>
 					<td>Reason</td>
-					<td><input type="text" th:field="*{reason}">
+					<td><input required="required" type="text" th:field="*{reason}">
 						<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p></td>
 				</tr>
 				<tr>

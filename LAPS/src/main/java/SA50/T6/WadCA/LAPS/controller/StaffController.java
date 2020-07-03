@@ -79,6 +79,16 @@ public class StaffController {
 	protected void initBinder(WebDataBinder binder) {
 
 	}
+	
+//	@InitBinder("LeaveRecordVal")
+//	protected void initLeaveBinder(WebDataBinder binder) {
+//		binder.addValidators(new ApplyLeaveValidator());
+//	}
+//	
+//	@InitBinder("overtime")
+//	protected void initOvertimeBinder(WebDataBinder binder) {
+//		binder.addValidators(new OvertimeValidator());
+//	}
 
 	@GetMapping("/login")
 	public String Login(@ModelAttribute("staff") Staff staff, String username, String password, HttpSession session) {
@@ -135,7 +145,6 @@ public class StaffController {
 		Staff staff = (Staff)session.getAttribute("staff");
 		Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 		model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
-
 		return "staff_applyLeave_add";
 	}
 
@@ -151,6 +160,49 @@ public class StaffController {
 		Staff staff = (Staff)session.getAttribute("staff");
 		int staffId = staff.getStaffId();
 		leaveRecord.setStaffId(staffId);
+		
+		LocalDate from = leaveRecord.getLeaveStartDate();
+		LocalDate to = leaveRecord.getLeaveEndDate();
+		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
+		
+		if(from.isAfter(to)) {
+			model.addAttribute("msg","To date should be later than From date");
+			return "redirect:/staff/apply/add";
+
+		}
+		
+		if(from.isBefore(LocalDate.now())) {
+			return "redirect:/staff/apply/add";
+		}
+				
+		if(from.getDayOfWeek() == DayOfWeek.SATURDAY || from.getDayOfWeek() == DayOfWeek.SUNDAY || to.getDayOfWeek() == DayOfWeek.SATURDAY || to.getDayOfWeek() == DayOfWeek.SUNDAY)
+		{
+			return "redirect:/staff/apply/add";
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfDay > staff.getTotalAnnualLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
+			if(numOfDay > staff.getTotalMedicalLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfDay > staff.getTotalAnnualLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.Compensation) {
+			if(numOfDay > staff.getTotalCompensationLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
 
 		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
 		leaveRecord.setManagerId(managerId);
@@ -255,7 +307,7 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value="/history/details/edit/save")
-	public String saveUpdatedLeave(@ModelAttribute("leaveRecord") @Valid LeaveRecord leaveRecord,
+	public String saveUpdatedLeave(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord,
 			BindingResult result, Model model,HttpSession session, RedirectAttributes redirect) {
 		
 		if(result.hasErrors()) {
@@ -266,6 +318,35 @@ public class StaffController {
 		int staffId = staff.getStaffId();
 		leaveRecord.setStaffId(staffId);
 		redirect.addAttribute("id", leaveRecord.getLeaveId());
+		
+		LocalDate from = leaveRecord.getLeaveStartDate();
+		LocalDate to = leaveRecord.getLeaveEndDate();
+		float numOfDay = lservice.numOfLeaveApplied(leaveRecord);
+		
+		if(from.isAfter(to)) {
+			return "redirect:/staff/apply/add";
+		}
+		
+		if(from.isBefore(LocalDate.now())) {
+			return "redirect:/staff/apply/add";
+		}
+				
+		if(from.getDayOfWeek() == DayOfWeek.SATURDAY || from.getDayOfWeek() == DayOfWeek.SUNDAY || to.getDayOfWeek() == DayOfWeek.SATURDAY || to.getDayOfWeek() == DayOfWeek.SUNDAY)
+		{
+			return "redirect:/staff/apply/add";
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.AnnualLeave) {
+			if(numOfDay > staff.getTotalAnnualLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
+		
+		if(leaveRecord.getLeaveType() == LType.MedicalLeave) {
+			if(numOfDay > staff.getTotalMedicalLeave()) {
+				return "redirect:/staff/apply/add";
+			}
+		}
 
 		int managerId = sservice.findStaffById(staffId).getManager().getStaffId();
 		leaveRecord.setManagerId(managerId);
