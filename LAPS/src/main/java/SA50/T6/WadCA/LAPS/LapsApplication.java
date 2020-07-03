@@ -55,17 +55,17 @@ public class LapsApplication {
 			//create manager
 
 
-			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
+			Staff manager1 = new Staff("manager1","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
-			Staff manager2 = new Staff("manager2","password","manager2@gmail.com",Status.active, 2,60,18);
+			Staff manager2 = new Staff("manager2","password","waiyankm93@gmail.com",Status.active, 2,60,18);
 			manager2.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager2);
 			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
 			head.setDesignation(Staff.Designation.admin);
 			staffRepo.save(head);
 			
-			Staff manager3 = new Staff("manager3","password","manager3@gmail.com",Status.active,2,60,18);
+			Staff manager3 = new Staff("manager3","password","waiyankm93@gmail.com",Status.active,2,60,18);
 			manager3.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager3);
 			

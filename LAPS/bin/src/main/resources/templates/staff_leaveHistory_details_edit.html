@@ -1,19 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title th:utext="#{staff.leaveHistory.details.edit.page.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
+<head>
+<title th:utext="#{admin.manageStaff.add.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
-	<link rel="stylesheet" type="text/css" media="all"
+<link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<script type="text/javascript" src="../../js/navbar.js"></script>
-	<script type="text/javascript" src="../../js/login.js"></script>
-  </head>
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+</head>
 <body>
- <header th:insert="staff_homepage.html :: header"> </header>
- <h2 th:utext="#{staff.leaveHistory.details.edit.page.title}"></h2>
+	<header th:insert="staff_homepage.html :: header"> </header>
+
+	<div class="content">
+		<h2 th:utext="#{staff.applyLeave.title}"></h2>
+		<a href="Back.html" th:href="@{/staff/history/details/}+${leave.leaveId}">Back</a>
+
+		<form th:object="${leave}"
+			th:action="@{/staff/history/details/edit/save}" method="post">
+
+			<table class="list">
+			<tr><td><input type="hidden" th:field="*{leaveId}"></td></tr>
+				<tr>
+					<td>Leave Category</td>
+					<td><select th:field=*{leaveType}>
+							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
+								th:text="${leave.leaveType.displayValue}">
+					</select></td>
+				</tr>
+				<tr>
+
+					<td>From Date</td>
+					<td><input type="date" th:field="*{leaveStartDate}">
+						<p th:if="${#fields.hasErrors('leaveStartDate')}"
+							th:errors="*{leaveStartDate}"></p></td>
+				</tr>
+				<tr>
+					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
+					<td>From Time</td>
+					<td><select th:field=*{leaveStartTime}>
+							<option th:value="'P'">PM</option>
+							<option th:value="'A'">AM</option>
+							<option th:value="'N'">N/A</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>To</td>
+					<td><input type="date" th:field="*{leaveEndDate}">
+						<p th:if="${#fields.hasErrors('leaveEndDate')}"
+							th:errors="*{leaveEndDate}"></td>
+				</tr>
+				<tr>
+					<td>To Time</td>
+					<td><select th:field=*{leaveEndTime}>
+							<option th:value="'P'">PM</option>
+							<option th:value="'A'">AM</option>
+							<option th:value="'N'">N/A</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Reason</td>
+					<td><input type="text" th:field="*{reason}">
+						<p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}"></p></td>
+				</tr>
+				<tr>
+					<td>Work Dissemination</td>
+					<td><input type="text" th:field="*{workDissemination}"></td>
+				</tr>
+				<tr>
+					<td>Contact Details</td>
+					<td><input type="text" th:field="*{contact}"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 
 </body>
 </html>

@@ -20,14 +20,14 @@
  		<div class="topnav" id="myTopnav">
  			<img src="../../images/logo.png">
  			
- 			<a href="/LAPS">Home</a> 			
+ 			<a href="/LAPS" th:utext="#{page.home}"></a> 			
  			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
  			<i class="fa fa-bars"></i>
  			</a>
  		</div>
  		
  		<div class="footer">
- 			<p>Company Name &copy; All rights reserved.</p>
+ 			<p th:utext="#{page.footer}"></p>
  		</div>
  </header>
  
@@ -36,11 +36,11 @@
   <div class="menu">
     <ul>
       <li>
-        <button type="button"  onclick="location.href='/admin/login'" value="Admin Login">Administrator Login</button>
+        <button type="button"  onclick="location.href='/admin/login'" value="Admin Login" th:utext="#{button.adminlogin}"></button>
       </li>
 
       <li>
-        <button type="button"  onclick="location.href='/staff/login'" value="Staff Login">Staff Login</button>
+        <button type="button"  onclick="location.href='/staff/login'" value="Staff Login" th:utext="#{button.stafflogin}"></button>
       </li>
     </ul>
   </div>
