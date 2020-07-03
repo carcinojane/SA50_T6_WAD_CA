@@ -1,6 +1,7 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -217,9 +218,12 @@ public class LeaveServiceImpl implements LeaveService {
     public void writeToCSV(ArrayList<LeaveRecord> records)
     {
     	final String CSV_SEPARATOR = ",";
+    	String home = System.getProperty("user.home");
+    	File file = new File(home+"/Downloads/" + "LeaveReport.csv"); 
         try
         {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+        	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
+            //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
             for (LeaveRecord record : records)
             {
                 StringBuffer oneLine = new StringBuffer();
@@ -227,6 +231,17 @@ public class LeaveServiceImpl implements LeaveService {
                 oneLine.append(CSV_SEPARATOR);
                 oneLine.append(record.getStaffId());
                 oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getStaff().getUsername());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveType().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStartDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveEndDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStatus().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                
                 bw.write(oneLine.toString());
                 bw.newLine();
             }
