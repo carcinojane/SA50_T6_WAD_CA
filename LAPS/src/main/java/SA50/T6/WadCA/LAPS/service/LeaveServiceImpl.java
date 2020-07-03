@@ -1,6 +1,7 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -189,7 +190,7 @@ public class LeaveServiceImpl implements LeaveService {
 				if(totalCompensationLeave>= days) {
 					leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
 					float balance = totalCompensationLeave-days;
-					staff.setTotalMedicalLeave(balance);
+					staff.setTotalCompensationLeave(balance);
 					srepo.save(staff);
 				}
 			}
@@ -217,9 +218,12 @@ public class LeaveServiceImpl implements LeaveService {
     public void writeToCSV(ArrayList<LeaveRecord> records)
     {
     	final String CSV_SEPARATOR = ",";
+    	String home = System.getProperty("user.home");
+    	File file = new File(home+"/Downloads/" + "LeaveReport.csv"); 
         try
         {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+        	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
+            //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
             for (LeaveRecord record : records)
             {
                 StringBuffer oneLine = new StringBuffer();
@@ -227,6 +231,17 @@ public class LeaveServiceImpl implements LeaveService {
                 oneLine.append(CSV_SEPARATOR);
                 oneLine.append(record.getStaffId());
                 oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getStaff().getUsername());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveType().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStartDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveEndDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStatus().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                
                 bw.write(oneLine.toString());
                 bw.newLine();
             }
@@ -298,8 +313,8 @@ public class LeaveServiceImpl implements LeaveService {
 		return months;
 	}
 
-	@Override
-	public List<LeaveRecord> findLeaveRecordByStaffId(int staffId,int status,int start,int size) {
+	@Transactional
+	public List<LeaveRecord> findLeaveRecordByStaffIdPage(int staffId,int status,int start,int size) {
 		String sqlStr="";
 		if (status==-1) {
 			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
@@ -309,7 +324,7 @@ public class LeaveServiceImpl implements LeaveService {
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> countSize(int staffId) {
 		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));

@@ -41,5 +41,5 @@ public interface LeaveService {
 
 	
 	List<LeaveRecord> countSize(@Param("staffId")int staffId);
-	List<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")int staffId,@Param("status")int status,int start,int size);
+	List<LeaveRecord> findLeaveRecordByStaffIdPage(@Param("staffId")int staffId,@Param("status")int status,int start,int size);
 }
