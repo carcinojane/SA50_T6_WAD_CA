@@ -14,7 +14,7 @@ public class Overtime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int overtimeId;
 	@NotNull
-	@Min(4)
+	//@Min(4)
 	private int hours;
 	@ManyToOne
 	private Staff staff;

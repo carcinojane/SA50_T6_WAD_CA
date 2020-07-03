@@ -38,6 +38,7 @@ public interface LeaveService {
 	public List<LeaveRecord> findByMangerId(Integer id);
 	public List<LeaveRecord>findByMonth(ArrayList<LeaveRecord> records,Month month);
 	public List<Month>LeaveMonths(ArrayList<LeaveRecord> records);
+
 	
 	List<LeaveRecord> countSize(@Param("staffId")int staffId);
 	List<LeaveRecord> findLeaveRecordByStaffId(@Param("staffId")int staffId,@Param("status")int status,int start,int size);

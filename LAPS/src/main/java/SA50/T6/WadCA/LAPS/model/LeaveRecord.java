@@ -30,11 +30,11 @@ public class LeaveRecord{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
 	private LocalDate leaveStartDate;
-	private char leaveStartTime;
+	private String leaveStartTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull
 	private LocalDate leaveEndDate;
-	private char leaveEndTime;
+	private String leaveEndTime;
 	private int staffId;
 	@ManyToOne
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
@@ -58,8 +58,8 @@ public class LeaveRecord{
 		// TODO Auto-generated constructor stub
 	}
 
-	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate, char leaveStartTime,
-			LocalDate leaveEndDate, char leaveEndTime, int staffId, String workDessemination, int contact) {
+	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate, String leaveStartTime,
+			LocalDate leaveEndDate, String leaveEndTime, int staffId, String workDessemination, int contact) {
 		super();
 		this.managerId = managerId;
 		this.leaveStatus = leaveStatus;
@@ -78,8 +78,8 @@ public class LeaveRecord{
 	//add leave
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, String leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, String leaveEndTime, int staffId,
 			LType leaveType, String workDissemination, int contact, String reasonForRejection) {
 		super();
 		this.managerId = managerId;
@@ -98,8 +98,8 @@ public class LeaveRecord{
 
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, String leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, String leaveEndTime, int staffId,
 			Staff staff, LType leaveType, String workDissemination, int contact) {
 		super();
 		this.managerId = managerId;
@@ -134,8 +134,8 @@ public class LeaveRecord{
 
 
 	public LeaveRecord(LeaveStatus leaveStatus, @NotNull(message = "Reason is mandatory field") String reason,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, char leaveStartTime,
-			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, char leaveEndTime, int staffId,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, String leaveStartTime,
+			@NotNull(message = "From date is mandatory field") LocalDate leaveEndDate, String leaveEndTime, int staffId,
 			 LType leaveType, String workDissemination, int contact) {
 		super();
 		this.leaveStatus = leaveStatus;
@@ -283,19 +283,19 @@ public class LeaveRecord{
 //	}
 
 	
-	public char getLeaveStartTime() {
+	public String getLeaveStartTime() {
 		return leaveStartTime;
 	}
 
-	public void setLeaveStartTime(char leaveStartTime) {
+	public void setLeaveStartTime(String leaveStartTime) {
 		this.leaveStartTime = leaveStartTime;
 	}
 
-	public char getLeaveEndTime() {
+	public String getLeaveEndTime() {
 		return leaveEndTime;
 	}
 
-	public void setLeaveEndTime(char leaveEndTime) {
+	public void setLeaveEndTime(String leaveEndTime) {
 		this.leaveEndTime = leaveEndTime;
 	}
 	
