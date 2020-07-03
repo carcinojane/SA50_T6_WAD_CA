@@ -54,6 +54,7 @@ public class LapsApplication {
 		return args -> {
 			//create manager
 
+
 			Staff manager1 = new Staff("manager1","password","manager1@gmail.com",Status.active,2,60,18);
 			manager1.setDesignation(Staff.Designation.manager);
 			staffRepo.save(manager1);
@@ -145,10 +146,7 @@ public class LapsApplication {
 			lr5.setLeaveType(LType.AnnualLeave);
 			
 			lRepo.save(lr1);lRepo.save(lr2);lRepo.save(lr3);lRepo.save(lr4);lRepo.save(lr5);
-			
-//			System.out.println(lr1.getLeaveType().getDisplayValue());
-//			System.out.println(lr4.getWorkDissemination());
-//			System.out.println(annual_emp.getLeaveType().getDisplayValue());		
+		
 
 	};
 

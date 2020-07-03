@@ -7,7 +7,7 @@
           href="../../css/main.css" th:href="@{/css/main.css}" />
   </head>
 <body>
- <header th:insert="staff_login.html :: header"> </header>
+ <header th:insert="staff_homepage.html :: header"> </header>
  <div class="content">
  <h2 th:utext="#{staff.overtime.title}"></h2>
  <h3>Compensation Leave Balance</h3>
@@ -27,7 +27,7 @@
  	</fieldset>
  </form>
  
- <p><a href="staff_homepage.html" th:href="@{/staff/home}">Back</a></p>
+ <p><a href="staff_homepage.html" th:href="@{/staff/.home}">Back</a></p>
 </div>
 </body>
 </html>
