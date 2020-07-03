@@ -189,7 +189,7 @@ public class LeaveServiceImpl implements LeaveService {
 				if(totalCompensationLeave>= days) {
 					leaveRecord.setLeaveStatus(LeaveStatus.APPROVED);
 					float balance = totalCompensationLeave-days;
-					staff.setTotalMedicalLeave(balance);
+					staff.setTotalCompensationLeave(balance);
 					srepo.save(staff);
 				}
 			}
@@ -298,8 +298,8 @@ public class LeaveServiceImpl implements LeaveService {
 		return months;
 	}
 
-	@Override
-	public List<LeaveRecord> findLeaveRecordByStaffId(int staffId,int status,int start,int size) {
+	@Transactional
+	public List<LeaveRecord> findLeaveRecordByStaffIdPage(int staffId,int status,int start,int size) {
 		String sqlStr="";
 		if (status==-1) {
 			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
@@ -309,7 +309,7 @@ public class LeaveServiceImpl implements LeaveService {
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> countSize(int staffId) {
 		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));

@@ -47,13 +47,13 @@
 	 	<thead>
 	 	<tr>
 	 		<th style="width:10%" th:utext="#{table.heading.empId}"></th>
-	 		<th style="width:17%" th:utext="#{table.heading.leavetype}"></th>
-			<th style="width:17%" th:utext="#{table.heading.from}"></th>
-			<th style="width:15%" th:utext="#{table.heading.fromtime}"></th>
-			<th style="width:17%" th:utext="#{table.heading.to}"></th>
-			<th style="width:15%" th:utext="#{table.heading.totime}"></th>
-			<th style="width:16%" th:utext="#{table.heading.status}"></th>
-			<th style="width:16%" th:utext="#{table.heading.action}"></th>
+	 		<th style="width:12.5%" th:utext="#{table.heading.leavetype}"></th>
+			<th style="width:15%" th:utext="#{table.heading.from}"></th>
+			<th style="width:10%" th:utext="#{table.heading.fromtime}"></th>
+			<th style="width:15%" th:utext="#{table.heading.to}"></th>
+			<th style="width:10%" th:utext="#{table.heading.totime}"></th>
+			<th style="width:12.5%" th:utext="#{table.heading.status}"></th>
+			<th style="width:15%" th:utext="#{table.heading.action}"></th>
 		</tr>
 		</thead>
 		
@@ -70,8 +70,8 @@
 			<td data-input="leaveEndTime" th:text="${lrecord.leaveEndTime}"></td>
 			<td data-input="leavestatus" th:text=${lrecord.leaveStatus}></td>
 			<td data-input="dummy4"><a href="manager_approvalDetails.html"
-				th:href="@{/manager/staffLeaveDetails/}+${lrecord.leaveId}" th:utext="#{manager.approval.details.page.title}"></a>
-				<a th:href="@{/manager/history/}+${lrecord.staffId}" th:utext="#{manager.history.page.title}"></a></td>
+				th:href="@{/manager/staffLeaveDetails/}+${lrecord.leaveId}"><button style="width:49%; background-color: grey" th:utext="#{manager.approval.details.page.title}"></button></a>
+				<a th:href="@{/manager/history/}+${lrecord.staffId}"><button style="width:49%; background-color: grey" th:utext="#{manager.history.page.title}"></button></a></td>
 		</tr>
 		</tbody>
 		</table>
