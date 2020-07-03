@@ -1,8 +1,10 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -67,11 +69,12 @@ public class ManagerController{
 
 	}
 	
-	@RequestMapping(value = "/subordinateLeave/print/{month}")
-	public String print(@PathVariable("month") Month month,
-			Model model,HttpSession session) {
+	@RequestMapping(value = "/subordinateLeave/print/{id}")
+	public String print(String model,HttpSession session, HttpServletRequest request) {
+		var month_param = request.getParameter("month");
 		Staff manager = (Staff)session.getAttribute("staff");
 		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
+		Month month = Month.JULY;
 		lservice.findByMonth(lrecords, month);
 		
 		return "forward:/manager/subordinateLeave";
