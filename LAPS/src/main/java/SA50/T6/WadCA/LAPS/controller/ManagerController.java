@@ -68,15 +68,26 @@ public class ManagerController{
 		return "manager_subordinateLeave";
 
 	}
-	
-	@RequestMapping(value = "/subordinateLeave/print/{id}")
-	public String print(String model,HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/export/{id}")
+	public String print1(String model,HttpSession session, HttpServletRequest request) {
 		var month_param = request.getParameter("month");
 		Staff manager = (Staff)session.getAttribute("staff");
 		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
 		Month month = Month.JULY;
 		lservice.findByMonth(lrecords, month);
 		
+		return "forward:/manager/subordinateLeave";
+
+	}
+	
+	@RequestMapping(value = "/export")
+	public String print(String model,HttpSession session, HttpServletRequest request) {
+		//var month_param = request.getParameter("month");
+		Staff manager = (Staff)session.getAttribute("staff");
+		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
+		Month month = Month.JULY;
+		lservice.findByMonth(lrecords, month);
+		lservice.writeToCSV((ArrayList<LeaveRecord>)lservice.findByMonth(lrecords, month));
 		return "forward:/manager/subordinateLeave";
 
 	}
