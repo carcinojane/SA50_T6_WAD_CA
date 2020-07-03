@@ -87,10 +87,19 @@ public class StaffServiceImpl implements StaffService {
 		srepo.delete(staff);
 		
 	}
-	
 
-	
-	
-	
-	
+	@Override
+	public ArrayList<Staff> findAllActiveStaff() {
+		return (ArrayList<Staff>) srepo.findAllActiveStaff();
+	}
+
+	@Override
+	public ArrayList<Staff> findAllInActiveStaff() {
+		return (ArrayList<Staff>) srepo.findAllInActiveStaff();
+	}
+
+	@Override
+	public ArrayList<Staff> findSubordinates(Staff staff) {
+		return (ArrayList<Staff>) srepo.findAllSubordinates(staff);
+	}
 }

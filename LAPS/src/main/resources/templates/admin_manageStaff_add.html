@@ -30,13 +30,13 @@
 					<td th:utext="#{admin.manageStaff.UserName}">User Name</td>
 					<td><input type="text" th:field="*{username}">
 						<p th:if="${#fields.hasErrors('username')}"
-							th:errors="*{username}" required></p></td>
+							th:errors="*{username}"></p></td>
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageStaff.Password}">Password</td>
 					<td><input type="text" th:field="*{password}">
 						<p th:if="${#fields.hasErrors('password')}"
-							th:errors="*{password}" required></p></td>
+							th:errors="*{password}"></p></td>
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageStaff.Email}">Email</td>
@@ -46,9 +46,8 @@
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageStaff.StartDate}">Start Date</td>
-					<td><input type="text" th:field="*{startDate}"
-						placeholder="dd-MM-yyyy"
-						th:text="${#dates.format(staff.startDate, 'dd-MM-yyyy')}" />
+					<td>				
+						<input type="date" th:field="*{startDate}">
 						<p th:if="${#fields.hasErrors('startDate')}"
 							th:errors="*{startDate}" /></td>
 				</tr>

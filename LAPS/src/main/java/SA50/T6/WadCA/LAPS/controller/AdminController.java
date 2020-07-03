@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -28,6 +29,7 @@ import SA50.T6.WadCA.LAPS.model.LType;
 import SA50.T6.WadCA.LAPS.model.LeaveType;
 import SA50.T6.WadCA.LAPS.model.Staff;
 import SA50.T6.WadCA.LAPS.model.Staff.Designation;
+import SA50.T6.WadCA.LAPS.model.Staff.Status;
 import SA50.T6.WadCA.LAPS.service.AdminService;
 import SA50.T6.WadCA.LAPS.service.AdminServiceImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
@@ -102,13 +104,20 @@ public class AdminController {
 
 	@RequestMapping(value = "/manageStaff")
 	public String manageStaff(Model model) {
-		model.addAttribute("staffs", sservice.findAllStaff());
+		model.addAttribute("staffs", sservice.findAllActiveStaff());
 		return "admin_manageStaff";
+	}
+	@RequestMapping(value = "/manageStaff/inactive")
+	public String ViewInactiveStaff(Model model) {
+		model.addAttribute("staffs", sservice.findAllInActiveStaff());
+		return "admin_manageStaff_ViewInActiveStaff";
 	}
 
 	@GetMapping("/manageStaff/details/{id}")
 	public String viewStaffDetaills(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("staff", sservice.findStaffById(id));
+		ArrayList<Staff> subordinates=sservice.findSubordinates(sservice.findStaffById(id));
+		model.addAttribute("subordinates", subordinates);
 
 		return "admin_manageStaff_details";
 	}
@@ -154,6 +163,7 @@ public class AdminController {
 		}
 		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
 		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setStatus(Status.active);
 		staff.setManager(manager);
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
@@ -176,14 +186,27 @@ public class AdminController {
 		}
 		Staff manager = sservice.findManagerByUsername(staff.getManager().getUsername());
 		manager = sservice.findStaffById(manager.getStaffId());
+		staff.setStatus(Status.active);
 		staff.setManager(manager);
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
 	}
 	
-	@GetMapping("/manageStaff/delete/{id}")
-	public String deleteStaff(@PathVariable("id") Integer id) {
-		sservice.deleteStaff(sservice.findStaffById(id));
+	//@GetMapping("/manageStaff/delete/{id}")
+	@RequestMapping(value="/manageStaff/delete/{id}",method= {RequestMethod.DELETE,RequestMethod.GET})
+	public String deleteStaff(@PathVariable("id") Integer id, Model model) {
+		Staff staff=sservice.findStaffById(id);
+		if(staff.getDesignation()==Designation.manager) {
+			ArrayList<Staff> subordinates=sservice.findSubordinates(staff);
+			System.out.println("Sub: "+ subordinates);
+			for (Staff staff2 : subordinates) {
+				staff2.setManager(null);
+				System.out.println("Manager null??: "+staff2.getManager());
+				sservice.saveStaff(staff2);
+			}
+		}
+		staff.setStatus(Status.inactive);
+		sservice.saveStaff(staff);		
 		return "forward:/admin/manageStaff";
 	}
 

@@ -43,6 +43,7 @@
           <form class="modal-content animate" th:object="${staff}" th:action="@{/staff/home}" action="/action_page.php" method="post">
             <div class="container">
               <h2>Staff Login</h2>
+              <h2 th:text="${error}"></h2>
               		<label for="uname">
 					<b>Username</b>
 					</label>
