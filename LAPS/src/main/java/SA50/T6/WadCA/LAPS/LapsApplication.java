@@ -63,7 +63,7 @@ public class LapsApplication {
 			manager2.setStartDate(LocalDate.of(2018, 01, 01));
 			
 			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
-			head.setDesignation(Staff.Designation.admin);
+			head.setDesignation(Staff.Designation.manager);
 			head.setStartDate(LocalDate.of(2000, 01, 01));
 			staffRepo.save(head);
 			
