@@ -34,8 +34,10 @@
 
 					<td>From Date</td>
 					<td><input type="date" th:field="*{leaveStartDate}">
-						<p th:if="${#fields.hasErrors('leaveStartDate')}"
-							th:errors="*{leaveStartDate}"></p></td>
+<!-- 						<p th:if="${#fields.hasErrors('leaveStartDate')}" -->
+<!-- 							th:errors="*{leaveStartDate}"></p> -->
+						<p th:text="${msg}" th:sytle="'color:red'"></p>
+							</td>
 				</tr>
 				<tr>
 					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
@@ -49,8 +51,8 @@
 				<tr>
 					<td>To</td>
 					<td><input type="date" th:field="*{leaveEndDate}">
-						<p th:if="${#fields.hasErrors('leaveEndDate')}"
-							th:errors="*{leaveEndDate}"></td>
+<!-- 						<p th:if="${#fields.hasErrors('leaveEndDate')}" -->
+<!-- 							th:errors="*{leaveEndDate}"></td> -->
 				</tr>
 				<tr>
 					<td>To Time</td>
