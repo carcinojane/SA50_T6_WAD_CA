@@ -43,8 +43,10 @@
 		<table id="leavetable" class="list">
 			<thead>
 				<tr>
-					<th style="width: 20%" th:utext="#{table.heading.from}"></th>
+					<th style="width: 20%" th:utext="#{table.heading.from}"></th>	
+					<th style="width: 17.5%" th:utext="#{table.heading.fromtime}"></th>
 					<th style="width: 22.5%" th:utext="#{table.heading.to}"></th>
+					<th style="width: 17.5%" th:utext="#{table.heading.totime}"></th>
 					<th style="width: 22.5%" th:utext="#{table.heading.leavetype}"></th>
 					<th style="width: 17.5%" th:utext="#{table.heading.status}"></th>
 					<th style="width: 17.5%" th:utext="#{table.heading.action}"></th>
@@ -58,13 +60,17 @@
 				<tr th:if="${not #lists.isEmpty(lrecords)}"
 					th:each="leave:${lrecords}">
 					<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
+					<td data-input="leaveStartTime" th:text="${leave.leaveStartTime}">From Time</td>
 					<td data-input="dummy2" th:text="${leave.leaveEndDate}">To</td>
+					<td data-input="leaveEndTime" th:text="${leave.leaveEndTime}">To Time</td>
 					<td data-input="leavetype" th:text="${leave.leaveType.displayValue}">Category</td>
 					<td data-input="leavestatus" th:text="${leave.leaveStatus.displayValue}">Status</td>
 					<td data-input="dummy3"><a th:href="@{/manager/staffLeaveDetails/}+${leave.leaveId}"
 						th:utext="#{manager.approval.details.page.title}"></a></td>
 		</table>
-		<a th:href="@{/manager/approval}"><button style="background-color:grey; width:10%; margin-left:45%; margin-right:45%;" th:utext="#{manager.button.backtoapproval}"></button></a> 	 
+		<div class="zoom">
+			<a th:href="@{/manager/approval}"><button style="background-color:grey;" th:utext="#{manager.button.backtoapproval}"></button></a> 	 
+		</div>
 	 </div>
 	 <script type="text/javascript" src="../../js/filter.js"></script>
 </body>

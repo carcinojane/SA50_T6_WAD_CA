@@ -63,7 +63,7 @@ public class LapsApplication {
 			manager2.setStartDate(LocalDate.of(2018, 01, 01));
 			
 			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
-			head.setDesignation(Staff.Designation.admin);
+			head.setDesignation(Staff.Designation.manager);
 			head.setStartDate(LocalDate.of(2000, 01, 01));
 			staffRepo.save(head);
 			
@@ -140,63 +140,64 @@ public class LapsApplication {
 			//create Leave Records
 			//Staff 1
 			LeaveRecord lr1 = new LeaveRecord(2, LeaveStatus.APPLIED,"Japan holiday", 
-					LocalDate.of(2020,7,13),'A', LocalDate.of(2020,7,17),'N',5,"staff2 will take over",97856210);
+					LocalDate.of(2020,7,13),"NA", LocalDate.of(2020,7,17),"NA",5,"staff2 will take over",97856210);
 			lr1.setLeaveType(LType.AnnualLeave);
 			
 			LeaveRecord lr2 = new LeaveRecord(2, LeaveStatus.APPLIED,"Off-in-lieu", 
-					LocalDate.of(2020,8,3),'A', LocalDate.of(2020,8,3),'N',5,"staff2 will take over",97856210);
+					LocalDate.of(2020,8,3),"NA", LocalDate.of(2020,8,3),"NA",5,"staff2 will take over",97856210);
 			lr2.setLeaveType(LType.Compensation);
 			
 			LeaveRecord lr3 = new LeaveRecord(2, LeaveStatus.APPLIED,"Broke arm on holiday", 
-					LocalDate.of(2020,7,20),'A', LocalDate.of(2020,7,31),'N',5,"staff2 will take over",97856210);
+					LocalDate.of(2020,7,20),"NA", LocalDate.of(2020,7,31),"NA",5,"staff2 will take over",97856210);
 			lr3.setLeaveType(LType.MedicalLeave);			
-	
-			LeaveRecord lr4 = new LeaveRecord(2, LeaveStatus.APPROVED,"It's my birthday!",
-					LocalDate.of(2020, 11, 9),'A',LocalDate.of(2020, 11, 9),'N',5,"Employee Perks",97856210);
+			
+			//Approved Annual leave
+			LeaveRecord lr4 = new LeaveRecord(2, LeaveStatus.APPROVED,"Clearing leave", 
+					LocalDate.of(2020,7,13),"NA", LocalDate.of(2020,7,17),"NA",6,"Manager 1 in charge",96223444);
 			lr4.setLeaveType(LType.AnnualLeave);
 			
-			LeaveRecord lr5 = new LeaveRecord(2, LeaveStatus.APPROVED,"December holiday",
-					LocalDate.of(2020, 12, 21),'A',LocalDate.of(2020, 12, 24),'N',5,"staff2 will take over",97856210);
+			LeaveRecord lr5 = new LeaveRecord(2, LeaveStatus.APPROVED,"It's my birthday!",
+					LocalDate.of(2020, 11, 9),"NA",LocalDate.of(2020, 11, 9),"NA",5,"Employee Perks",97856210);
 			lr5.setLeaveType(LType.AnnualLeave);
 			
-			LeaveRecord lr6 = new LeaveRecord(2, LeaveStatus.APPROVED,"Clearing leave", 
-					LocalDate.of(2020,7,13),'A', LocalDate.of(2020,7,17),'N',6,"Manager 1 in charge",96223444);
+			LeaveRecord lr6 = new LeaveRecord(2, LeaveStatus.APPROVED,"December holiday", 
+					LocalDate.of(2020,12,21),"A", LocalDate.of(2020,12,24),"N",5,"staff2 will take over",97856210);
 			lr6.setLeaveType(LType.AnnualLeave);
 			//Staff 2
 			LeaveRecord lr7 = new LeaveRecord(2, LeaveStatus.APPLIED,"Tangs Sale",
-					LocalDate.of(2020, 7, 21),'A',LocalDate.of(2020, 7, 21),'N',6,"Manager 1 in charge",9622344);
+					LocalDate.of(2020, 7, 21),"A",LocalDate.of(2020, 7, 21),"N",6,"Manager 1 in charge",9622344);
 			lr7.setLeaveType(LType.Compensation);
 			
 			LeaveRecord lr8 = new LeaveRecord(2, LeaveStatus.APPLIED,"Eye operation",
-					LocalDate.of(2020, 10, 12),'A',LocalDate.of(2020, 10, 23),'N',6,"staff1",9622344);
+					LocalDate.of(2020, 10, 12),"A",LocalDate.of(2020, 10, 23),"N",6,"staff1",9622344);
 			lr8.setLeaveType(LType.MedicalLeave);
 			
 			LeaveRecord lr9 = new LeaveRecord(2, LeaveStatus.APPROVED,"Staycation",
-					LocalDate.of(2020, 11, 2),'A',LocalDate.of(2020, 11, 3),'N',6,"staff1",9622344);
+					LocalDate.of(2020, 11, 2),"A",LocalDate.of(2020, 11, 3),"N",6,"staff1",9622344);
 			lr9.setLeaveType(LType.AnnualLeave);
 			
 			LeaveRecord lr10 = new LeaveRecord(2, LeaveStatus.APPLIED,"PSLE results release",
-					LocalDate.of(2020, 11, 25),'A',LocalDate.of(2020, 11, 25),'N',6,"staff1",9622344);
+					LocalDate.of(2020, 11, 25),"A",LocalDate.of(2020, 11, 25),"N",6,"staff1",9622344);
 			lr10.setLeaveType(LType.AnnualLeave);
 			//Staff 3
 			LeaveRecord lr11 = new LeaveRecord(4, LeaveStatus.APPLIED,"Off-in-lieu (halfday)",
-					LocalDate.of(2020, 7, 10),'N',LocalDate.of(2020, 7, 10),'N',7,"staff 4 will take over",93445222);
+					LocalDate.of(2020, 7, 10),"N",LocalDate.of(2020, 7, 10),"N",7,"staff 4 will take over",93445222);
 			lr11.setLeaveType(LType.Compensation);
 			
 			LeaveRecord lr12 = new LeaveRecord(4, LeaveStatus.APPLIED,"Celebrate Phase 3",
-					LocalDate.of(2020, 7, 27),'A',LocalDate.of(2020, 7, 27),'N',7,"staff 4 will take over",93445222);
+					LocalDate.of(2020, 7, 27),"A",LocalDate.of(2020, 7, 27),"N",7,"staff 4 will take over",93445222);
 			lr12.setLeaveType(LType.AnnualLeave);
 			
 			LeaveRecord lr13 = new LeaveRecord(4, LeaveStatus.APPROVED,"Facelift operation",
-					LocalDate.of(2020, 8, 3),'A',LocalDate.of(2020, 8, 14),'A',7,"staff 4 will take over",93445222);
+					LocalDate.of(2020, 8, 3),"A",LocalDate.of(2020, 8, 14),"A",7,"staff 4 will take over",93445222);
 			lr13.setLeaveType(LType.MedicalLeave);
 			
 			LeaveRecord lr14 = new LeaveRecord(4, LeaveStatus.APPROVED,"Off-in-lieu (half day)",
-					LocalDate.of(2020, 7, 28),'A',LocalDate.of(2020, 7, 28),'A',7,"staff 4 will take over",93445222);
+					LocalDate.of(2020, 7, 28),"A",LocalDate.of(2020, 7, 28),"A",7,"staff 4 will take over",93445222);
 			lr14.setLeaveType(LType.Compensation);
 			
 			LeaveRecord lr15 = new LeaveRecord(4, LeaveStatus.APPROVED,"Malaysia holiday",
-					LocalDate.of(2020, 10, 21),'A',LocalDate.of(2020, 10, 23),'N',7,"staff 4 will take over",93445222);
+					LocalDate.of(2020, 10, 21),"A",LocalDate.of(2020, 10, 23),"N",7,"staff 4 will take over",93445222);
 			lr15.setLeaveType(LType.AnnualLeave);
 			
 			lRepo.save(lr1);lRepo.save(lr2);lRepo.save(lr3);lRepo.save(lr4);lRepo.save(lr5);

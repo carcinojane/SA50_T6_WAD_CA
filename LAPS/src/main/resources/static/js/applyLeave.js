@@ -18,11 +18,13 @@
 	    }
 	});*/
 
-   $('#leaveType').on('change',function(){
-        if( $(this).val()=='Compensation' ){
-        $("#time").show()
-        }
-        else{
-        $("#time").hide()
-        }
-    });
+   
+//  $(function(){
+//	  $("#leaveType").change(function(){
+//		   if($(this).val=="Compensation"){
+//			   $('#time').show();
+//		   } else{
+//			   $('#time').hide();
+//		   }
+//	   });
+//  });

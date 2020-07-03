@@ -17,7 +17,7 @@
  			<img src="../../images/logo.png">
  			
  			<a onclick="location.href='/admin/.home'" th:utext="#{page.home}"></a>
- 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout" th:utext="#{page.logout}"></button>
+ 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout" th:utext="#{page.logout}" ></button>
  			
  			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
  			<i class="fa fa-bars"></i>
@@ -30,8 +30,8 @@
  	</header>
 
 	<div class="content">
-		<h2 th:utext="#{session.display.welcome}+${session.display}">
-			Session Data</h2>
+		<!-- <h2 th:utext="#{session.display.welcome}+${session.display}">
+			Session Data</h2> -->
 		<h2 th:utext="#{admin.homepage.page.title}"></h2>
 		<div class="menu">
 			<ul>

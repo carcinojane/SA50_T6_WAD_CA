@@ -17,6 +17,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import SA50.T6.WadCA.LAPS.model.LType;
@@ -34,6 +36,9 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Autowired
 	StaffRepository srepo;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
 	@Transactional
 	public ArrayList<LeaveRecord> findAll() {
@@ -71,13 +76,12 @@ public class LeaveServiceImpl implements LeaveService {
 		LocalDate curr = from;
 
 		do {
-			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == 'P')
+			if(curr.compareTo(from)==0 && leave.getLeaveStartTime() == "PM")
 				numOfDay += 0.5;
-			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == 'A')
+			else if(curr.compareTo(to)==0 && leave.getLeaveEndTime() == "AM")
 				numOfDay += 0.5;
 			else if(curr.getDayOfWeek() != DayOfWeek.SATURDAY && curr.getDayOfWeek() != DayOfWeek.SUNDAY)
 				numOfDay ++;
-
 			curr = curr.plusDays(1);
 		}while(curr.isBefore(to));
 
@@ -239,26 +243,79 @@ public class LeaveServiceImpl implements LeaveService {
 		return lrepo.findLeaveRecordByManagerId(id);
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		List<LeaveRecord> leaveRecords= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			Month startMonth = record.getLeaveStartDate().getMonth();
+			Month endMonth = record.getLeaveEndDate().getMonth();
 
-	@Override
+			if(startMonth.equals(endMonth)
+					&& startMonth.equals(month)) {
+				leaveRecords.add(record);
+			}
+			
+			if(startMonth.compareTo(month)==-1 && endMonth.equals(month)) {
+				leaveRecords.add(record);
+			}
+			if(endMonth.compareTo(month)==1 && 
+					startMonth.equals(month) ||startMonth.compareTo(month)==-1) {
+				leaveRecords.add(record);
+			}
+		}
+		
+				return leaveRecords;
+	}
+	
+	@Transactional
 	public List<Month> LeaveMonths(ArrayList<LeaveRecord> records) {
-		// TODO Auto-generated method stub
 		List<Month> months= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
 			LeaveRecord record = (LeaveRecord)iterator.next();
-			Month month = record.getLeaveStartDate().getMonth();
-			if(!months.contains(month)) {
-				months.add(month);
+			Month startMonth = record.getLeaveStartDate().getMonth();
+			Month endMonth= record.getLeaveEndDate().getMonth();
+			
+			if(startMonth.equals(endMonth)) {
+				if(!months.contains(startMonth)) {
+					months.add(startMonth);
+				}
 			}
+			else {
+				Month month = startMonth;
+				while(!month.equals(endMonth)) {
+					month.plus(1);
+					if(!months.contains(month)) {
+						months.add(month);
+					}
+				}
+				
+			}
+			
 		}
 		return months;
 	}
+
+	@Override
+	public List<LeaveRecord> findLeaveRecordByStaffId(int staffId,int status,int start,int size) {
+		String sqlStr="";
+		if (status==-1) {
+			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
+		}else {
+			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" and t.leave_status="+status+" limit "+start+","+size;
+		}
+		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
+	}
+
+	@Override
+	public List<LeaveRecord> countSize(int staffId) {
+		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
+		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
+	}
+
+
 
 
 }
