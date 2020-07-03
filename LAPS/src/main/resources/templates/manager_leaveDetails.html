@@ -22,10 +22,11 @@
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.from}"></th><td th:text="${leave.leaveStartDate}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.to}"></th><td th:text="${leave.leaveEndDate}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.leavetype}"></th><td th:text="${leave.leaveType.displayValue}"></td></tr>
-	 	<tr><th style="width: 20%" th:utext="#{table.heading.status}"></th><td th:text="${leave.leaveStatus.displayValue}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.contact}"></th><td th:text="${leave.contact}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.reason}"></th><td th:text="${leave.reason}"></td></tr>
 	 	<tr><th style="width: 20%" th:utext="#{table.heading.workdissemination}"></th><td th:text="${leave.workDissemination}"></td></tr>
+	 	<tr><th style="width: 20%" th:utext="#{table.heading.status}"></th><td th:text="${leave.leaveStatus.displayValue}"></td></tr>
+	 	<tr><th style="width: 20%" th:utext="#{leaveRecord.resonForRejection}"></th><td th:text="${leave.reasonForRejection}"></td></tr>
 		</table>
 		<div class="status">
 	 	  	<ul>
