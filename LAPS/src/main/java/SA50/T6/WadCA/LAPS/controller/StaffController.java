@@ -174,9 +174,8 @@ public class StaffController {
 		if(result.hasErrors()) {
 			return "redirect:/staff/apply/add";
 		}
-		
-		Staff staff = (Staff)session.getAttribute("staff");
-		int staffId = staff.getStaffId();
+		int staffId = (int)session.getAttribute("staffId");
+		Staff staff = sservice.findStaffById(staffId);
 		String staffName = staff.getUsername();
 		leaveRecord.setStaffId(staffId);
 		
@@ -247,6 +246,9 @@ public class StaffController {
 		
 		if(leaveRecord.getLeaveType() == LType.Compensation) {
 			if(numOfDay > staff.getTotalCompensationLeave()) {
+				System.out.println(numOfDay);
+				System.out.println(staff.getTotalCompensationLeave());
+				System.out.println(staff.getStaffId());
 				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 				model.addAttribute("insufficient","Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
