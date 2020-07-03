@@ -36,7 +36,7 @@ public interface LeaveService {
 	public void rejectLeave(Integer id);
 	public void writeToCSV(ArrayList<LeaveRecord> records);
 	public List<LeaveRecord> findByMangerId(Integer id);
-	public List<LeaveRecord>findByMonth(ArrayList<LeaveRecord> records,Month month);
+	public List<LeaveRecord>findByMonth(ArrayList<LeaveRecord> records,Integer month);
 	public List<Month>LeaveMonths(ArrayList<LeaveRecord> records);
 
 	

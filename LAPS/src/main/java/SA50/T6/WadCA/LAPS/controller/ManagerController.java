@@ -1,10 +1,8 @@
 package SA50.T6.WadCA.LAPS.controller;
 
-import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -68,29 +66,43 @@ public class ManagerController{
 		return "manager_subordinateLeave";
 
 	}
-	@RequestMapping(value = "/export/{id}")
-	public String print1(String model,HttpSession session, HttpServletRequest request) {
-		var month_param = request.getParameter("month");
+	
+//	@RequestMapping(value = "/export",method = RequestMethod.GET)
+//	public String print(Model model,HttpSession session,HttpServletRequest request) {
+//		Staff manager = (Staff)session.getAttribute("staff");
+//		String selectedMonth= request.getParameter("month");
+//		int month =Integer.parseInt(selectedMonth);
+//		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
+//		//Month month = Month.JULY;
+//		lservice.findByMonth(lrecords, month);
+//		lservice.writeToCSV((ArrayList<LeaveRecord>)lservice.findByMonth(lrecords, month));
+//		return "forward:/manager/subordinateLeave";
+//
+//	}
+	
+//	@RequestMapping(value = "/export")
+//	public String print(@RequestParam(value="month", required =true ,defaultValue="7")Integer month,
+//    HttpSession session) {
+//		Staff manager = (Staff)session.getAttribute("staff");
+//		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
+//		//Month month = Month.JULY;
+//		lservice.findByMonth(lrecords, month);
+//		lservice.writeToCSV((ArrayList<LeaveRecord>)lservice.findByMonth(lrecords, month));
+//		return "forward:/manager/subordinateLeave";
+//	}
+	
+	@GetMapping(value = "/export")
+	public String print(HttpSession session) {
 		Staff manager = (Staff)session.getAttribute("staff");
 		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
 		Month month = Month.JULY;
-		lservice.findByMonth(lrecords, month);
-		
+		int month1 = month.getValue();
+		lservice.writeToCSV((ArrayList<LeaveRecord>)lservice.findByMonth(lrecords, month1));
 		return "forward:/manager/subordinateLeave";
 
 	}
 	
-	@RequestMapping(value = "/export")
-	public String print(String model,HttpSession session, HttpServletRequest request) {
-		//var month_param = request.getParameter("month");
-		Staff manager = (Staff)session.getAttribute("staff");
-		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
-		Month month = Month.JULY;
-		lservice.findByMonth(lrecords, month);
-		lservice.writeToCSV((ArrayList<LeaveRecord>)lservice.findByMonth(lrecords, month));
-		return "forward:/manager/subordinateLeave";
-
-	}
+	
 
 	@RequestMapping("/staffLeaveDetails/{id}")
 	public String leaveDetails(Model model, @PathVariable("id") Integer id) {

@@ -33,6 +33,8 @@
 		     
         <input type="hidden" id="dummy2" class="search-key" placeholder="">
         <input type="hidden" id="dummy3" class="search-key" placeholder="">
+        <input type="hidden" id="dummy4" class="search-key" placeholder="">
+        <input type="hidden" id="dummy5" class="search-key" placeholder="">
         
          <select id="leavestatus" class="search-key">
           <option value="">Select a leave status</option>
@@ -40,7 +42,7 @@
           <option value="UPDATED">Updated</option>
         </select>
         
-        <input type="hidden" id="dummy4" class="search-key" placeholder="">
+        <input type="hidden" id="dummy6" class="search-key" placeholder="">
          
 		</div>
 	 	<table id="leavetable" class="list">
@@ -65,11 +67,11 @@
 			<td data-input="dummy1" th:text=${lrecord.staffId}></td>
 			<td data-input="leavetype" th:text="${lrecord.leaveType.displayValue}"></td>
 			<td data-input="dummy2" th:text=${lrecord.leaveStartDate}></td>
-			<td data-input="leaveStartTime" th:text="${lrecord.leaveStartTime}"></td>
-			<td data-input="dummy3" th:text=${lrecord.leaveEndDate}></td>
-			<td data-input="leaveEndTime" th:text="${lrecord.leaveEndTime}"></td>
+			<td data-input="dummy3" th:text="${lrecord.leaveStartTime}"></td>
+			<td data-input="dummy4" th:text=${lrecord.leaveEndDate}></td>
+			<td data-input="dummy5" th:text="${lrecord.leaveEndTime}"></td>
 			<td data-input="leavestatus" th:text=${lrecord.leaveStatus}></td>
-			<td data-input="dummy4"><a href="manager_approvalDetails.html"
+			<td data-input="dummy6"><a href="manager_approvalDetails.html"
 				th:href="@{/manager/staffLeaveDetails/}+${lrecord.leaveId}"><button style="width:49%; background-color: grey" th:utext="#{manager.approval.details.page.title}"></button></a>
 				<a th:href="@{/manager/history/}+${lrecord.staffId}"><button style="width:49%; background-color: grey" th:utext="#{manager.history.page.title}"></button></a></td>
 		</tr>

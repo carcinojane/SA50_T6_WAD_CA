@@ -1,6 +1,7 @@
 package SA50.T6.WadCA.LAPS.service;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -217,16 +218,32 @@ public class LeaveServiceImpl implements LeaveService {
     public void writeToCSV(ArrayList<LeaveRecord> records)
     {
     	final String CSV_SEPARATOR = ",";
+    	String home = System.getProperty("user.home");
+    	File file = new File(home+"/Downloads/" + "LeaveReport.csv"); 
         try
         {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
-            for (LeaveRecord record : records)
+        	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
+            //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+        	bw.write("LeaveId,StaffId,Name,Category,Start_date,End_date,Status");
+        	bw.newLine();
+        	for (LeaveRecord record : records)
             {
                 StringBuffer oneLine = new StringBuffer();
                 oneLine.append(record.getLeaveId());
                 oneLine.append(CSV_SEPARATOR);
                 oneLine.append(record.getStaffId());
                 oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getStaff().getUsername());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveType().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStartDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveEndDate());
+                oneLine.append(CSV_SEPARATOR);
+                oneLine.append(record.getLeaveStatus().getDisplayValue());
+                oneLine.append(CSV_SEPARATOR);
+                
                 bw.write(oneLine.toString());
                 bw.newLine();
             }
@@ -244,24 +261,24 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Month month) {
+	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Integer month) {
 		List<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
 			LeaveRecord record = (LeaveRecord)iterator.next();
-			Month startMonth = record.getLeaveStartDate().getMonth();
-			Month endMonth = record.getLeaveEndDate().getMonth();
+			int startMonth = record.getLeaveStartDate().getMonth().getValue();
+			int endMonth = record.getLeaveEndDate().getMonth().getValue();
 
-			if(startMonth.equals(endMonth)
-					&& startMonth.equals(month)) {
+			if(startMonth==endMonth
+					&& startMonth==month) {
 				leaveRecords.add(record);
 			}
 			
-			if(startMonth.compareTo(month)==-1 && endMonth.equals(month)) {
+			if(startMonth<month && endMonth==month) {
 				leaveRecords.add(record);
 			}
-			if(endMonth.compareTo(month)==1 && 
-					startMonth.equals(month) ||startMonth.compareTo(month)==-1) {
+			if(endMonth>month && 
+					startMonth==month ||startMonth<month) {
 				leaveRecords.add(record);
 			}
 		}
