@@ -502,3 +502,9 @@ Show the link that contains should open and close the topnav (.icon) */
 .content .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+
+/* error message*/
+.red-text{
+	color: red;
+	font-size: 9;
+}

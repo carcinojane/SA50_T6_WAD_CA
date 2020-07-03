@@ -29,7 +29,9 @@
 					<td><select name="leaveType" id="leaveType" th:field=*{leaveType}>
 							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
 								th:text="${leave.leaveType.displayValue}">
-					</select></td>
+					</select>
+					<p th:text="${insufficient}" th:style="'color:red'"></p>
+					</td>
 				</tr>
 				<tr>
 
@@ -37,6 +39,7 @@
 					<td><input required= "required" type="date" th:field="*{leaveStartDate}">
 						<p th:if="${#fields.hasErrors('leaveStartDate')}"
 							th:errors="*{leaveStartDate}"></p>
+							<p th:text="${msg}" th:style="'color:red'"></p>
 					</td>
 				</tr>
 				<tr>
@@ -52,7 +55,9 @@
 					<td>To</td>
 					<td><input required= "required" type="date" th:field="*{leaveEndDate}">
 						<p th:if="${#fields.hasErrors('leaveEndDate')}"
-							th:errors="*{leaveEndDate}"></td>
+							th:errors="*{leaveEndDate}">
+						<p th:text="${msg}" th:style="'color:red'">
+					</td>
 				</tr>
 				<tr>
 					<td>To Time</td>

@@ -1,10 +1,12 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import SA50.T6.WadCA.LAPS.model.Overtime;
 
+@Component("overtimeValidator")
 public class OvertimeValidator implements Validator{
 
 	@Override
@@ -17,7 +19,7 @@ public class OvertimeValidator implements Validator{
 		Overtime overtime = (Overtime) target;
 		
 		if(overtime.getHours() < 4) {
-			errors.reject("min", "At least 4 hours has to be clocked in to be eligable for OT claim.");
+			errors.rejectValue("hours", "min.overtime");
 		}
 		
 	}

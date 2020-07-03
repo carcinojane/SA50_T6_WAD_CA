@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -21,6 +23,7 @@ import SA50.T6.WadCA.LAPS.service.LeaveService;
 import SA50.T6.WadCA.LAPS.service.LeaveServiceImpl;
 import SA50.T6.WadCA.LAPS.service.StaffService;
 import SA50.T6.WadCA.LAPS.service.StaffServiceImpl;
+import antlr.collections.List;
 
 @Controller
 @RequestMapping("/manager")
@@ -59,7 +62,9 @@ public class ManagerController{
 		//lservice.approveLeave(id);
 		//return "redirect:/manager/approve/"+id;
 		Staff manager = (Staff)session.getAttribute("staff");
-		model.addAttribute("lrecords",lservice.findByMangerId(manager.getStaffId()));
+		ArrayList<LeaveRecord> lrecords = (ArrayList)lservice.findByMangerId(manager.getStaffId());
+		model.addAttribute("lrecords",lrecords);
+		model.addAttribute("months",lservice.LeaveMonths(lrecords));
 		return "manager_subordinateLeave";
 
 	}
