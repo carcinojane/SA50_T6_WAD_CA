@@ -16,7 +16,6 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.page.title}"></h2>
-		<a href="/admin//manageStaff" th:utext="#{page.back}">Back</a> 
 	
 		<h2 th:if="${not #lists.isEmpty(staffs)}" th:utext="#{admin.manageStaff.viewInactiveStaff}">Staff List</h2>
 		<br />
@@ -39,6 +38,11 @@
 				<td th:if="${staff ne null and staff.manager ne null}" th:text=${staff.manager.username}>Manager</td>
 			</tr>
 		</table>
+		
+		<div class="zoom">
+			<a href="/admin//manageStaff"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
+		
 	</div>
 
 </body>
