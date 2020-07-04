@@ -10,8 +10,10 @@
  <header th:insert="staff_homepage.html :: header"> </header>
  <div class="content">
  <h2 th:utext="#{staff.overtime.title}"></h2>
- <h3>Compensation Leave Balance</h3>
- <p th:text="${compLeave}"></p>
+ <h3 th:utext="#{staff.overtime.compensation}"></h3>
+ <!--  -->
+ <p th:utext="${compLeave}+' ' + #{ot.day}"></p>
+ 
  
  <form th:object="${overtime}" th:action="@{/staff/overtime/save}" method="get">
  	<fieldset>

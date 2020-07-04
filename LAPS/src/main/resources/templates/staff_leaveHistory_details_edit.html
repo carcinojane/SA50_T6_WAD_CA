@@ -16,6 +16,8 @@
 
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
+		
+		
 
 		<form th:object="${leave}"
 			th:action="@{/staff/history/details/edit/save}" method="post">
@@ -27,15 +29,17 @@
 					<td><select th:field=*{leaveType}>
 							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
 								th:text="${leave.leaveType.displayValue}">
-					</select></td>
+					</select>
+					<p th:text="${insufficient}" th:style="'color:red'"></p>
+					</td>
 				</tr>
 				<tr>
 
 					<td>From Date</td>
 					<td><input type="date" th:field="*{leaveStartDate}">
-<!-- 						<p th:if="${#fields.hasErrors('leaveStartDate')}" -->
-<!-- 							th:errors="*{leaveStartDate}"></p> -->
-						<p th:text="${msg}" th:sytle="'color:red'"></p>
+						<p th:if="${#fields.hasErrors('leaveStartDate')}"
+							th:errors="*{leaveStartDate}"></p>
+						<p th:text="${msg}" th:style="'color:red'"></p>
 							</td>
 				</tr>
 				<tr>
@@ -45,13 +49,17 @@
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
 							<option th:value="NA">N/A</option>
-					</select></td>
+					</select>
+					<p th:text="${time}" th:style="'color:red'"></p>
+					</td>
 				</tr>
 				<tr>
 					<td>To</td>
 					<td><input type="date" th:field="*{leaveEndDate}">
-<!-- 						<p th:if="${#fields.hasErrors('leaveEndDate')}" -->
-<!-- 							th:errors="*{leaveEndDate}"></td> -->
+						<p th:if="${#fields.hasErrors('leaveEndDate')}"
+							th:errors="*{leaveEndDate}">
+					<p th:text="${msg}" th:style="'color:red'"></p>		
+					</td>
 				</tr>
 				<tr>
 					<td>To Time</td>
@@ -59,7 +67,9 @@
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
 							<option th:value="NA">N/A</option>
-					</select></td>
+					</select>
+					<p th:text="${time}" th:style="'color:red'"></p>
+					</td>
 				</tr>
 				<tr>
 					<td>Reason</td>

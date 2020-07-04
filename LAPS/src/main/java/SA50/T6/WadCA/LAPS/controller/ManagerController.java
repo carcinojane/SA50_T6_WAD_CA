@@ -111,8 +111,14 @@ public class ManagerController{
 	}
 
 	@GetMapping(value = "/approve/{id}")
-	public String approveLeave(@PathVariable("id") Integer id, HttpSession session) {
-		lservice.approveLeave(id);
+	public String approveLeave(@PathVariable("id") Integer id, HttpSession session, Model model) {
+		boolean status = lservice.approveLeave(id);
+		
+		if(status == false) {
+			System.out.println(status + "tot");
+			model.addAttribute("msg","unable to approve leave");
+			return leaveDetails(model,id);
+		}
 		//return "redirect:/manager/approve/"+id;
 		return "redirect:/manager/staffLeaveDetails/"+id;
 
