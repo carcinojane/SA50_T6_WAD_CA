@@ -3,6 +3,7 @@ package SA50.T6.WadCA.LAPS.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -288,8 +289,19 @@ public class StaffController {
 	}
 
 	@GetMapping("/apply/cancel/{id}")
-	public String cancel(@PathVariable("id") Integer id, HttpSession session) {
+	public String cancel(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		LeaveRecord leaveRecord = lservice.findById(id);
+		
+		boolean cancellable =leaveRecord.getLeaveStartDate().isBefore(LocalDate.now()); 
+		System.out.println(LocalDate.now());
+		
+		if(cancellable == true){
+			model.addAttribute("cancel","Cancellation not allowed.");
+			System.out.println(cancellable);
+			return "forward:/staff/history/details/"+id;
+			
+		}
+		
 		Staff staff = (Staff) session.getAttribute("staff");
 		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
 		float balance = 0;
@@ -370,7 +382,7 @@ public class StaffController {
 		return "staff_leaveHistory_details_edit";
 	}
 
-	@RequestMapping(value = "/history/details/edit/save")
+	@GetMapping(value = "/history/details/edit/save")
 	public String saveUpdatedLeave(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord, BindingResult result,
 			Model model, HttpSession session, RedirectAttributes redirect) {
 		Staff staff = (Staff) session.getAttribute("staff");
@@ -385,24 +397,28 @@ public class StaffController {
 
 		if (leaveRecord.getLeaveType() == LType.Compensation) {
 			if (leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() == "NA") {
-				return "redirect:/staff/history/details/edit/{id}";
+				model.addAttribute("time","Please specify From Time and To Time");
+				return "forward:/staff/history/details/edit/{id}";
 			}
 		}
 
 		if (leaveRecord.getLeaveType() == LType.AnnualLeave) {
 			if (numOfDay > staff.getTotalAnnualLeave()) {
+				model.addAttribute("insufficient","Leave entitlement not sufficient");
 				return "redirect:/staff/history/details/edit/{id}";
 			}
 		}
 
 		if (leaveRecord.getLeaveType() == LType.MedicalLeave) {
 			if (numOfDay > staff.getTotalMedicalLeave()) {
+				model.addAttribute("insufficient","Leave entitlement not sufficient");
 				return "redirect:/staff/history/details/edit/{id}";
 			}
 		}
 
 		if (leaveRecord.getLeaveType() == LType.Compensation) {
 			if (numOfDay > staff.getTotalCompensationLeave()) {
+				model.addAttribute("insufficient","Leave entitlement not sufficient");
 				return "redirect:/staff/history/details/edit/{id}";
 			}
 		}
