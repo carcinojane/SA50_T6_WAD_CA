@@ -17,9 +17,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
-		<a href="Back.html" th:href="@{/staff/apply}">Back</a>
 		
-
 		<form action="#" th:object="${LeaveRecord}"
 			th:action="@{/staff/apply/save}" method="post">
 
@@ -92,11 +90,10 @@
 				</tr>
 			</table>
 		</form>
+		<div class="zoom">
+			<a href="Back.html" th:href="@{/staff/apply}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
 	</div>
-
-
-
-
 
 </body>
 </html>
