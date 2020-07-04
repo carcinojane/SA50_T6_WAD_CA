@@ -69,7 +69,7 @@
 			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
 						th:href="@{/staff/history/details/edit/}+${leave.leaveId}"><button style="background-color: grey" th:utext="#{button.update}"></button></a>
 			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
-						th:href="@{/staff/apply/delete/}+${leave.leaveId}"><button
+						th:href="@{/staff/apply/delete/}+${leave.leaveId}" onclick="return confirm('Confirm Delete?')"><button
 							style="background-color: red" th:utext="#{button.delete}"></button></a>	 
 			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}"
 						th:href="@{/staff/apply/cancel/}+${leave.leaveId}"><button
