@@ -16,7 +16,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.edit.page.title}"></h2>
-		<a href="Back.html" th:href="@{/admin/manageStaff}" th:utext="#{page.back}">Back</a>
+		
 		<form action="#" th:object="${staff}"
 			th:action="@{/admin/manageStaff/edit/save}" method="post">
 			<table class="list">
@@ -96,6 +96,10 @@
 			</table>
 			
 		</form>
+		<div class="zoom">
+			<a href="Back.html" th:href="@{/admin/manageStaff}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
+		
 	</div>
 </body>
 </html>

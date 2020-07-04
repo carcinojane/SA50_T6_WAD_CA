@@ -63,11 +63,11 @@
 					Leave</td>
 			</tr>
 		</table>
+		<div class="zoom">
 			<a href="EditStaff.html"
-			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}" th:utext="#{button.edit}">Edit</a> | 
-			<a href="Back.html" th:href="@{/admin/manageStaff}" th:utext="#{page.back}">Back</a>
-
-
+			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}"><button style="background-color:green;" th:utext="#{button.edit}"></button></a>
+			<a href="Back.html" th:href="@{/admin/manageStaff}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
 
 	</div>
 

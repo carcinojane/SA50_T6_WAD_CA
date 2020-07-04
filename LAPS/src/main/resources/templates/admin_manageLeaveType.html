@@ -17,7 +17,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		<a href="/admin/.home" th:utext="#{page.back}"></a>
+		
 		<table class="list">
 			<tr>
 				
@@ -38,6 +38,9 @@
 
 			</tr>
 		</table>
+		<div class="zoom">
+			<a href="/admin/.home"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
 	</div>
 
 </body>
