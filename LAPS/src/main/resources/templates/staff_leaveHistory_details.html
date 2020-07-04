@@ -62,30 +62,18 @@
 				<td th:text="${leave.reasonForRejection}"></td>
 			</tr>
 		</table>
-
-		<div class="status">
-			<table>
-				<tr>
-				<td><a href="Back.html" th:href="@{/staff/apply}">Back</a></td>
-				<td><a
-						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
-						th:href="@{/staff/history/details/edit/}+${leave.leaveId}">
-							<button style="background-color: grey">Update</button>
-					</a>
-					<a
-						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
-						th:href="@{/staff/apply/delete/}+${leave.leaveId}">
-							<button style="background-color: red">Delete</button>
-					</a> 
-					<td><a
-						th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}"
-						th:href="@{/staff/apply/cancel/}+${leave.leaveId}">
-							<button style="background-color: green">Cancel</button>
-					</a></td>
-
-				</tr>
-			</table>
-
+		
+		
+		<div class="zoom">
+			<a href="Back.html" th:href="@{/staff/apply}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
+						th:href="@{/staff/history/details/edit/}+${leave.leaveId}"><button style="background-color: grey" th:utext="#{button.update}"></button></a>
+			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPLIED} or ${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).UPDATED} "
+						th:href="@{/staff/apply/delete/}+${leave.leaveId}" onclick="return confirm('Confirm Delete?')"><button
+							style="background-color: red" th:utext="#{button.delete}"></button></a>	 
+			<a th:if="${leave.leaveStatus == T(SA50.T6.WadCA.LAPS.model.LeaveStatus).APPROVED}"
+						th:href="@{/staff/apply/cancel/}+${leave.leaveId}"><button
+							style="background-color: green" th:utext="#{button.cancel}"></button></a>	 
 		</div>
 	</div>
 </body>

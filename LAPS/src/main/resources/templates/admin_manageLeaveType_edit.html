@@ -17,7 +17,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		<a href="/admin/manageLeaveType" th:utext="#{page.back}">Back</a>
+		
 		<form action="#" th:object="${leavetype}"
 			th:action="@{/admin/manageLeaveType/save}" method="post">
 			<table class="list">
@@ -39,13 +39,13 @@
 
 				<tr>
 					<td th:utext="#{admin.manageLeave.Entitlement}"></td>
-					<td><input type="text" th:field="*{entitlement}">
+					<td><input type="text" th:field="*{entitlement}" required>
 						<p th:if="${#fields.hasErrors('entitlement')}"
 							th:errors="*{entitlement}"></p></td>
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageLeave.MinClaim}"></td>
-					<td><input type="text" th:field="*{minClaim}">
+					<td><input type="text" th:field="*{minClaim}" required>
 						<p th:if="${#fields.hasErrors('minClaim')}"
 							th:errors="*{minClaim}"></p></td>
 				</tr>
@@ -56,6 +56,9 @@
 				</tr>
 			</table>
 		</form>
+		<div class="zoom">
+			<a href="/admin/manageLeaveType"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+		</div>
 	</div>
 
 </body>

@@ -23,11 +23,13 @@
  		<p th:if="${#fields.hasErrors('hours')}" th:errors="*{hours}"></p>
  	</fieldset>
  	<fieldset>
- 		<button type="submit">Submit</button>
+ 		<button style="width:10%; margin-left:45%;" type="submit">Submit</button>
  	</fieldset>
  </form>
  
- <p><a href="staff_homepage.html" th:href="@{/staff/.home}">Back</a></p>
+<div class="zoom">
+			<a href="staff_homepage.html" th:href="@{/staff/.home}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+</div>
 </div>
 </body>
 </html>

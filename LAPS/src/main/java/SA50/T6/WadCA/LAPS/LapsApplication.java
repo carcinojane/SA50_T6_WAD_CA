@@ -23,8 +23,6 @@ import SA50.T6.WadCA.LAPS.repo.StaffRepository;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeImpl;
 import SA50.T6.WadCA.LAPS.service.LeaveTypeService;
 
-
-
 @SpringBootApplication
 public class LapsApplication {
 
@@ -46,40 +44,41 @@ public class LapsApplication {
 		SpringApplication.run(LapsApplication.class, args);
 	}
 
-	//test mapping
-
+	// test mapping
 
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			//create manager
+			// create manager
 
-			Staff manager1 = new Staff("manager1","password","waiyankm93@gmail.com",Status.active,2,60,18);
+			Staff manager1 = new Staff("manager1", "password", "waiyankm93@gmail.com", Status.active, 2, 60, 18);
 			manager1.setDesignation(Staff.Designation.manager);
 			manager1.setStartDate(LocalDate.of(2010, 01, 01));
-			
-			Staff manager2 = new Staff("manager2","password","waiyankm93@gmail.com",Status.active, 2,60,18);
+
+			Staff manager2 = new Staff("manager2", "password", "waiyankm93@gmail.com", Status.active, 2, 60, 18);
 			manager2.setDesignation(Staff.Designation.manager);
 			manager2.setStartDate(LocalDate.of(2018, 01, 01));
-			
-			Staff head = new Staff("Head","password","head@gmail.com", Status.active, 2,60,18);
+
+			Staff head = new Staff("Head", "password", "head@gmail.com", Status.active, 2, 60, 18);
 			head.setDesignation(Staff.Designation.manager);
 			head.setStartDate(LocalDate.of(2000, 01, 01));
 			staffRepo.save(head);
-			
-			Staff manager3 = new Staff("manager3","password","waiyankm93@gmail.com",Status.active,2,60,18);
+
+			Staff manager3 = new Staff("manager3", "password", "waiyankm93@gmail.com", Status.active, 2, 60, 18);
 			manager3.setDesignation(Staff.Designation.manager);
 			manager3.setStartDate(LocalDate.of(2017, 01, 01));
-			
-			manager1.setManager(head);manager2.setManager(head);manager3.setManager(head);
+
+			manager1.setManager(head);
+			manager2.setManager(head);
+			manager3.setManager(head);
 			staffRepo.save(manager1);
 			staffRepo.save(manager2);
 			staffRepo.save(manager3);
-			
-			//create staff
-			Staff staff1 = new Staff("staff1","password","staff1@gmail.com",Status.active, 0f,60f,14f);
-			Staff staff2 = new Staff("staff2","password","staff2@gmail.com", Status.active, 1f,60f,14f);
-			Staff staff3 = new Staff("staff3","password","staff3@gmail.com", Status.active, 1.5f,60f,14f);
+
+			// create staff
+			Staff staff1 = new Staff("staff1", "password", "staff1@gmail.com", Status.active, 0f, 60f, 14f);
+			Staff staff2 = new Staff("staff2", "password", "staff2@gmail.com", Status.active, 1f, 60f, 14f);
+			Staff staff3 = new Staff("staff3", "password", "staff3@gmail.com", Status.active, 1.5f, 60f, 14f);
 			// staff with 0 Annual leave
 			Staff staff4 = new Staff("staff4", "password", "staff4@gmail.com", Status.active, 2f, 60f, 0f);
 			// staff with 0 Compensation leave
@@ -118,13 +117,13 @@ public class LapsApplication {
 			staffRepo.save(staff5);
 			staffRepo.save(staff6);
 			staffRepo.save(staff7);
-			
-			//create admin
-			Admin admin1=new Admin("Human Resources","admin1", "password");
+
+			// create admin
+			Admin admin1 = new Admin("Human Resources", "admin1", "password");
 			adminRepo.save(admin1);
-			
+
 			LeaveType annual_emp = new LeaveType(Designation.employee, LType.AnnualLeave, 14f, 1f);
-			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f,1f);
+			LeaveType medical_emp = new LeaveType(Designation.employee, LType.MedicalLeave, 60f, 1f);
 			LeaveType compensation_emp = new LeaveType(Designation.employee, LType.Compensation, 2f, 0.5f);
 			LeaveType annual_mng = new LeaveType(Designation.manager, LType.AnnualLeave, 18f, 1f);
 			LeaveType medical_mng = new LeaveType(Designation.manager, LType.MedicalLeave, 60f, 1f);
@@ -207,12 +206,26 @@ public class LapsApplication {
 					LocalDate.of(2020, 11, 10),"NA",LocalDate.of(2020, 11, 13),"NA",7,"staff 4 will take over",93445222);
 			lr17.setLeaveType(LType.AnnualLeave);
 			
-			lRepo.save(lr1);lRepo.save(lr2);lRepo.save(lr3);lRepo.save(lr4);lRepo.save(lr5);
-			lRepo.save(lr6);lRepo.save(lr7);lRepo.save(lr8);lRepo.save(lr9);lRepo.save(lr10);
-			lRepo.save(lr11);lRepo.save(lr12);lRepo.save(lr13);lRepo.save(lr14);lRepo.save(lr15);lRepo.save(lr16);lRepo.save(lr17);
 
+			lRepo.save(lr1);
+			lRepo.save(lr2);
+			lRepo.save(lr3);
+			lRepo.save(lr4);
+			lRepo.save(lr5);
+			lRepo.save(lr6);
+			lRepo.save(lr7);
+			lRepo.save(lr8);
+			lRepo.save(lr9);
+			lRepo.save(lr10);
+			lRepo.save(lr11);
+			lRepo.save(lr12);
+			lRepo.save(lr13);
+			lRepo.save(lr14);
+			lRepo.save(lr15);
+			lRepo.save(lr16);
+			lRepo.save(lr17);
 
-	};
+		};
 
-}
+	}
 }
