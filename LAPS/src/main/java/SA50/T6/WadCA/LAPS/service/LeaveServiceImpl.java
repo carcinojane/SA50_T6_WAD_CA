@@ -155,7 +155,7 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Transactional
 	public boolean approveLeave(Integer id) {
-		boolean status = true;
+		boolean status = false;
 		LeaveRecord leaveRecord = lrepo.findById(id).get();
 		if(checkStatus(leaveRecord)) {
 			Staff staff = leaveRecord.getStaff();
@@ -172,6 +172,7 @@ public class LeaveServiceImpl implements LeaveService {
 					float balance = totalAnnualLeave-days;
 					staff.setTotalAnnualLeave(balance);
 					srepo.save(staff);
+					status = true;
 				}
 
 			}
@@ -182,6 +183,7 @@ public class LeaveServiceImpl implements LeaveService {
 					float balance = totalMedicalLeave-days;
 					staff.setTotalMedicalLeave(balance);
 					srepo.save(staff);
+					status = true;
 				}
 
 			}
@@ -192,9 +194,10 @@ public class LeaveServiceImpl implements LeaveService {
 					float balance = totalCompensationLeave-days;
 					staff.setTotalCompensationLeave(balance);
 					srepo.save(staff);
+					status = true;
 				}
 			}
-			else status=false;
+		
 		}
 		if(status) {
 			leaveRecord.setReasonForRejection("N.A.");
