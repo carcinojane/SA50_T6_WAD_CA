@@ -382,7 +382,7 @@ public class StaffController {
 		return "staff_leaveHistory_details_edit";
 	}
 
-	@GetMapping(value = "/history/details/edit/save")
+	@RequestMapping(value = "/history/details/edit/save")
 	public String saveUpdatedLeave(@ModelAttribute("LeaveRecord") @Valid LeaveRecord leaveRecord, BindingResult result,
 			Model model, HttpSession session, RedirectAttributes redirect) {
 		Staff staff = (Staff) session.getAttribute("staff");
@@ -398,7 +398,7 @@ public class StaffController {
 		if (leaveRecord.getLeaveType() == LType.Compensation) {
 			if (leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() == "NA") {
 				model.addAttribute("time","Please specify From Time and To Time");
-				return "forward:/staff/history/details/edit/{id}";
+				return "redirect:/staff/history/details/edit/{id}";
 			}
 		}
 
