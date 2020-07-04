@@ -37,12 +37,12 @@ public interface LeaveService {
 	public List<LeaveRecord> findByMangerId(Integer id);
 	
 	//export
+	public List<Integer>findDStaffId(ArrayList<LeaveRecord> records, Integer managerId);
 	public List<Month>LeaveMonths(List<LeaveRecord> records);
 	public List<LeaveRecord>findByStaffId(List<LeaveRecord> records,Integer staffId);
 	public List<LeaveRecord>findByMonth(List<LeaveRecord> records,Integer month);
 	public List<LeaveRecord>findByLtype(List<LeaveRecord> records,LType leaveType);
 	public List<LeaveRecord>findByStatus(List<LeaveRecord> records,LeaveStatus leaveStatus);
-	public List<LeaveRecord>findByMonthLtypeLstatus(List<LeaveRecord> records,Integer month, LType leaveType, LeaveStatus leaveStatus);
 	public void writeToCSV(List<LeaveRecord> records);
 
 	

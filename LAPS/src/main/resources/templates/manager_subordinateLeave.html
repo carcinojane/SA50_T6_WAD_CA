@@ -31,10 +31,14 @@
 		</div>
 
 		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
-			<input type="hidden" id="dummy1" class="search-key" placeholder="">
-			<input type="hidden" id="dummy2" class="search-key" placeholder="">
 			<form action="#" th:action="@{/manager/reportForm}" th:object="${managerReport}"
 				>
+				<select th:field="*{staffId}" id="staffId" class="search-key">
+					<option th:value=null value="">Select StaffId</option>
+					<option th:each="staffId:${dStaffId}" th:value="${staffId}"
+						th:text="${staffId}"></option>
+				</select> 
+				<input type="hidden" id="dummy2" class="search-key" placeholder="">
 				<select th:field="*{month}" id="month" class="search-key">
 					<option th:value=0 value="">Select a month</option>
 					<option th:each="month:${months}" th:value="${month.value}"
@@ -86,7 +90,7 @@
 			</thead>
 			<tbody id="leaveRecordTable">
 				<tr th:each="leave:${lrecords}">
-					<td data-input="dummy1" th:text="${leave.staffId}"></td>
+					<td data-input="staffId" th:text="${leave.staff.staffId}"></td>
 					<td data-input="dummy2" th:text="${leave.staff.username}"></td>
 					<td style="display: none;" data-input="month"
 						th:text="${leave.leaveStartDate.Month.value}"></td>

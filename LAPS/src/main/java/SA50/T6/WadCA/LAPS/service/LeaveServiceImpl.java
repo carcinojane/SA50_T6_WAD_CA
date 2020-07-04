@@ -37,7 +37,7 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Autowired
 	StaffRepository srepo;
-	
+
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -197,7 +197,7 @@ public class LeaveServiceImpl implements LeaveService {
 					status = true;
 				}
 			}
-		
+
 		}
 		if(status) {
 			leaveRecord.setReasonForRejection("N.A.");
@@ -210,53 +210,53 @@ public class LeaveServiceImpl implements LeaveService {
 	public void rejectLeave(Integer id) {
 		LeaveRecord record = lrepo.findById(id).get();
 		if(checkStatus(record)) {
-		//if(checkStatus(record)&&record.getReason()!=null) {
+			//if(checkStatus(record)&&record.getReason()!=null) {
 			record.setLeaveStatus(LeaveStatus.REJECTED);
 		}
 		lrepo.save(record);
 
 	}
-	
+
 	@Transactional
-    public void writeToCSV(List<LeaveRecord> records)
-    {
-    	final String CSV_SEPARATOR = ",";
-    	String home = System.getProperty("user.home");
-    	File file = new File(home+"/Downloads/" + "LeaveReport.csv"); 
-        try
-        {
-        	BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
-            //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
-        	bw.write("LeaveId,StaffId,Name,Category,Start_date,End_date,Status");
-        	bw.newLine();
-        	for (LeaveRecord record : records)
-            {
-                StringBuffer oneLine = new StringBuffer();
-                oneLine.append(record.getLeaveId());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getStaffId());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getStaff().getUsername());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getLeaveType().getDisplayValue());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getLeaveStartDate());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getLeaveEndDate());
-                oneLine.append(CSV_SEPARATOR);
-                oneLine.append(record.getLeaveStatus().getDisplayValue());
-                oneLine.append(CSV_SEPARATOR);
-                
-                bw.write(oneLine.toString());
-                bw.newLine();
-            }
-            bw.flush();
-            bw.close();
-        }
-        catch (UnsupportedEncodingException e) {}
-        catch (FileNotFoundException e){}
-        catch (IOException e){}
-    }
+	public void writeToCSV(List<LeaveRecord> records)
+	{
+		final String CSV_SEPARATOR = ",";
+		String home = System.getProperty("user.home");
+		File file = new File(home+"/Downloads/" + "LeaveReport.csv"); 
+		try
+		{
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
+			//BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
+			bw.write("LeaveId,StaffId,Name,Category,Start_date,End_date,Status");
+			bw.newLine();
+			for (LeaveRecord record : records)
+			{
+				StringBuffer oneLine = new StringBuffer();
+				oneLine.append(record.getLeaveId());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getStaffId());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getStaff().getUsername());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getLeaveType().getDisplayValue());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getLeaveStartDate());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getLeaveEndDate());
+				oneLine.append(CSV_SEPARATOR);
+				oneLine.append(record.getLeaveStatus().getDisplayValue());
+				oneLine.append(CSV_SEPARATOR);
+
+				bw.write(oneLine.toString());
+				bw.newLine();
+			}
+			bw.flush();
+			bw.close();
+		}
+		catch (UnsupportedEncodingException e) {}
+		catch (FileNotFoundException e){}
+		catch (IOException e){}
+	}
 
 	@Override
 	public List<LeaveRecord> findByMangerId(Integer id) {
@@ -276,7 +276,7 @@ public class LeaveServiceImpl implements LeaveService {
 					&& startMonth==month) {
 				leaveRecords.add(record);
 			}
-			
+
 			if(startMonth<month && endMonth==month) {
 				leaveRecords.add(record);
 			}
@@ -285,10 +285,10 @@ public class LeaveServiceImpl implements LeaveService {
 				leaveRecords.add(record);
 			}
 		}
-		
-				return leaveRecords;
+
+		return leaveRecords;
 	}
-	
+
 	@Transactional
 	public List<Month> LeaveMonths(List<LeaveRecord> records) {
 		List<Month> months= new ArrayList<>();
@@ -297,7 +297,7 @@ public class LeaveServiceImpl implements LeaveService {
 			LeaveRecord record = (LeaveRecord)iterator.next();
 			Month startMonth = record.getLeaveStartDate().getMonth();
 			Month endMonth= record.getLeaveEndDate().getMonth();
-			
+
 			if(startMonth.equals(endMonth)) {
 				if(!months.contains(startMonth)) {
 					months.add(startMonth);
@@ -311,9 +311,9 @@ public class LeaveServiceImpl implements LeaveService {
 						months.add(month);
 					}
 				}
-				
+
 			}
-			
+
 		}
 		return months;
 	}
@@ -322,9 +322,9 @@ public class LeaveServiceImpl implements LeaveService {
 	public List<LeaveRecord> findLeaveRecordByStaffIdPage(int staffId,int status,int start,int size) {
 		String sqlStr="";
 		if (status==-1) {
-			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
+			sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" limit "+start+","+size;
 		}else {
-			 sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" and t.leave_status="+status+" limit "+start+","+size;
+			sqlStr = "select * from leave_record t where t.staff_id = " + staffId+" and t.leave_status="+status+" limit "+start+","+size;
 		}
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
@@ -335,7 +335,7 @@ public class LeaveServiceImpl implements LeaveService {
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> findByStaffId(List<LeaveRecord> records, Integer staffId) {
 		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
@@ -343,12 +343,12 @@ public class LeaveServiceImpl implements LeaveService {
 			LeaveRecord record = (LeaveRecord)iterator.next();
 			if(record.getStaffId()== staffId) {
 				leaveRecords.add(record);
-				}
 			}
+		}
 		return leaveRecords;
 	}
 
-	@Override
+	@Transactional
 	public List<LeaveRecord> findByLtype(List<LeaveRecord> records, LType leaveType) {
 		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
@@ -356,12 +356,12 @@ public class LeaveServiceImpl implements LeaveService {
 			LeaveRecord record = (LeaveRecord)iterator.next();
 			if(record.getLeaveType()== leaveType) {
 				leaveRecords.add(record);
-				}
 			}
+		}
 		return leaveRecords;
 	}
 
-	@Override
+	@Transactional
 	public ArrayList<LeaveRecord> findByStatus(List<LeaveRecord> records, LeaveStatus leaveStatus) {
 		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
@@ -369,19 +369,24 @@ public class LeaveServiceImpl implements LeaveService {
 			LeaveRecord record = (LeaveRecord)iterator.next();
 			if(record.getLeaveStatus()== leaveStatus) {
 				leaveRecords.add(record);
-				}
 			}
+		}
 		return leaveRecords;
 	}
 
-	@Override
-	public List<LeaveRecord> findByMonthLtypeLstatus(List<LeaveRecord> records, Integer month, LType leaveType,
-			LeaveStatus leaveStatus) {
-		List<LeaveRecord> fliterMonth= findByMonth(records,month);
-		List<LeaveRecord> filterLType= findByLtype(fliterMonth,leaveType);
-		List<LeaveRecord> filterLStatus= findByStatus(filterLType,leaveStatus);
-		
-		return filterLStatus;
+	@Transactional
+	public ArrayList<Integer> findDStaffId(ArrayList<LeaveRecord> records, Integer managerId) {
+		ArrayList<Integer> dStaffId= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			if(record.getManagerId()==managerId) {
+				if(!dStaffId.contains(record.getStaff().getStaffId())) {
+					dStaffId.add(record.getStaff().getStaffId());
+				}
+			}
+		}
+		return dStaffId;
 	}
 
 

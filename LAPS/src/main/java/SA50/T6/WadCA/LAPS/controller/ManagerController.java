@@ -68,6 +68,7 @@ public class ManagerController{
 		Staff manager = (Staff)session.getAttribute("staff");
 		ArrayList<LeaveRecord> lrecords = (ArrayList<LeaveRecord>)lservice.findByMangerId(manager.getStaffId());
 		session.setAttribute("mlrecords", lrecords);
+		model.addAttribute("dStaffId",lservice.findDStaffId(lrecords,manager.getStaffId()));
 		model.addAttribute("lrecords",lrecords);
 		model.addAttribute("months",lservice.LeaveMonths(lrecords));
 		return "manager_subordinateLeave";
