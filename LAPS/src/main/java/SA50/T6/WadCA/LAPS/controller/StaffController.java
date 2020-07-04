@@ -240,9 +240,6 @@ public class StaffController {
 
 		if (leaveRecord.getLeaveType() == LType.Compensation) {
 			if (numOfDay > staff.getTotalCompensationLeave()) {
-				System.out.println(numOfDay);
-				System.out.println(staff.getTotalCompensationLeave());
-				System.out.println(staff.getStaffId());
 				Designation designation = sservice.findStaffById(staff.getStaffId()).getDesignation();
 				model.addAttribute("insufficient", "Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
@@ -392,34 +389,35 @@ public class StaffController {
 
 		applyLeaveValidator.validate(leaveRecord, result);
 		if (result.hasErrors()) {
-			return "redirect:/staff/history/details/edit/{id}";
+			model.addAttribute("msg","please key in valid date(s)");
+			return editLeaveDetails(model, leaveRecord.getLeaveId(), session);
 		}
 
 		if (leaveRecord.getLeaveType() == LType.Compensation) {
-			if (leaveRecord.getLeaveStartTime() == "NA" || leaveRecord.getLeaveEndTime() == "NA") {
+			if (leaveRecord.getLeaveStartTime().contains("NA") || leaveRecord.getLeaveEndTime().contains("NA")) {
 				model.addAttribute("time","Please specify From Time and To Time");
-				return "redirect:/staff/history/details/edit/{id}";
+				return editLeaveDetails(model, leaveRecord.getLeaveId(), session);
 			}
 		}
 
 		if (leaveRecord.getLeaveType() == LType.AnnualLeave) {
 			if (numOfDay > staff.getTotalAnnualLeave()) {
 				model.addAttribute("insufficient","Leave entitlement not sufficient");
-				return "redirect:/staff/history/details/edit/{id}";
+				return editLeaveDetails(model, leaveRecord.getLeaveId(), session);
 			}
 		}
 
-		if (leaveRecord.getLeaveType() == LType.MedicalLeave) {
+		else if (leaveRecord.getLeaveType() == LType.MedicalLeave) {
 			if (numOfDay > staff.getTotalMedicalLeave()) {
 				model.addAttribute("insufficient","Leave entitlement not sufficient");
-				return "redirect:/staff/history/details/edit/{id}";
+				return editLeaveDetails(model, leaveRecord.getLeaveId(), session);
 			}
 		}
 
-		if (leaveRecord.getLeaveType() == LType.Compensation) {
+		else if (leaveRecord.getLeaveType() == LType.Compensation) {
 			if (numOfDay > staff.getTotalCompensationLeave()) {
 				model.addAttribute("insufficient","Leave entitlement not sufficient");
-				return "redirect:/staff/history/details/edit/{id}";
+				return editLeaveDetails(model, leaveRecord.getLeaveId(), session);
 			}
 		}
 
