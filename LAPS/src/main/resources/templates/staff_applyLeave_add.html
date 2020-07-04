@@ -8,9 +8,10 @@
 <link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="../../js/navbar.js"></script>
 <script type="text/javascript" src="../../js/login.js"></script>
-<!-- <script type="text/javascript" src="../../js/applyLeave.js"></script> -->
+<script type="text/javascript" src="../../js/applyLeave.js"></script>
 </head>
 <body>
 	<header th:insert="staff_homepage.html :: header"> </header>
@@ -41,13 +42,12 @@
 							<p th:text="${msg}" th:style="'color:red'"></p>
 					</td>
 				</tr>
-				<tr>
+				<tr id="fromTime">
 					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
 					<td>From Time</td>
 					<td><select id="time" th:field=*{leaveStartTime}>
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
-							<option th:value="NA">N/A</option>
 					</select>
 					<p th:text="${time}" th:style="'color:red'"></p>
 					</td>
@@ -60,12 +60,11 @@
 						<p th:text="${msg}" th:style="'color:red'">
 					</td>
 				</tr>
-				<tr>
+				<tr id="toTime">
 					<td>To Time</td>
-					<td><select id="time" th:field=*{leaveEndTime}>
+					<td><select th:field=*{leaveEndTime}>
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
-							<option th:value="NA">N/A</option>
 					</select>
 					<p th:text="${time}" th:style="'color:red'"></p>
 					</td>
