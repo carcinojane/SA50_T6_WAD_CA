@@ -28,9 +28,17 @@
 				<th style="width: 20%" th:utext="#{table.heading.from}"></th>
 				<td th:text="${leave.leaveStartDate}"></td>
 			</tr>
+			<tr th:if="${leave.leaveType == T(SA50.T6.WadCA.LAPS.model.LType).Compensation}">
+				<th style="width: 20%" th:utext="#{table.heading.fromtime}"></th>
+				<td th:text="${leave.leaveStartTime}"></td>
+			</tr>
 			<tr>
 				<th style="width: 20%" th:utext="#{table.heading.to}"></th>
 				<td th:text="${leave.leaveEndDate}"></td>
+			</tr>
+			<tr th:if="${leave.leaveType == T(SA50.T6.WadCA.LAPS.model.LType).Compensation}">
+				<th style="width: 20%" th:utext="#{table.heading.totime}"></th>
+				<td th:text="${leave.leaveEndTime}"></td>
 			</tr>
 			<tr>
 				<th style="width: 20%" th:utext="#{table.heading.leavetype}"></th>
@@ -118,5 +126,6 @@
 		</div>
 	</div>
 </body>
+
 
 </html>
