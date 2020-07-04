@@ -218,7 +218,7 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 	
 	@Transactional
-    public void writeToCSV(ArrayList<LeaveRecord> records)
+    public void writeToCSV(List<LeaveRecord> records)
     {
     	final String CSV_SEPARATOR = ",";
     	String home = System.getProperty("user.home");
@@ -264,7 +264,7 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public List<LeaveRecord> findByMonth(ArrayList<LeaveRecord> records, Integer month) {
+	public List<LeaveRecord> findByMonth(List<LeaveRecord> records, Integer month) {
 		List<LeaveRecord> leaveRecords= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
@@ -290,7 +290,7 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 	
 	@Transactional
-	public List<Month> LeaveMonths(ArrayList<LeaveRecord> records) {
+	public List<Month> LeaveMonths(List<LeaveRecord> records) {
 		List<Month> months= new ArrayList<>();
 		for (Iterator<LeaveRecord> iterator=records.iterator();
 				iterator.hasNext();) {
@@ -334,6 +334,56 @@ public class LeaveServiceImpl implements LeaveService {
 		String sqlStr="select * from leave_record t where t.staff_id = " + staffId;
 		return this.jdbcTemplate.query(sqlStr, new BeanPropertyRowMapper<LeaveRecord>(LeaveRecord.class));
 	}
+
+	@Override
+	public List<LeaveRecord> findByStaffId(List<LeaveRecord> records, Integer staffId) {
+		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			if(record.getStaffId()== staffId) {
+				leaveRecords.add(record);
+				}
+			}
+		return leaveRecords;
+	}
+
+	@Override
+	public List<LeaveRecord> findByLtype(List<LeaveRecord> records, LType leaveType) {
+		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			if(record.getLeaveType()== leaveType) {
+				leaveRecords.add(record);
+				}
+			}
+		return leaveRecords;
+	}
+
+	@Override
+	public ArrayList<LeaveRecord> findByStatus(List<LeaveRecord> records, LeaveStatus leaveStatus) {
+		ArrayList<LeaveRecord> leaveRecords= new ArrayList<>();
+		for (Iterator<LeaveRecord> iterator=records.iterator();
+				iterator.hasNext();) {
+			LeaveRecord record = (LeaveRecord)iterator.next();
+			if(record.getLeaveStatus()== leaveStatus) {
+				leaveRecords.add(record);
+				}
+			}
+		return leaveRecords;
+	}
+
+	@Override
+	public List<LeaveRecord> findByMonthLtypeLstatus(List<LeaveRecord> records, Integer month, LType leaveType,
+			LeaveStatus leaveStatus) {
+		List<LeaveRecord> fliterMonth= findByMonth(records,month);
+		List<LeaveRecord> filterLType= findByLtype(fliterMonth,leaveType);
+		List<LeaveRecord> filterLStatus= findByStatus(filterLType,leaveStatus);
+		
+		return filterLStatus;
+	}
+
 
 
 

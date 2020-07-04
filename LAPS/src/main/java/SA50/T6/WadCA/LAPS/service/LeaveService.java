@@ -24,7 +24,6 @@ public interface LeaveService {
 	public LeaveRecord findById(int id);
 	public boolean saveLeaveRecord(LeaveRecord leaveRecord);
 	public List<LeaveStatus> findAllLeaveStatus();
-//	public List<LeaveRecord> findByFromAndToDate(LocalDate leaveStartDate, LocalDate leaveEndDate);
 	public void deleteLeaveRecord(LeaveRecord leaveRecord);
 	public float numOfLeaveApplied(LeaveRecord leaveRecord);
 	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus);
@@ -34,10 +33,17 @@ public interface LeaveService {
 	public Boolean checkStatus(LeaveRecord leaveRecord);
 	public boolean approveLeave(Integer id);
 	public void rejectLeave(Integer id);
-	public void writeToCSV(ArrayList<LeaveRecord> records);
+
 	public List<LeaveRecord> findByMangerId(Integer id);
-	public List<LeaveRecord>findByMonth(ArrayList<LeaveRecord> records,Integer month);
-	public List<Month>LeaveMonths(ArrayList<LeaveRecord> records);
+	
+	//export
+	public List<Month>LeaveMonths(List<LeaveRecord> records);
+	public List<LeaveRecord>findByStaffId(List<LeaveRecord> records,Integer staffId);
+	public List<LeaveRecord>findByMonth(List<LeaveRecord> records,Integer month);
+	public List<LeaveRecord>findByLtype(List<LeaveRecord> records,LType leaveType);
+	public List<LeaveRecord>findByStatus(List<LeaveRecord> records,LeaveStatus leaveStatus);
+	public List<LeaveRecord>findByMonthLtypeLstatus(List<LeaveRecord> records,Integer month, LType leaveType, LeaveStatus leaveStatus);
+	public void writeToCSV(List<LeaveRecord> records);
 
 	
 	List<LeaveRecord> countSize(@Param("staffId")int staffId);

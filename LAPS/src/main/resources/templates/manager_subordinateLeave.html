@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../../js/search.js"></script>
 <script>
 	function exporting() {
-	  alert("Report has been exported.");
+		alert("Report has been exported.");
 	}
 </script>
 </head>
@@ -29,34 +29,41 @@
 			<input id="userInput" type="text" placeholder="&#xF002; Search"
 				style="font-family: Arial, FontAwesome">
 		</div>
+
 		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
 			<input type="hidden" id="dummy1" class="search-key" placeholder="">
 			<input type="hidden" id="dummy2" class="search-key" placeholder="">
-			<form th:action="@{/manager/export}">
-				<select name="month" id="month" class="search-key">
-					<option value="">Select a month</option>
+			<form action="#" th:action="@{/manager/reportForm}" th:object="${managerReport}"
+				>
+				<select th:field="*{month}" id="month" class="search-key">
+					<option th:value=0 value="">Select a month</option>
 					<option th:each="month:${months}" th:value="${month.value}"
 						th:text="${month}"></option>
-				</select>
-			</form>
-			<input type="hidden" id="dummy3" class="search-key" placeholder="">
-			<input type="hidden" id="dummy4" class="search-key" placeholder="">
-			<input type="hidden" id="dummy5" class="search-key" placeholder="">
-			<input type="hidden" id="dummy6" class="search-key" placeholder="">
+				</select> 
+				<input type="hidden" id="dummy3" class="search-key" placeholder="">
+				<input type="hidden" id="dummy4" class="search-key" placeholder="">
+				<input type="hidden" id="dummy5" class="search-key" placeholder="">
+				<input type="hidden" id="dummy6" class="search-key" placeholder="">
 
-			<select id="leavetype" class="search-key">
-				<option value="">Select a leave category</option>
-				<option
-					th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
-					th:value="${typeOpt.displayValue}"
-					th:text="${typeOpt.displayValue}"></option>
-			</select> <select id="leavestatus" class="search-key">
-				<option value="">Select a leave status</option>
-				<option
-					th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
-					th:value="${statusOpt.displayValue}"
-					th:text="${statusOpt.displayValue}"></option>
-			</select> <input type="hidden" id="dummy7" class="search-key" placeholder="">
+				<select th:field="*{leaveType}" id="leavetype" class="search-key">
+					<option th:value=null value="">Select a leave category</option>
+					<option
+						th:each="typeOpt:${T(SA50.T6.WadCA.LAPS.model.LType).values()}"
+						th:value="${typeOpt.displayValue}"
+						th:text="${typeOpt.displayValue}"></option>
+				</select> <select th:field="*{leaveStatus}" id="leavestatus"
+					class="search-key">
+					<option th:value=null value="">Select a leave status</option>
+					<option
+						th:each="statusOpt:${T(SA50.T6.WadCA.LAPS.model.LeaveStatus).values()}"
+						th:value="${statusOpt.displayValue}"
+						th:text="${statusOpt.displayValue}"></option>
+				</select> <input type="hidden" id="dummy7" class="search-key" placeholder="">
+				<p style="width: 10%;">
+				<button type="submit" style="background-color: grey" onclick="exporting()">Export Report</button>
+				<p>
+			</form>
+
 		</div>
 		<h3 style="width: 400px;" th:if="${not #lists.isEmpty(lrecords)}">Listing</h3>
 
@@ -98,11 +105,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<p style="width: 10%; margin-left: 45%; margin-right: 45%;">
-			<a th:href="@{/manager/export}">
-				<button style="background-color: grey" onclick="exporting()">Print</button>
-			</a>
-		</p>
 	</div>
 	<script type="text/javascript" src="../../js/filter.js"></script>
 </body>
