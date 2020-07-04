@@ -19,13 +19,13 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 	
 	@Override
-	public void sendNotification(Staff staff, Integer employeeId, String employeeName) throws MailException{
+	public void sendNotification(Staff staff, Integer employeeId, String employeeName, String appliedLeaveType) throws MailException{
 		//send email
 		SimpleMailMessage mail = new SimpleMailMessage();
 		mail.setTo(staff.getEmail());
 		mail.setFrom("leavemanagementsysiss@gmail.com");
 		mail.setSubject("Leave Application Notification!");
-		mail.setText("Your employee - Employee Id: " + employeeId + ", Employee Name: " + employeeName + " has applied a leave. Please check the leave application system for more details.");
+		mail.setText("Your employee - Employee Id: " + employeeId + ", Employee Name: " + employeeName + " has applied a/an " + appliedLeaveType + ". Please check the leave application system for more details.");
 		
 		javaMailSender.send(mail);
 	}

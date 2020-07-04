@@ -277,8 +277,9 @@ public class StaffController {
 //		} else 
 		lservice.saveLeaveRecord(leaveRecord);
 		Staff reportingManager = sservice.findStaffById(managerId);
+		String appliedLeaveType = leaveRecord.getLeaveType().getDisplayValue();
 		try {
-			nservice.sendNotification(reportingManager, staffId, staffName);
+			nservice.sendNotification(reportingManager, staffId, staffName, appliedLeaveType);
 		} catch (MailException e) {
 			// catch error
 		}

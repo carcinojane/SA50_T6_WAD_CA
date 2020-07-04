@@ -116,7 +116,7 @@ public class ManagerController{
 		
 		if(status == false) {
 			System.out.println(status + "tot");
-			model.addAttribute("msg","unable to approve leave");
+			model.addAttribute("msg","Unable to approve leave (Insufficient leave balance)!");
 			return leaveDetails(model,id);
 		}
 		//return "redirect:/manager/approve/"+id;
