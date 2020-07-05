@@ -92,7 +92,7 @@ public class ManagerController{
 		if(month==0 && lstatus==null && ltype==null) {
 			filterRecords= records;
 		}
-		
+
 		if(month!=0) {
 			List<LeaveRecord> mFilter = lservice.findByMonth(records, month);
 			if(lstatus!=null && ltype!=null) {
@@ -109,60 +109,60 @@ public class ManagerController{
 				filterRecords = mFilter;
 			}
 		}
-		
+
 		else if(lstatus!=null && ltype!=null) {
-				List<LeaveRecord> sFilter =lservice.findByStatus(records,lstatus);
-				filterRecords = lservice.findByLtype(sFilter,ltype);
-			}
+			List<LeaveRecord> sFilter =lservice.findByStatus(records,lstatus);
+			filterRecords = lservice.findByLtype(sFilter,ltype);
+		}
 		else if(lstatus!=null) {
 			filterRecords = lservice.findByStatus(records, lstatus);
 		}
-		
+
 		else if(ltype!=null) {
 			filterRecords = lservice.findByLtype(records, ltype);
 		}	
 
-	lservice.writeToCSV(filterRecords);
+		lservice.writeToCSV(filterRecords);
 
-	return "forward:/manager/subordinateLeave";
-}
-
-
-@RequestMapping("/staffLeaveDetails/{id}")
-public String leaveDetails(Model model, @PathVariable("id") Integer id) {
-	model.addAttribute("leave", lservice.findById(id));
-	return "manager_leaveDetails";
-}
-
-@GetMapping(value = "/approve/{id}")
-public String approveLeave(@PathVariable("id") Integer id, HttpSession session, Model model) {
-	boolean status = lservice.approveLeave(id);
-
-	if(status == false) {
-		System.out.println(status + "tot");
-		model.addAttribute("msg","Unable to approve leave (Insufficient leave balance)!");
-		return leaveDetails(model,id);
+		return "forward:/manager/subordinateLeave";
 	}
-	return "redirect:/manager/staffLeaveDetails/"+id;
 
-}
 
-@GetMapping(value= "/save")
-public String saveLeave(  @ModelAttribute("leave") @Valid LeaveRecord leave, 
-		BindingResult bindingResult,  Model model) {
-	if (bindingResult.hasErrors()) {
+	@RequestMapping("/staffLeaveDetails/{id}")
+	public String leaveDetails(Model model, @PathVariable("id") Integer id) {
+		model.addAttribute("leave", lservice.findById(id));
 		return "manager_leaveDetails";
 	}
-	lservice.saveLeaveRecord(leave);
-	return "manager_leaveDetails";
-}
 
-@GetMapping(value = "/history/{id}")
-public String staffRecord(Model model, @PathVariable("id") Integer id) {
-	model.addAttribute("staff", sservice.findStaffById(id));
-	model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
-	return "manager_PastLeaveRecords";
-}
+	@GetMapping(value = "/approve/{id}")
+	public String approveLeave(@PathVariable("id") Integer id, HttpSession session, Model model) {
+		boolean status = lservice.approveLeave(id);
+
+		if(status == false) {
+			System.out.println(status + "tot");
+			model.addAttribute("msg","Unable to approve leave (Insufficient leave balance)!");
+			return leaveDetails(model,id);
+		}
+		return "redirect:/manager/staffLeaveDetails/"+id;
+
+	}
+
+	@GetMapping(value= "/save")
+	public String saveLeave(  @ModelAttribute("leave") @Valid LeaveRecord leave, 
+			BindingResult bindingResult,  Model model) {
+		if (bindingResult.hasErrors()) {
+			return "manager_leaveDetails";
+		}
+		lservice.saveLeaveRecord(leave);
+		return "manager_leaveDetails";
+	}
+
+	@GetMapping(value = "/history/{id}")
+	public String staffRecord(Model model, @PathVariable("id") Integer id) {
+		model.addAttribute("staff", sservice.findStaffById(id));
+		model.addAttribute("lrecords", lservice.findLeaveRecordByStaffId(id)) ;
+		return "manager_PastLeaveRecords";
+	}
 
 
 }

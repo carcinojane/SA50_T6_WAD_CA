@@ -15,9 +15,9 @@
 	<header th:insert="staff_homepage.html :: header"> </header>
 	<div class="content">
 		<h2 th:utext="#{staff.leaveBalance.page.title}"></h2>
-		
-		<table class="list" th:object="${staff}" >
-		<tr>
+
+		<table class="list" th:object="${staff}">
+			<tr>
 				<td>Remaining Annual Leave</td>
 				<td><p th:text="*{totalAnnualLeave}"></p></td>
 			</tr>

@@ -3,7 +3,6 @@ package SA50.T6.WadCA.LAPS.controller;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -202,7 +201,6 @@ public class StaffController {
 				model.addAttribute("msg", "From date should be later than today");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 				return "staff_applyLeave_add";
-				// return "redirect:/staff/apply/add";
 			}
 		}
 
@@ -212,7 +210,6 @@ public class StaffController {
 			model.addAttribute("msg", "From or To date falls on PH");
 			model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 			return "staff_applyLeave_add";
-			// return "redirect:/staff/apply/add";
 		}
 
 		if (leaveRecord.getLeaveType() == LType.AnnualLeave) {
@@ -224,7 +221,6 @@ public class StaffController {
 				model.addAttribute("insufficient", "Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 				return "staff_applyLeave_add";
-				// return "redirect:/staff/apply/add";
 			}
 		}
 
@@ -234,7 +230,6 @@ public class StaffController {
 				model.addAttribute("insufficient", "Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 				return "staff_applyLeave_add";
-				// return "redirect:/staff/apply/add";
 			}
 		}
 
@@ -244,7 +239,6 @@ public class StaffController {
 				model.addAttribute("insufficient", "Leave entitlement is not sufficient");
 				model.addAttribute("leaveTypeList", ltservice.findLeaveTypeByDesignation(designation));
 				return "staff_applyLeave_add";
-				// return "redirect:/staff/apply/add";
 			}
 		}
 
@@ -267,14 +261,6 @@ public class StaffController {
 
 		}
 
-//		LocalDate leaveStartDate = leaveRecord.getLeaveStartDate();
-//		LocalDate leaveEndDate = leaveRecord.getLeaveEndDate();
-//		if(leaveStartDate.getDayOfWeek() == DayOfWeek.SATURDAY 
-//				|| leaveStartDate.getDayOfWeek() == DayOfWeek.SUNDAY 
-//				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SATURDAY 
-//				|| leaveEndDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
-//			return "redirect:/staff/apply/add";
-//		} else 
 		lservice.saveLeaveRecord(leaveRecord);
 		Staff reportingManager = sservice.findStaffById(managerId);
 		String appliedLeaveType = leaveRecord.getLeaveType().getDisplayValue();
@@ -289,17 +275,17 @@ public class StaffController {
 	@GetMapping("/apply/cancel/{id}")
 	public String cancel(@PathVariable("id") Integer id, HttpSession session, Model model) {
 		LeaveRecord leaveRecord = lservice.findById(id);
-		
+
 		boolean cancellable =leaveRecord.getLeaveStartDate().isBefore(LocalDate.now()); 
 		System.out.println(LocalDate.now());
-		
+
 		if(cancellable == true){
 			model.addAttribute("cancel","Cancellation not allowed.");
 			System.out.println(cancellable);
 			return "forward:/staff/history/details/"+id;
-			
+
 		}
-		
+
 		Staff staff = (Staff) session.getAttribute("staff");
 		float numOfLeave = lservice.numOfLeaveApplied(leaveRecord);
 		float balance = 0;
@@ -332,7 +318,6 @@ public class StaffController {
 
 	@GetMapping("/balance")
 	public String balance(Model model, HttpSession session) {
-		// int staffId = (int) session.getAttribute("staffId");
 		model.addAttribute("staff", sservice.findStaffById((int) session.getAttribute("staffId")));
 		return "staff_leaveBalance";
 	}
@@ -348,13 +333,13 @@ public class StaffController {
 		}
 		Integer status = Integer.parseInt(status_param);
 		int totalNum = lservice.countSize(staff.getStaffId()).size();
-		
+
 		PageBean pageBean = new PageBean(Integer.parseInt(page), 5);
 		List<LeaveRecord> findLeaveRecordByStaffId = lservice.findLeaveRecordByStaffIdPage(staff.getStaffId(), status,
 				pageBean.getStart(), pageBean.getPageSize());
 		String genPagination = PageUtil.genPagination("/staff/history", totalNum, Integer.parseInt(page), 5, null);
-		
-		
+
+
 		model.addAttribute("pageCode", genPagination);
 		model.addAttribute("lrecords", findLeaveRecordByStaffId);
 		return "staff_LeaveHistory";
@@ -440,12 +425,6 @@ public class StaffController {
 		return "redirect:/staff/apply";
 	}
 
-//	@GetMapping("/history/details/delete/{id}")
-//	public String deleteLeaveDetails(Model model, @PathVariable("id") Integer id) {
-//		lservice.deleteLeaveRecord(lservice.findById(id));
-//		return "redirect:/staff/history";
-//	}
-
 	@GetMapping("/overtime")
 	public String overtime(Model model, HttpSession session) {
 		int staffId = (int) session.getAttribute("staffId");
@@ -465,10 +444,8 @@ public class StaffController {
 		}
 
 		Staff staff = sservice.findStaffById((int) session.getAttribute("staffId"));
-		// set staffId;
 		overtime.setStaff(staff);
 		oservice.SaveOvertime(overtime);
-		// calculate total compensation leave
 		float currCompLeave = oservice.FindCompensationLeaveAwarded(overtime.getHours());
 		float totalCompLeave = staff.getTotalCompensationLeave() + currCompLeave;
 		staff.setTotalCompensationLeave(totalCompLeave);

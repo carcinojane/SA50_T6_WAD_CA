@@ -21,9 +21,6 @@ public interface LeaveRepository extends JpaRepository<LeaveRecord, Integer> {
 	@Query("Select r from LeaveRecord r where r.staffId = :staffId AND r.leaveType = :leaveType"
 			+ " AND r.leaveStatus = :leaveStatus")
 	public List<LeaveRecord> findByIdAndStatusAndType(@Param("staffId")Integer id,@Param("leaveType")LType leaveType,@Param("leaveStatus")LeaveStatus leaveStatus);
-
-//	@Query("SELECT * FROM LeaveRecord lr WHERE lr.leaveStartDate <= :leaveStartDate AND lr.leaveEndDate >= :leaveEndDate")
-//	List<LeaveRecord> findByFromAndToDate(@Param("leaveStartDate") LocalDate leaveStartDate, @Param("leaveEndDate") LocalDate leaveEndDate);
 	
 	@Query("SELECT lr FROM LeaveRecord lr WHERE lr.managerId = :managerId")
 	ArrayList<LeaveRecord> findLeaveRecordByManagerId(@Param("managerId")Integer managerId);

@@ -51,7 +51,7 @@ public class LapsApplication {
 		return args -> {
 			// create manager
 			//testdata
-			
+
 			Staff manager1 = new Staff("manager1", "password", "waiyankm93@gmail.com", Status.active, 2, 60, 18);
 			manager1.setDesignation(Staff.Designation.manager);
 			manager1.setStartDate(LocalDate.of(2010, 01, 01));

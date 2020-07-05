@@ -30,11 +30,16 @@
 			</table>
 		</form>
 		<table style="width: 30%";>
-		<tr>
-		<td style="width:10%;"><a href="/admin/manageStaff/add"><button style="background-color:green;" th:utext="#{admin.manageStaff.add.page.title}"></button></a></td>
-		<td style="width:10%;"><a href="/admin/manageStaff/inactive"><button style="background-color:green;" th:utext="#{admin.manageStaff.viewInactiveStaff}"></button></a></td>
-		<td style="width:10%;"><a href="/admin/.home"><button style="background-color:grey;" th:utext="#{page.back}"></button></a></td>
-		</tr>
+			<tr>
+				<td style="width: 10%;"><a href="/admin/manageStaff/add"><button
+							style="background-color: green;"
+							th:utext="#{admin.manageStaff.add.page.title}"></button></a></td>
+				<td style="width: 10%;"><a href="/admin/manageStaff/inactive"><button
+							style="background-color: green;"
+							th:utext="#{admin.manageStaff.viewInactiveStaff}"></button></a></td>
+				<td style="width: 10%;"><a href="/admin/.home"><button
+							style="background-color: grey;" th:utext="#{page.back}"></button></a></td>
+			</tr>
 		</table>
 		<br />
 		<table class="list" th:if="${not #lists.isEmpty(staffs)}">
@@ -51,20 +56,18 @@
 				<td th:text=${staff.username}>User Name</td>
 				<td th:text=${staff.startDate}>Start Date</td>
 				<td th:text=${staff.designation}>Designation</td>
-				<td><a href="DetailStaff.html" th:href="@{/admin/manageStaff/details/}+${staff.staffId}"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{button.detail}"></button></a></td>
-				<td><a href="DeleteStaff.html" th:href="@{/admin/manageStaff/delete/}+${staff.staffId}" id="deleteButton" onclick="return confirm('Confirm Delete?')"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{button.delete}"></button></a></td>
-					
+				<td><a href="DetailStaff.html"
+					th:href="@{/admin/manageStaff/details/}+${staff.staffId}"><button
+							style="width: 49%; margin-left: 25.5%; background-color: grey"
+							th:utext="#{button.detail}"></button></a></td>
+				<td><a href="DeleteStaff.html"
+					th:href="@{/admin/manageStaff/delete/}+${staff.staffId}"
+					id="deleteButton" onclick="return confirm('Confirm Delete?')"><button
+							style="width: 49%; margin-left: 25.5%; background-color: grey"
+							th:utext="#{button.delete}"></button></a></td>
+
 			</tr>
 		</table>
 	</div>
-<!-- 	<script>
-		function myFunction() {
-			if (confirm("Confirm Delete?")) {
-				
-			} else {
-				windows.location = windows.location;
-			}
-		}
-	</script> -->
 </body>
 </html>

@@ -64,14 +64,19 @@
 			<tbody id="leaveRecordTable">
 				<tr th:each="leave:${lrecords}">
 					<td data-input="dummy1" th:text="${leave.leaveStartDate}">From</td>
-					<td data-input="dummy2" th:text="${leave.leaveStartTime}">From Time</td>
+					<td data-input="dummy2" th:text="${leave.leaveStartTime}">From
+						Time</td>
 					<td data-input="dummy3" th:text="${leave.leaveEndDate}">To</td>
-					<td data-input="dummy4" th:text="${leave.leaveEndTime}">To Time</td>
+					<td data-input="dummy4" th:text="${leave.leaveEndTime}">To
+						Time</td>
 					<td data-input="leavetype"
 						th:text="${leave.leaveType.displayValue}">Category</td>
 					<td data-input="leavestatus"
 						th:text="${leave.leaveStatus.displayValue}">Status</td>
-					<td data-input="dummy5"><a th:href="@{/staff/history/details/}+${leave.leaveId}"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{staff.leaveHistory.details.page.title}"></button></a></td>
+					<td data-input="dummy5"><a
+						th:href="@{/staff/history/details/}+${leave.leaveId}"><button
+								style="width: 49%; margin-left: 25.5%; background-color: grey"
+								th:utext="#{staff.leaveHistory.details.page.title}"></button></a></td>
 				</tr>
 			</tbody>
 		</table>

@@ -27,19 +27,19 @@ public class Staff {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int staffId;
-	
+
 	@NotEmpty(message="Username is mendatory!!")
 	@Column(unique = true)
 	private String username;
 	@NotNull
 	@Size(min = 6, max = 15)
 	private String password;
-	
+
 	@Email(message="Email should be in a valid format. Eg: aaa@email.com")
 	private String email;
 	private Status status;
 	public enum Status{
-	active,inactive
+		active,inactive
 	}
 
 	// self-referencing staff to manger: staffId
@@ -59,15 +59,14 @@ public class Staff {
 	private float totalCompensationLeave;
 	private float totalMedicalLeave;
 	private float totalAnnualLeave;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
 
 	public Staff() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	
+
 
 	public Staff(@NotEmpty(message = "Username is mendatory!!") String username,
 			@NotNull @Size(min = 6, max = 15) String password,
@@ -164,7 +163,7 @@ public class Staff {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 
 	public Status getStatus() {
 		return status;
@@ -231,7 +230,7 @@ public class Staff {
 	public Collection<Staff> getSubordinates(){
 		return new ArrayList<Staff>(subordinates);
 	}
-	
+
 	public void addSubordinates(Staff subordinate){
 		if(subordinates.contains(subordinate))
 			return;

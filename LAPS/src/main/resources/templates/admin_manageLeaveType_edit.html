@@ -17,7 +17,7 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		
+
 		<form action="#" th:object="${leavetype}"
 			th:action="@{/admin/manageLeaveType/save}" method="post">
 			<table class="list">
@@ -33,7 +33,7 @@
 					<td th:text=${leavetype.designation}></td>
 				</tr>
 				<tr>
-					<td  th:utext="#{admin.manageLeave.LeaveType}"></td>
+					<td th:utext="#{admin.manageLeave.LeaveType}"></td>
 					<td th:text=${leavetype.leaveType}></td>
 				</tr>
 
@@ -51,13 +51,14 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Save"/> &nbsp; &nbsp; <input
-						type="reset" value="Reset"/></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
 				</tr>
 			</table>
 		</form>
 		<div class="zoom">
-			<a href="/admin/manageLeaveType"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+			<a href="/admin/manageLeaveType"><button
+					style="background-color: grey;" th:utext="#{page.back}"></button></a>
 		</div>
 	</div>
 

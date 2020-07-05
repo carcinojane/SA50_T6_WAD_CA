@@ -93,20 +93,16 @@ public class LeaveServiceImpl implements LeaveService {
 
 	@Transactional
 	public List<LeaveRecord> findByIdAndLeaveStatus(Integer id, LeaveStatus leaveStatus) {
-
-		// TODO Auto-generated method stub
 		return lrepo.findByIdAndLeaveStatus(id, leaveStatus);
 	}
 
 	@Transactional
 	public List<LeaveRecord> findByIdAndLeaveType(Integer id, LType leaveType) {
-		// TODO Auto-generated method stub
 		return lrepo.findByIdAndLeaveType(id, leaveType);
 	}
 
 	@Transactional
 	public List<LeaveRecord> findByIdAndStatusAndType(Integer id, LeaveStatus leaveStatus, LType leaveType) {
-		// TODO Auto-generated method stub
 		return lrepo.findByIdAndStatusAndType(id, leaveType, leaveStatus);
 	}
 
@@ -145,7 +141,7 @@ public class LeaveServiceImpl implements LeaveService {
 	}
 
 	@Transactional
-	public Boolean checkStatus(LeaveRecord leaveRecord) {
+	public boolean checkStatus(LeaveRecord leaveRecord) {
 		if(leaveRecord.getLeaveStatus()==LeaveStatus.APPLIED||
 				leaveRecord.getLeaveStatus()==LeaveStatus.UPDATED) {
 			return true;
@@ -209,8 +205,7 @@ public class LeaveServiceImpl implements LeaveService {
 	@Transactional
 	public void rejectLeave(Integer id) {
 		LeaveRecord record = lrepo.findById(id).get();
-		if(checkStatus(record)) {
-			//if(checkStatus(record)&&record.getReason()!=null) {
+		if(checkStatus(record)&&record.getReason()!=null) {
 			record.setLeaveStatus(LeaveStatus.REJECTED);
 		}
 		lrepo.save(record);
@@ -226,7 +221,6 @@ public class LeaveServiceImpl implements LeaveService {
 		try
 		{
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), "UTF-8"));
-			//BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("LeaveReport.csv"), "UTF-8"));
 			bw.write("LeaveId,StaffId,Name,Category,Start_date,End_date,Status");
 			bw.newLine();
 			for (LeaveRecord record : records)
@@ -388,10 +382,6 @@ public class LeaveServiceImpl implements LeaveService {
 		}
 		return dStaffId;
 	}
-
-
-
-
 
 }
 

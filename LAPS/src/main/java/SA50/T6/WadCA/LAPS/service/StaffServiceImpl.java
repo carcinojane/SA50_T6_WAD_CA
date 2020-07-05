@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,83 +24,69 @@ public class StaffServiceImpl implements StaffService {
 		return srepo.findById(staffId).get();
 	}
 
-	@Override
+	@Transactional
 	public Staff findStaffByName(String name) {
 		Staff staff = srepo.findByUsername(name); 
 		return staff;
 	}
-	
+
 	public ArrayList<Staff> findAllStaff() {
 		return (ArrayList<Staff>) srepo.findAll();
 	}
 
-	@Override
+	@Transactional
 	public boolean saveStaff(Staff staff) {
 		if(srepo.save(staff)!=null) return true; else return false;
 	}
 
-	
-
-	@Override
+	@Transactional
 	public ArrayList<Staff> findSearchStaff(String username) {
 		return (ArrayList<Staff>) srepo.findStaffLikeSearchInput(username);
-			}
+	}
 
-	@Override
+	@Transactional
 	public Integer findStaffIdByUsername(String username) {
-		// TODO Auto-generated method stub
 		return srepo.findStaffIdByUsername(username);
 	}
 
-	@Override
-
+	@Transactional
 	public ArrayList<String> findAllManagerNames() {
-		
-			List<Staff> staffs = srepo.findAllManagers();
-			ArrayList<String> names = new ArrayList<String>();
-			for (Iterator<Staff> iterator = staffs.iterator(); iterator.hasNext();) {
-				Staff staff = (Staff) iterator.next();
-				names.add(staff.getUsername());
-			}
-			return names;
+
+		List<Staff> staffs = srepo.findAllManagers();
+		ArrayList<String> names = new ArrayList<String>();
+		for (Iterator<Staff> iterator = staffs.iterator(); iterator.hasNext();) {
+			Staff staff = (Staff) iterator.next();
+			names.add(staff.getUsername());
 		}
+		return names;
+	}
 
 	public Staff findStaffObjByUsername(String username) {
 		return srepo.findByUsername(username);
 	}
 
-//	@Override
-//	public ArrayList<Float> findLeaveBalanceById(int staffId) {
-//		Staff staff = srepo.findById(staffId).get();
-//		ArrayList<Float> balance = new ArrayList<Float>();
-//		balance.add(staff.getTotalAnnualLeave());
-//		balance.add(staff.getTotalMedicalLeave());
-//		balance.add(staff.getTotalCompensationLeave());
-//		return balance;
-//	}
-
-	@Override
+	@Transactional
 	public Staff findManagerByUsername(String username) {
 		return srepo.findManagerByUsername(username);
 	}
 
-	@Override
+	@Transactional
 	public void deleteStaff(Staff staff) {
 		srepo.delete(staff);
-		
+
 	}
 
-	@Override
+	@Transactional
 	public ArrayList<Staff> findAllActiveStaff() {
 		return (ArrayList<Staff>) srepo.findAllActiveStaff();
 	}
 
-	@Override
+	@Transactional
 	public ArrayList<Staff> findAllInActiveStaff() {
 		return (ArrayList<Staff>) srepo.findAllInActiveStaff();
 	}
 
-	@Override
+	@Transactional
 	public ArrayList<Staff> findSubordinates(Staff staff) {
 		return (ArrayList<Staff>) srepo.findAllSubordinates(staff);
 	}

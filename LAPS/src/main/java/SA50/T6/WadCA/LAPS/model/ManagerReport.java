@@ -16,7 +16,6 @@ public class ManagerReport {
 	
 	public ManagerReport() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public ManagerReport(Integer month, Integer staffId, LType leaveType, LeaveStatus leaveStatus) {

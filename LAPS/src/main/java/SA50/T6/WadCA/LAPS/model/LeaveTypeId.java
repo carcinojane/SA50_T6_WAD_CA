@@ -11,7 +11,6 @@ public class LeaveTypeId implements Serializable{
 	
 	public LeaveTypeId() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public LeaveTypeId(LType leaveType, Designation designation) {
@@ -44,16 +43,5 @@ public class LeaveTypeId implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-
-
-
-	
-	
 	
 }

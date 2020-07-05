@@ -49,7 +49,7 @@ public class AdminController {
 	private StaffService sservice;
 	@Autowired
 	private LeaveTypeService ltservice;
-
+	
 	@Autowired
 	public void setAdminService(AdminServiceImpl aserviceImpl) {
 		this.aservice = aserviceImpl;
@@ -70,12 +70,12 @@ public class AdminController {
 		admin = new Admin();
 		return "admin_login";
 	}
-	
+
 	@GetMapping("/.home")
 	public String menu() {
 		return "admin_homepage";
 	}
-	
+
 	@PostMapping("/home")
 	public String home(@ModelAttribute("admin") @Valid Admin admin, BindingResult bindingResult, Model model,
 			HttpSession session) {
@@ -191,8 +191,7 @@ public class AdminController {
 		sservice.saveStaff(staff);
 		return "forward:/admin/manageStaff";
 	}
-	
-	//@GetMapping("/manageStaff/delete/{id}")
+
 	@RequestMapping(value="/manageStaff/delete/{id}",method= {RequestMethod.DELETE,RequestMethod.GET})
 	public String deleteStaff(@PathVariable("id") Integer id, Model model) {
 		Staff staff=sservice.findStaffById(id);

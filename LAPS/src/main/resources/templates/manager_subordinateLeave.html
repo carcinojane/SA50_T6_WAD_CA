@@ -31,20 +31,18 @@
 		</div>
 
 		<div class="filter" th:if="${not #lists.isEmpty(lrecords)}">
-			<form action="#" th:action="@{/manager/reportForm}" th:object="${managerReport}"
-				>
+			<form action="#" th:action="@{/manager/reportForm}"
+				th:object="${managerReport}">
 				<select th:field="*{staffId}" id="staffId" class="search-key">
 					<option th:value=null value="">Select StaffId</option>
 					<option th:each="staffId:${dStaffId}" th:value="${staffId}"
 						th:text="${staffId}"></option>
-				</select> 
-				<input type="hidden" id="dummy2" class="search-key" placeholder="">
+				</select> <input type="hidden" id="dummy2" class="search-key" placeholder="">
 				<select th:field="*{month}" id="month" class="search-key">
 					<option th:value=0 value="">Select a month</option>
 					<option th:each="month:${months}" th:value="${month.value}"
 						th:text="${month}"></option>
-				</select> 
-				<input type="hidden" id="dummy3" class="search-key" placeholder="">
+				</select> <input type="hidden" id="dummy3" class="search-key" placeholder="">
 				<input type="hidden" id="dummy4" class="search-key" placeholder="">
 				<input type="hidden" id="dummy5" class="search-key" placeholder="">
 				<input type="hidden" id="dummy6" class="search-key" placeholder="">
@@ -64,7 +62,8 @@
 						th:text="${statusOpt.displayValue}"></option>
 				</select> <input type="hidden" id="dummy7" class="search-key" placeholder="">
 				<p style="width: 10%;">
-				<button type="submit" style="background-color: grey" onclick="exporting()">Export Report</button>
+					<button type="submit" style="background-color: grey"
+						onclick="exporting()">Export Report</button>
 				<p>
 			</form>
 

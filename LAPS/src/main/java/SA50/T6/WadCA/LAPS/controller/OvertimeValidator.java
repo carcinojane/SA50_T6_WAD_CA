@@ -17,11 +17,11 @@ public class OvertimeValidator implements Validator{
 	@Override
 	public void validate(Object target, Errors errors) {
 		Overtime overtime = (Overtime) target;
-		
+
 		if(overtime.getHours() < 4) {
 			errors.rejectValue("hours", "min.overtime");
 		}
-		
+
 	}
 
 }

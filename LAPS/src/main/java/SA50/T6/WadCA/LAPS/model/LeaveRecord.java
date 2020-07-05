@@ -1,17 +1,11 @@
 package SA50.T6.WadCA.LAPS.model;
 import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import javax.persistence.OneToOne;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -24,7 +18,6 @@ public class LeaveRecord{
 	private int leaveId;
 	private int managerId;
 	private LeaveStatus leaveStatus;
-	
 	@NotEmpty
 	private String reason;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -39,14 +32,6 @@ public class LeaveRecord{
 	@ManyToOne
 	@JoinColumn(name="staffId", insertable=false, updatable=false)
 	private Staff staff;
-
-//	@ManyToOne
-//	@JoinColumns({
-//		@JoinColumn(name="id", insertable=false, updatable=false),
-//		@JoinColumn(name="designation", insertable=false, updatable=false)
-//	})
-//	private LeaveType leaveType;
-
 	private LType leaveType;
 	private String workDissemination;
 	private int contact;
@@ -55,7 +40,6 @@ public class LeaveRecord{
 
 	public LeaveRecord() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus, String reason, LocalDate leaveStartDate, String leaveStartTime,
@@ -73,9 +57,6 @@ public class LeaveRecord{
 		this.contact = contact;
 	}
 	
-	
-	
-	//add leave
 	public LeaveRecord(int managerId, LeaveStatus leaveStatus,
 			@NotNull(message = "Reason is mandatory field") String reason,
 			@NotNull(message = "From date is mandatory field") LocalDate leaveStartDate, String leaveStartTime,
@@ -209,19 +190,6 @@ public class LeaveRecord{
 		this.leaveEndDate = leaveEndDate;
 	}
 
-
-//	public Staff getStaff() {
-//		return staff;
-//	}
-//
-//
-//	public void setStaff(Staff staff) {
-//		this.staff = staff;
-//	}
-	
-	
-
-
 	public String getWorkDissemination() {
 		return workDissemination;
 	}
@@ -274,14 +242,8 @@ public class LeaveRecord{
 	public void setLeaveType(LType leaveType) {
 		this.leaveType = leaveType;
 
-		//this.leaveTypeDisplay = leaveType.getLeaveType().getDisplayValue();
+		
 	}
-
-//	public String getLeaveTypeDisplay() {
-//		return leaveTypeDisplay;
-//
-//	}
-
 	
 	public String getLeaveStartTime() {
 		return leaveStartTime;

@@ -17,10 +17,10 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageLeaveType.page.title}"></h2>
-		
+
 		<table class="list">
 			<tr>
-				
+
 				<th th:utext="#{admin.manageStaff.Designation}"></th>
 				<th th:utext="#{admin.manageLeave.LeaveType}"></th>
 				<th th:utext="#{admin.manageLeave.Entitlement}"></th>
@@ -29,17 +29,21 @@
 
 			</tr>
 			<tr th:each="leavetype:${leavetypes}">
-				
+
 				<td th:text=${leavetype.designation}>Designation</td>
 				<td th:text=${leavetype.leaveType.displayValue}>LeaveType</td>
 				<td th:text=${leavetype.entitlement}>Entitlement</td>
 				<td th:text=${leavetype.minClaim}>MinClaim</td>
-				<td><a th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}"><button style="width:49%; margin-left:25.5%; background-color: grey" th:utext="#{button.edit}"></button></a></td>
+				<td><a
+					th:href="${'/admin/manageLeaveType/edit/' + {leavetype.leaveType} +'/' + {leavetype.designation}}"><button
+							style="width: 49%; margin-left: 25.5%; background-color: grey"
+							th:utext="#{button.edit}"></button></a></td>
 
 			</tr>
 		</table>
 		<div class="zoom">
-			<a href="/admin/.home"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+			<a href="/admin/.home"><button style="background-color: grey;"
+					th:utext="#{page.back}"></button></a>
 		</div>
 	</div>
 

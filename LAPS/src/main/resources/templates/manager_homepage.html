@@ -12,36 +12,42 @@
 <script type="text/javascript" src="../../js/login.js"></script>
 </head>
 <body>
-	 <header th:fragment="header">
- 		<div class="topnav" id="myTopnav">
- 			<a><i class="fa fa-leaf" aria-hidden="true" style="font-size:20px"></i></a>
- 			
- 			<a href="/manager/home" th:utext="#{page.home}"></a>
- 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout" th:utext="#{page.logout}"></button>
- 			
- 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
- 			<i class="fa fa-bars"></i>
- 			</a>
- 		</div>
- 		
- 		<div class="footer">
- 			<p th:utext="#{page.footer}"></p>
- 		</div>
- 	 </header>
-	 
-	 <div class="content">
-	 	<h2 th:utext="#{manager.homepage.page.title}"></h2>
-	 	  <div class="menu">
-	 	  	<ul>
-	 	  		<li>
-	 	  			<button type="button"  onclick="location.href='/manager/approval'" value="View Leave Application for Approval" th:utext="#{manager.button.approval}"></button>
-	 	  		</li>
-	 	  		<li>
-	 	  			<button type="button"  onclick="location.href='/manager/subordinateLeave'" value="View all subordinate leave" th:utext="#{manager.button.subordinateLeave}"></button>
-	 	  		</li>
-	 	  	</ul>
-	 	  </div>
-	 </div>
+	<header th:fragment="header">
+		<div class="topnav" id="myTopnav">
+			<a><i class="fa fa-leaf" aria-hidden="true"
+				style="font-size: 20px"></i></a> <a href="/manager/home"
+				th:utext="#{page.home}"></a>
+			<button class="logout" type="button" onclick="location.href='/LAPS'"
+				value="Logout" th:utext="#{page.logout}"></button>
+
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars"></i>
+			</a>
+		</div>
+
+		<div class="footer">
+			<p th:utext="#{page.footer}"></p>
+		</div>
+	</header>
+
+	<div class="content">
+		<h2 th:utext="#{manager.homepage.page.title}"></h2>
+		<div class="menu">
+			<ul>
+				<li>
+					<button type="button" onclick="location.href='/manager/approval'"
+						value="View Leave Application for Approval"
+						th:utext="#{manager.button.approval}"></button>
+				</li>
+				<li>
+					<button type="button"
+						onclick="location.href='/manager/subordinateLeave'"
+						value="View all subordinate leave"
+						th:utext="#{manager.button.subordinateLeave}"></button>
+				</li>
+			</ul>
+		</div>
+	</div>
 
 </body>
 </html>

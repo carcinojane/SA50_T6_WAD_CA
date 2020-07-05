@@ -30,8 +30,8 @@
 				<td th:text=${staff.password}>Password</td>
 			</tr>
 			<tr>
-			<td th:utext="#{admin.manageStaff.Email}">Email</td>
-			<td th:text=${staff.email}>Email</td>
+				<td th:utext="#{admin.manageStaff.Email}">Email</td>
+				<td th:text=${staff.email}>Email</td>
 			</tr>
 			<tr>
 				<td th:utext="#{admin.manageStaff.StartDate}">Start Date</td>
@@ -47,26 +47,32 @@
 			</tr>
 			<tr th:if="${not #lists.isEmpty(subordinates)}">
 				<td th:utext="#{admin.manageStaff.Subordinates}">Subordinates</td>
-				<td><p th:each="subordinate: ${subordinates}" th:text="${subordinate.username}">Subordinates</td>
+				<td><p th:each="subordinate: ${subordinates}"
+						th:text="${subordinate.username}">Subordinates</td>
 			</tr>
 			<tr>
-				<td th:utext="#{admin.manageStaff.TotalAnnualLeave}">Total Annual Leave</td>
+				<td th:utext="#{admin.manageStaff.TotalAnnualLeave}">Total
+					Annual Leave</td>
 				<td th:text=${staff.totalAnnualLeave}>Total Annual Leave</td>
 			</tr>
 			<tr>
-				<td th:utext="#{admin.manageStaff.TotalMedicalLeave}">Total Medical Leave</td>
+				<td th:utext="#{admin.manageStaff.TotalMedicalLeave}">Total
+					Medical Leave</td>
 				<td th:text=${staff.totalMedicalLeave}>Total Medical Leave</td>
 			</tr>
 			<tr th:if="${staff ne null and staff.manager ne null}">
-				<td th:utext="#{admin.manageStaff.TotalCompensationLeave}">Total Compensation Leave</td>
+				<td th:utext="#{admin.manageStaff.TotalCompensationLeave}">Total
+					Compensation Leave</td>
 				<td th:text=${staff.totalCompensationLeave}>Total Compensation
 					Leave</td>
 			</tr>
 		</table>
 		<div class="zoom">
 			<a href="EditStaff.html"
-			th:href="@{/admin/manageStaff/edit/}+${staff.staffId}"><button style="background-color:green;" th:utext="#{button.edit}"></button></a>
-			<a href="Back.html" th:href="@{/admin/manageStaff}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+				th:href="@{/admin/manageStaff/edit/}+${staff.staffId}"><button
+					style="background-color: green;" th:utext="#{button.edit}"></button></a>
+			<a href="Back.html" th:href="@{/admin/manageStaff}"><button
+					style="background-color: grey;" th:utext="#{page.back}"></button></a>
 		</div>
 
 	</div>

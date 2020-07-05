@@ -16,21 +16,19 @@
 
 	<div class="content">
 		<h2 th:utext="#{admin.manageStaff.edit.page.title}"></h2>
-		
+
 		<form action="#" th:object="${staff}"
 			th:action="@{/admin/manageStaff/edit/save}" method="post">
 			<table class="list">
 
 
 				<tr>
-
-					<input type="hidden" th:field="*{staffId}">
+					<td><input type="hidden" th:field="*{staffId}"></td>
 				</tr>
 				<tr>
-
-					<input type="hidden" th:field="*{username}">
+					<td><input type="hidden" th:field="*{username}"></td>
 				</tr>
-				
+
 				<tr>
 
 					<td th:utext="#{admin.manageStaff.UserName}">User Name</td>
@@ -45,12 +43,11 @@
 				<tr>
 					<td th:utext="#{admin.manageStaff.Email}">Email</td>
 					<td><input type="text" th:field="*{email}">
-						<p th:if="${#fields.hasErrors('email')}"
-							th:errors="*{email}"></p></td>
+						<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></td>
 				</tr>
 				<tr>
 					<td th:utext="#{admin.manageStaff.StartDate}">Start Date</td>
-					<td><input type="date" th:field="*{startDate}"/>
+					<td><input type="date" th:field="*{startDate}" />
 						<p th:if="${#fields.hasErrors('startDate')}"
 							th:errors="*{startDate}" /></td>
 				</tr>
@@ -65,41 +62,45 @@
 				<tr>
 					<td th:utext="#{admin.manageStaff.ManagedBy}">Managed By</td>
 					<td><select th:field="*{manager.username}">
-							<option th:each="managerName : ${managerNames}" th:value="${managerName}"
-								th:text="${managerName}"></option>
+							<option th:each="managerName : ${managerNames}"
+								th:value="${managerName}" th:text="${managerName}"></option>
 					</select></td>
 				</tr>
 				<tr>
-					<td th:utext="#{admin.manageStaff.TotalAnnualLeave}">Total Annual Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalAnnualLeave}">Total
+						Annual Leave</td>
 					<td><input type="text" th:field="*{totalAnnualLeave}">
 						<p th:if="${#fields.hasErrors('totalAnnualLeave')}"
 							th:errors="*{totalAnnualLeave}"></p></td>
 				</tr>
 				<tr>
-					<td th:utext="#{admin.manageStaff.TotalMedicalLeave}">Total Medical Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalMedicalLeave}">Total
+						Medical Leave</td>
 					<td><input type="text" th:field="*{totalMedicalLeave}">
 						<p th:if="${#fields.hasErrors('totalMedicalLeave')}"
 							th:errors="*{totalMedicalLeave}"></p></td>
 				</tr>
 				<tr>
-					<td th:utext="#{admin.manageStaff.TotalCompensationLeave}">Total Compensation Leave</td>
+					<td th:utext="#{admin.manageStaff.TotalCompensationLeave}">Total
+						Compensation Leave</td>
 					<td><input type="text" th:field="*{totalCompensationLeave}">
 						<p th:if="${#fields.hasErrors('totalCompensationLeave')}"
 							th:errors="*{totalCompensationLeave}"></p></td>
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Save"/> &nbsp; &nbsp; <input
-						type="reset" vale="Reset"/></td>
+					<td><input type="submit" value="Save" /> &nbsp; &nbsp; <input
+						type="reset" value="Reset" /></td>
 				</tr>
 
 			</table>
-			
+
 		</form>
 		<div class="zoom">
-			<a href="Back.html" th:href="@{/admin/manageStaff}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+			<a href="Back.html" th:href="@{/admin/manageStaff}"><button
+					style="background-color: grey;" th:utext="#{page.back}"></button></a>
 		</div>
-		
+
 	</div>
 </body>
 </html>

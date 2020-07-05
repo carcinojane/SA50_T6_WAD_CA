@@ -13,21 +13,22 @@
 </head>
 <body>
 	<header th:fragment="header">
- 		<div class="topnav" id="myTopnav">
- 			<a><i class="fa fa-leaf" aria-hidden="true" style="font-size:20px"></i></a>
- 			
- 			<a onclick="location.href='/admin/.home'" th:utext="#{page.home}"></a>
- 			<button class="logout" type="button" onclick="location.href='/LAPS'" value="Logout" th:utext="#{page.logout}" ></button>
- 			
- 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
- 			<i class="fa fa-bars"></i>
- 			</a>
- 		</div>
- 		
- 		<div class="footer">
- 			<p th:utext="#{page.footer}"></p>
- 		</div>
- 	</header>
+		<div class="topnav" id="myTopnav">
+			<a><i class="fa fa-leaf" aria-hidden="true"
+				style="font-size: 20px"></i></a> <a
+				onclick="location.href='/admin/.home'" th:utext="#{page.home}"></a>
+			<button class="logout" type="button" onclick="location.href='/LAPS'"
+				value="Logout" th:utext="#{page.logout}"></button>
+
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars"></i>
+			</a>
+		</div>
+
+		<div class="footer">
+			<p th:utext="#{page.footer}"></p>
+		</div>
+	</header>
 
 	<div class="content">
 		<!-- <h2 th:utext="#{session.display.welcome}+${session.display}">

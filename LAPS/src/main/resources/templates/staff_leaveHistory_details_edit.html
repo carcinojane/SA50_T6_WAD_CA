@@ -9,7 +9,9 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+	crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{~/js/navbar.js}"></script>
 <script type="text/javascript" th:src="@{~/js/login.js}"></script>
 <script type="text/javascript" th:src="@{~/js/applyLeave.js}"></script>
@@ -19,22 +21,24 @@
 
 	<div class="content">
 		<h2 th:utext="#{staff.applyLeave.title}"></h2>
-		
-		
+
+
 
 		<form th:object="${leave}"
 			th:action="@{/staff/history/details/edit/save}" method="post">
 
 			<table class="list">
-			<tr><td><input type="hidden" th:field="*{leaveId}"></td></tr>
+				<tr>
+					<td><input type="hidden" th:field="*{leaveId}"></td>
+				</tr>
 				<tr>
 					<td>Leave Category</td>
-					<td><select  id="leaveType" th:field=*{leaveType}>
-							<option th:each="leave:${leaveTypeList}" th:value="${leave.leaveType}"
+					<td><select id="leaveType" th:field=*{leaveType}>
+							<option th:each="leave:${leaveTypeList}"
+								th:value="${leave.leaveType}"
 								th:text="${leave.leaveType.displayValue}">
 					</select>
-					<p th:text="${insufficient}" th:style="'color:red'"></p>
-					</td>
+						<p th:text="${insufficient}" th:style="'color:red'"></p></td>
 				</tr>
 				<tr>
 
@@ -42,8 +46,7 @@
 					<td><input type="date" th:field="*{leaveStartDate}">
 						<p th:if="${#fields.hasErrors('leaveStartDate')}"
 							th:errors="*{leaveStartDate}"></p>
-						<p th:text="${msg}" th:style="'color:red'"></p>
-							</td>
+						<p th:text="${msg}" th:style="'color:red'"></p></td>
 				</tr>
 				<tr id="fromTime">
 					<!-- when category is selected if selected value.leaveType==== T(SA50.T6.WadCA.LAPS.model.LType).Compensation-->
@@ -52,16 +55,14 @@
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
 					</select>
-					<p th:text="${time}" th:style="'color:red'"></p>
-					</td>
+						<p th:text="${time}" th:style="'color:red'"></p></td>
 				</tr>
 				<tr>
 					<td>To</td>
 					<td><input type="date" th:field="*{leaveEndDate}">
 						<p th:if="${#fields.hasErrors('leaveEndDate')}"
 							th:errors="*{leaveEndDate}">
-					<p th:text="${msg}" th:style="'color:red'"></p>		
-					</td>
+						<p th:text="${msg}" th:style="'color:red'"></p></td>
 				</tr>
 				<tr id="toTime">
 					<td>To Time</td>
@@ -69,8 +70,7 @@
 							<option th:value="PM">PM</option>
 							<option th:value="AM">AM</option>
 					</select>
-					<p th:text="${time}" th:style="'color:red'"></p>
-					</td>
+						<p th:text="${time}" th:style="'color:red'"></p></td>
 				</tr>
 				<tr>
 					<td>Reason</td>
@@ -93,7 +93,9 @@
 			</table>
 		</form>
 		<div class="zoom">
-			<a href="Back.html" th:href="@{/staff/history/details/}+${leave.leaveId}"><button style="background-color:grey;" th:utext="#{page.back}"></button></a>
+			<a href="Back.html"
+				th:href="@{/staff/history/details/}+${leave.leaveId}"><button
+					style="background-color: grey;" th:utext="#{page.back}"></button></a>
 		</div>
 	</div>
 

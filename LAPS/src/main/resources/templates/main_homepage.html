@@ -1,50 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-  
-  <head>
-    <title th:utext="#{main.homepage.page.title}"></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <link rel="stylesheet" type="text/css" media="all"
+
+<head>
+<title th:utext="#{main.homepage.page.title}"></title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css" media="all"
 	href="../../css/main.css" th:href="@{/css/main.css}" />
-	<link rel="stylesheet" type="text/css" media="all"
+<link rel="stylesheet" type="text/css" media="all"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<script type="text/javascript" src="../../js/navbar.js"></script>
-	<script type="text/javascript" src="../../js/login.js"></script>
-  </head>
+<script type="text/javascript" src="../../js/navbar.js"></script>
+<script type="text/javascript" src="../../js/login.js"></script>
+</head>
 
 <body>
 
- <header th:fragment="header">
- 		<div class="topnav" id="myTopnav">
- 			<a><i class="fa fa-leaf" aria-hidden="true" style="font-size:20px"></i></a>
- 			
- 			<a href="/LAPS" th:utext="#{page.home}"></a> 			
- 			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
- 			<i class="fa fa-bars"></i>
- 			</a>
- 		</div>
- 		
- 		<div class="footer">
- 			<p th:utext="#{page.footer}"></p>
- 		</div>
- </header>
- 
- <div class="content">
-  <h2 th:utext="#{main.homepage.page.title}"></h2>
-  <div class="menu">
-    <ul>
-      <li>
-        <button type="button"  onclick="location.href='/admin/login'" value="Admin Login" th:utext="#{button.adminlogin}"></button>
-      </li>
+	<header th:fragment="header">
+		<div class="topnav" id="myTopnav">
+			<a><i class="fa fa-leaf" aria-hidden="true"
+				style="font-size: 20px"></i></a> <a href="/LAPS" th:utext="#{page.home}"></a>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+				<i class="fa fa-bars"></i>
+			</a>
+		</div>
 
-      <li>
-        <button type="button"  onclick="location.href='/staff/login'" value="Staff Login" th:utext="#{button.stafflogin}"></button>
-      </li>
-    </ul>
-  </div>
-</div>
+		<div class="footer">
+			<p th:utext="#{page.footer}"></p>
+		</div>
+	</header>
+
+	<div class="content">
+		<h2 th:utext="#{main.homepage.page.title}"></h2>
+		<div class="menu">
+			<ul>
+				<li>
+					<button type="button" onclick="location.href='/admin/login'"
+						value="Admin Login" th:utext="#{button.adminlogin}"></button>
+				</li>
+
+				<li>
+					<button type="button" onclick="location.href='/staff/login'"
+						value="Staff Login" th:utext="#{button.stafflogin}"></button>
+				</li>
+			</ul>
+		</div>
+	</div>
 
 </body>
 </html>
