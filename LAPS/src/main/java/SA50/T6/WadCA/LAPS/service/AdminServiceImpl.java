@@ -1,5 +1,7 @@
 package SA50.T6.WadCA.LAPS.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +14,12 @@ public class AdminServiceImpl implements AdminService{
 	@Autowired
 	AdminRepository arepo;
 
-	@Override
+	@Transactional
 	public Admin findAdminById(int adminId) {
 		return arepo.findById(adminId).get();
 	}
 
-	@Override
+	@Transactional
 	public Admin findAdminByName(String username) {
 		Admin admin = arepo.findByUsername(username);
 		return admin;
